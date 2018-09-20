@@ -13,4 +13,4 @@ Execution:
 
 `python3 qmt.py`
 
-**Currently in alpha stage - Do not submit new links too fast with this tool!
+**Currently in alpha stage - Do not submit new links too fast with this tool!**
