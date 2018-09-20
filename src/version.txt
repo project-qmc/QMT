@@ -1,0 +1,5 @@
+{
+ "number": "0.0.1",
+ "tag": "b",
+ "comments": ["First version of QMT, to be used with QMC."]
+ }
