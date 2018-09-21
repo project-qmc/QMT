@@ -49,7 +49,7 @@ def getFunctionName():
     
 def getRemoteQMTversion():
     import requests
-    resp = requests.get("https://raw.githubusercontent.com/QMC-Project/QMC-QMT/master/src/version.txt")
+    resp = requests.get("https://raw.githubusercontent.com/project-qmc/QMT/master/src/version.txt")
     if resp.status_code == 200:
         data = resp.json()
         return data['number']
