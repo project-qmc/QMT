@@ -274,7 +274,7 @@ class MainWindow(QWidget):
                  local_version[2]):
             self.versionMess = '<b style="color:red">New Version Available:</b> %s.%s.%s  ' % (
             remote_version[0], remote_version[1], remote_version[2])
-            self.versionMess += '(<a href="https://github.com/QMC-Project/QMC-QMT/releases/">download</a>)'
+            self.versionMess += '(<a href="https://github.com/project-qmc/QMT/releases/">download</a>)'
         else:
             self.versionMess = "You have the latest version of QMT"
 
