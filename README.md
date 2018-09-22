@@ -1,4 +1,4 @@
-## QMT - Quality Magnet Tool
+## QMT - Quality Magnet Tool [![Build Status](https://travis-ci.org/project-qmc/QMT.svg?branch=master)](https://travis-ci.org/project-qmc/QMT)
 
 Forked from SPMT and modified to easily search, vote on and add magnet links.
 
