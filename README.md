@@ -7,8 +7,11 @@ Works with python3
 Python requirements installation:
 
 `pip install -r requirements.txt`
+
 or
+
 `pip3 install -r requirements.txt`
+
 
 Execution:
 
