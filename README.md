@@ -4,10 +4,11 @@ Forked from SPMT and modified to easily search, vote on and add magnet links.
 
 Works with python3
 
-Requirements installation:
+Python requirements installation:
 
 `pip install -r requirements.txt`
-
+or
+`pip3 install -r requirements.txt`
 
 Execution:
 
