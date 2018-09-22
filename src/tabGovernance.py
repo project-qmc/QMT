@@ -10,14 +10,17 @@ from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtWidgets import QTableWidgetItem, QPushButton, QWidget, QHBoxLayout, \
     QMessageBox
 
+from itertools import product
 from qt.gui_tabGovernance import TabGovernance_gui, ScrollMessageBox
 from qt.dlg_selectMNs import SelectMNs_dlg
 from qt.dlg_budgetProjection import BudgetProjection_dlg
 from misc import printException, getCallerName, getFunctionName, printDbg, printOK, writeToFile, highlight_textbox
 from threads import ThreadFuns
+import json
 import time
 import random
 import re
+import requests
 from utils import ecdsa_sign
 from constants import cache_File
 
@@ -291,8 +294,64 @@ class TabGovernance():
         else:
             self.ui.selectedPropLabel.setText("<em><b>%d</b> torrents selected" % len(self.selectedTorrents))
 
+    @staticmethod
+    def prepare_vote_data(hash, masternode_name, vote):
+        json_object = {
+            'jsonrpc': 1.0,
+            'id': 'curltest',
+            'method': 'mnbudgetvote',
+            'params': [
+                'alias',
+                hash,
+                vote,
+                master_node
+            ]
+        }
+        return json.dumps(json_object)
+
     @pyqtSlot(object, str)
     def vote_thread(self, ctrl, vote_code):
+        if not isinstance(vote_code, int) or vote_code not in range(3):
+            raise Exception("Wrong vote_code %s" % str(vote_code))
+
+        # Uncomment when needed
+        # self.successVotes = 0
+        # self.failedVotes = 0
+
+        # save delay check data to cache
+        self.caller.parent.cache["votingDelayCheck"] = self.ui.randomDelayCheck.isChecked()
+        self.caller.parent.cache["votingDelayNeg"] = self.ui.randomDelayNeg_edt.value()
+        self.caller.parent.cache["votingDelayPos"] = self.ui.randomDelayPos_edt.value()
+        writeToFile(self.caller.parent.cache, cache_File)
+
+        server_url = "http://{}:{}".format(self.caller.rpcClient.rpc_ip, self.caller.rpcClient.rpc_port)
+        auth_pair = self.caller.rpcClient.rpc_user, self.caller.rpcClient.rpc_passwd
+
+        for prop, mn in product(self.selectedTorrents, self.votingMasternodes):
+            try:
+                v_res = requests.post(url=server_url,
+                                      auth=auth_pair,
+                                      data=self.prepare_vote_data(prop.hash,
+                                                                  mn[1],
+                                                                  ["ABSTAIN", "YES", "NO"][vote_code]))
+                printDbg(v_res) # Vote status is not processed yet
+            except Exception as e:
+                printException(getCallerName(),
+                               getFunctionName(),
+                               'Submitting a vote failed',
+                               e.args + (prop.hash, mn[1], ["ABSTAIN", "YES", "NO"][vote_code]))
+                continue
+
+            if self.ui.randomDelayCheck.isChecked():
+                time.sleep(random.randint(
+                    -int(self.ui.randomDelayNeg_edt.value()),
+                    int(self.ui.randomDelayPos_edt.value())
+                ))
+
+
+    @pyqtSlot(object, str)
+    def _vote_thread_old(self, ctrl, vote_code):
+        # Left for reference
         # vote_code index for ["yes", "abstain", "no"]
         if not isinstance(vote_code, int) or vote_code not in range(3):
             raise Exception("Wrong vote_code %s" % str(vote_code))
