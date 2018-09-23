@@ -34,7 +34,7 @@ class TabGovernance_gui(QWidget):
         self.search_label = QLabel("<b><i>Search:<i></b>")
         self.search_label.setStyleSheet('color: #003366')
         self.search_textbox = QLineEdit()
-        self.search_textbox.setFixedWidth(300)
+        #self.search_textbox.setFixedWidth(300)
         self.is_regex_label = QLabel("Regex?")
         self.is_regex_checkbox = QCheckBox()
         row.addWidget(self.search_label)
