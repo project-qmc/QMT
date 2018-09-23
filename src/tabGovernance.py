@@ -161,9 +161,9 @@ class TabGovernance():
             self.ui.torrentBox.setItem(row, 0, item(prop.name))
             self.ui.torrentBox.item(row, 0).setFont(QFont("Arial", 9, QFont.Bold))
 
-            #hash = item(prop.Hash)
-            #hash.setToolTip(prop.Hash)
-            #self.ui.torrentBox.setItem(row, 1, hash)
+            hash = item(prop.Hash)
+            hash.setToolTip(prop.Hash)
+            self.ui.torrentBox.setItem(row, 6, hash)
 
             self.ui.torrentBox.setCellWidget(row, 2, itemButton(prop.URL, 0))
 
@@ -298,13 +298,13 @@ class TabGovernance():
     def prepare_vote_data(hash, masternode_name, vote):
         json_object = {
             'jsonrpc': 1.0,
-            'id': 'curltest',
+            'id': 'qmt',
             'method': 'mnbudgetvote',
             'params': [
                 'alias',
                 hash,
                 vote,
-                master_node
+                masternode_name
             ]
         }
         return json.dumps(json_object)
@@ -331,15 +331,15 @@ class TabGovernance():
             try:
                 v_res = requests.post(url=server_url,
                                       auth=auth_pair,
-                                      data=self.prepare_vote_data(prop.hash,
+                                      data=self.prepare_vote_data(prop.Hash,
                                                                   mn[1],
-                                                                  ["ABSTAIN", "YES", "NO"][vote_code]))
+                                                                  ["ABSTAIN", "yes", "no"][vote_code]))
                 printDbg(v_res) # Vote status is not processed yet
             except Exception as e:
                 printException(getCallerName(),
                                getFunctionName(),
                                'Submitting a vote failed',
-                               e.args + (prop.hash, mn[1], ["ABSTAIN", "YES", "NO"][vote_code]))
+                               e.args + (prop.Hash, mn[1], ["ABSTAIN", "yes", "no"][vote_code]))
                 continue
 
             if self.ui.randomDelayCheck.isChecked():

@@ -202,7 +202,7 @@ class TabGovernance_gui(QWidget):
         
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
-        item.setText("S/L")
+        item.setText("Hash")
         item.setToolTip("Not supported yet")
         self.torrentBox.setHorizontalHeaderItem(6, item)
         
