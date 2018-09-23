@@ -41,7 +41,7 @@ class TabAddTorrent(object):
                        1,
                        super_block,
                        payee,
-                       1]
+                       5]
         })
 
     @staticmethod
@@ -55,7 +55,7 @@ class TabAddTorrent(object):
                        1,
                        super_block,
                        payee,
-                       1,
+                       5,
                        hash]
         })
 
