@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import io
 import os.path
 import sys
 
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.Qt import QDesktopServices, QFont, QUrl
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
@@ -20,6 +22,7 @@ import time
 import random
 import re
 import requests
+from torrent_tracker_scraper import scraper as torrent_scraper
 from constants import cache_File
 
 
@@ -46,7 +49,7 @@ class Torrent():
         self.MyNays = []
 
 
-class TabGovernance():
+class TabGovernance(QtCore.QObject):
     def __init__(self, caller):
         self.caller = caller
         self.torrents = []  # list of Torrent Objects
@@ -61,18 +64,18 @@ class TabGovernance():
         # Connect GUI buttons
         self.vote_codes = ["abstains", "yes", "no"]
 
-        self.ui.refreshTorrents_btn.clicked.connect(lambda: self.onRefreshTorrents())
-        self.ui.toggleExpiring_btn.clicked.connect(lambda: self.onToggleExpiring())
-        self.ui.selectMN_btn.clicked.connect(lambda: SelectMNs_dlg(self).exec_())
-        self.ui.budgetProjection_btn.clicked.connect(lambda: BudgetProjection_dlg(self).exec_())
-        self.ui.torrentBox.itemClicked.connect(lambda: self.updateSelection())
-        self.ui.voteYes_btn.clicked.connect(lambda: self.onVote(1))
-        self.ui.voteNo_btn.clicked.connect(lambda: self.onVote(2))
+        self.ui.refreshTorrents_btn.pressed.connect(lambda: self.onRefreshTorrents())
+        self.ui.toggleExpiring_btn.pressed.connect(lambda: self.onToggleExpiring())
+        self.ui.selectMN_btn.pressed.connect(lambda: SelectMNs_dlg(self).exec_())
+        self.ui.budgetProjection_btn.pressed.connect(lambda: BudgetProjection_dlg(self).exec_())
+        self.ui.torrentBox.itemSelectionChanged.connect(lambda: self.updateSelection())
+        self.ui.voteYes_btn.pressed.connect(lambda: self.onVote(1))
+        self.ui.voteNo_btn.pressed.connect(lambda: self.onVote(2))
         self.ui.search_textbox.returnPressed.connect(lambda: self.onRefreshTorrents())
 
-        self.ui.seed_leech_btn.clicked.connect(lambda: self.get_sl())
-        self.ui.download_torrent_btn.clicked.connect(lambda: self.download_selected())
-        self.ui.play_torrent_btn.clicked.connect(lambda: self.play_selected())
+        self.ui.seed_leech_btn.pressed.connect(lambda: self.get_sl())
+        self.ui.download_torrent_btn.pressed.connect(lambda: self.download_selected())
+        self.ui.play_torrent_btn.pressed.connect(lambda: self.play_selected())
 
     def clear(self):
         # Clear voting masternodes configuration and update cache
@@ -100,16 +103,25 @@ class TabGovernance():
     @pyqtSlot()
     def download_selected(self):
         selected_row = next(iter(self.getSelection().keys()))
-        url = self.ui.torrentBox.item(selected_row, 6)
+        url = self.ui.torrentBox.item(selected_row, 6).text()
 
         QDesktopServices.openUrl(QUrl(str(url)))
 
     @pyqtSlot()
     def play_selected(self):
         selected_row = next(iter(self.getSelection().keys()))
-        url = "https://instant.io/#" + str(self.ui.torrentBox.item(selected_row, 6))
+        url = "https://instant.io/#" + str(self.ui.torrentBox.item(selected_row, 6).text())
 
         QDesktopServices.openUrl(QUrl(str(url)))
+
+    def display_error(self, message):
+        QtWidgets.QMessageBox.critical(
+            self.caller,
+            'Error',
+            message,
+            QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.Ok
+        )
 
     def displayTorrents(self):
         self.ui.refreshingLabel.hide()
@@ -154,6 +166,9 @@ class TabGovernance():
             if not_expired and matches_criteria:
                 filtered_torrents.append(prop)
 
+        if search_criteria or search_regex:
+            filtered_torrents = filtered_torrents[:50]
+
         self.ui.torrentBox.setRowCount(len(filtered_torrents))
         for row, prop in enumerate(filtered_torrents):
             self.ui.torrentBox.setItem(row, 0, item(prop.name))
@@ -181,7 +196,6 @@ class TabGovernance():
             self.ui.torrentBox.setItem(row, 5, item(prop.Hash))
             self.ui.torrentBox.setItem(row, 6, item(prop.URL))
 
-
         # Sort by Votes descending
         self.ui.torrentBox.setSortingEnabled(True)
         self.ui.torrentBox.sortByColumn(3, Qt.DescendingOrder)
@@ -189,20 +203,54 @@ class TabGovernance():
     def getSelection(self):
         items = self.ui.torrentBox.selectedItems()
 
-        rows = []
-        for i in range(0, len(items), self.ui.torrentBox.columnCount()):
+        rows = set()
+        for i in range(len(items)):
             row = items[i].row()
-            rows.append(row)
+            rows.add(row)
 
-        hash_map = {row: self.ui.torrentBox.item(row, 5) for row in rows}
+        url_map = {row: self.ui.torrentBox.item(row, 6).text() for row in rows}
 
-        return hash_map
+        return url_map
 
     @pyqtSlot()
     def get_sl(self):
         selected_hashes = self.getSelection()
-        pass
 
+        uri_extractor = r'urn\:btih\:([^&]+)'
+        selected_hashes = {
+            row: re.findall(uri_extractor, value)[0]
+            for row, value in selected_hashes.items()
+            if re.findall(uri_extractor, value)
+        }
+
+        def poll(ctrl):
+            global print
+            # Mute the module temporary
+            saved_error = torrent_scraper.logger.error
+            null_func = lambda _, __, ___: None
+
+            torrent_scraper.logger.error = null_func
+
+            # Mute print too
+            saved_stdout = sys.stdout
+            sys.stdout = io.StringIO()
+
+            for row, hash in selected_hashes.items():
+                try:
+                    _, s, l, c = torrent_scraper.scrape(hash,
+                                                        'tracker.coppersurfer.tk',
+                                                        6969)
+                except ValueError:
+                    continue
+
+                string = f'{s} / {l}'
+                self.ui.torrentBox.setItem(row, 4, QTableWidgetItem(string))
+
+            torrent_scraper.logger.error = saved_error
+            sys.stdout = saved_stdout
+            self.ui.torrentBox.clearSelection()
+
+        ThreadFuns.runInThread(poll, ())
 
     @pyqtSlot()
     def onRefreshTorrents(self):
@@ -334,10 +382,15 @@ class TabGovernance():
             try:
                 v_res = requests.post(url=server_url,
                                       auth=auth_pair,
-                                      data=self.prepare_vote_data(prop.hash,
+                                      data=self.prepare_vote_data(prop.hash + '@',
                                                                   mn[1],
                                                                   ["ABSTAIN", "YES", "NO"][vote_code]))
-                printDbg(v_res)  # Vote status is not processed yet
+
+                response = json.loads(v_res.content)
+                if 'error' in response:
+                    self.display_error(response['error']['message'])
+                    continue
+
             except Exception as e:
                 printException(getCallerName(),
                                getFunctionName(),

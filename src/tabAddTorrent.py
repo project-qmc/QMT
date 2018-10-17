@@ -3,9 +3,10 @@ import time
 
 import requests
 import requests.exceptions
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 
-from misc import readRPCfile, highlight_textbox, printException, getCallerName, getFunctionName
+from misc import getCallerName, getFunctionName, highlight_textbox, printException, readRPCfile
 from qt.gui_tabAddTorrent import TabAddTorrent_gui
 from threads import ThreadFuns
 
@@ -66,6 +67,15 @@ class TabAddTorrent(object):
             self.next_super = self.caller.rpcClient.getNextSuperBlock()
             self.update = not self.update
 
+    def display_error(self, exc):
+        QtWidgets.QMessageBox.critical(
+            self.caller,
+            'Error',
+            exc.args[0],
+            QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.Ok
+        )
+
     def submit_torrent_thread(self, ctrl, name, uri, payee, cat):
         while not self.update:
             time.sleep(self.UPDATE_HALF_PERIOD)
@@ -92,6 +102,9 @@ class TabAddTorrent(object):
                                e.args + (name, uri, payee, cat))
 
             response_object = json.loads(response)
+
+            if 'error' in response_object:
+                raise Exception(response_object['error']['message'])
 
             while self.current_block < initial_block + self.BLOCK_DELAY:
                 time.sleep(self.UPDATE_HALF_PERIOD)
@@ -134,4 +147,6 @@ class TabAddTorrent(object):
             return
 
         ThreadFuns.runInThread(self.submit_torrent_thread,
-                               (name, uri, payee, cat))
+                               (name, uri, payee, cat),
+                               on_thread_exception=self.display_error,
+                               skip_raise_exception=False)

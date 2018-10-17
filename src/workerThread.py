@@ -35,4 +35,5 @@ class WorkerThread(QThread):
         try:
             self.worker_result = self.worker_fun(self.ctrl_obj, *self.worker_fun_args)
         except Exception as e:
+            self.worker_exception = e
             print(e)
