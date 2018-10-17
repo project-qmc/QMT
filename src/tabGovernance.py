@@ -1,27 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os.path
 import sys
 
-import os.path
 from PyQt5.Qt import QDesktopServices, QFont, QUrl
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from PyQt5.QtCore import Qt, pyqtSlot
-from PyQt5.QtWidgets import QTableWidgetItem, QPushButton, QWidget, QHBoxLayout, \
-    QMessageBox
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
 
 from itertools import product
 from qt.gui_tabGovernance import TabGovernance_gui, ScrollMessageBox
 from qt.dlg_selectMNs import SelectMNs_dlg
 from qt.dlg_budgetProjection import BudgetProjection_dlg
-from misc import printException, getCallerName, getFunctionName, printDbg, printOK, writeToFile, highlight_textbox
+from misc import printException, getCallerName, getFunctionName, printDbg, writeToFile, highlight_textbox
 from threads import ThreadFuns
 import json
 import time
 import random
 import re
 import requests
-from utils import ecdsa_sign
 from constants import cache_File
 
 
@@ -62,15 +60,19 @@ class TabGovernance():
         self.caller.tabGovernance = self.ui
         # Connect GUI buttons
         self.vote_codes = ["abstains", "yes", "no"]
+
         self.ui.refreshTorrents_btn.clicked.connect(lambda: self.onRefreshTorrents())
         self.ui.toggleExpiring_btn.clicked.connect(lambda: self.onToggleExpiring())
         self.ui.selectMN_btn.clicked.connect(lambda: SelectMNs_dlg(self).exec_())
         self.ui.budgetProjection_btn.clicked.connect(lambda: BudgetProjection_dlg(self).exec_())
         self.ui.torrentBox.itemClicked.connect(lambda: self.updateSelection())
         self.ui.voteYes_btn.clicked.connect(lambda: self.onVote(1))
-#        self.ui.voteAbstain_btn.clicked.connect(lambda: self.onVote(0))
         self.ui.voteNo_btn.clicked.connect(lambda: self.onVote(2))
         self.ui.search_textbox.returnPressed.connect(lambda: self.onRefreshTorrents())
+
+        self.ui.seed_leech_btn.clicked.connect(lambda: self.get_sl())
+        self.ui.download_torrent_btn.clicked.connect(lambda: self.download_selected())
+        self.ui.play_torrent_btn.clicked.connect(lambda: self.play_selected())
 
     def clear(self):
         # Clear voting masternodes configuration and update cache
@@ -95,6 +97,20 @@ class TabGovernance():
     def countMyVotes_thread(self, ctrl):
         self.countMyVotes()
 
+    @pyqtSlot()
+    def download_selected(self):
+        selected_row = next(iter(self.getSelection().keys()))
+        url = self.ui.torrentBox.item(selected_row, 6)
+
+        QDesktopServices.openUrl(QUrl(str(url)))
+
+    @pyqtSlot()
+    def play_selected(self):
+        selected_row = next(iter(self.getSelection().keys()))
+        url = "https://instant.io/#" + str(self.ui.torrentBox.item(selected_row, 6))
+
+        QDesktopServices.openUrl(QUrl(str(url)))
+
     def displayTorrents(self):
         self.ui.refreshingLabel.hide()
         self.ui.search_textbox.setReadOnly(False)
@@ -107,24 +123,6 @@ class TabGovernance():
             item.setTextAlignment(Qt.AlignCenter)
             item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
             return item
-
-        def itemButton(value, icon_num):
-            pwidget = QWidget()
-            btn = QPushButton()
-            if icon_num == 0:
-                btn.setIcon(self.ui.link_icon)
-                btn.setToolTip("Download Torrent")
-                btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(str(value))))
-            else:
-                btn.setIcon(self.ui.search_icon)
-                btn.setToolTip("Play with instant.io")
-                btn.clicked.connect(lambda: QDesktopServices.openUrl(QUrl(str(value))))
-
-            pLayout = QHBoxLayout()
-            pLayout.addWidget(btn)
-            pLayout.setContentsMargins(0, 0, 0, 0)
-            pwidget.setLayout(pLayout)
-            return pwidget
 
         self.ui.mnCountLabel.setText("Total MN Count: <em>%d</em>" % self.mnCount)
         search_criteria = self.ui.search_textbox.text()
@@ -160,49 +158,51 @@ class TabGovernance():
         for row, prop in enumerate(filtered_torrents):
             self.ui.torrentBox.setItem(row, 0, item(prop.name))
             self.ui.torrentBox.item(row, 0).setFont(QFont("Arial", 9, QFont.Bold))
-
-            #hash = item(prop.Hash)
-            #hash.setToolTip(prop.Hash)
-            #self.ui.torrentBox.setItem(row, 1, hash)
-
-            self.ui.torrentBox.setCellWidget(row, 2, itemButton(prop.URL, 0))
+            # self.ui.torrentBox.setCellWidget(row, 1, itemButton("https://instant.io/#" + prop.URL, 1))
+            # self.ui.torrentBox.setCellWidget(row, 2, itemButton(prop.URL, 0))
 
             monthlyPay = item(prop.MonthlyPayment)
             monthlyPay.setData(Qt.EditRole, int(round(prop.MonthlyPayment)))
-            self.ui.torrentBox.setItem(row, 3, monthlyPay)
+            self.ui.torrentBox.setItem(row, 1, monthlyPay)
 
             payments = "%d / %d" % (prop.RemainingPayCount, prop.TotalPayCount)
-            self.ui.torrentBox.setItem(row, 4, item(payments))
+            self.ui.torrentBox.setItem(row, 2, item(payments))
 
             net_votes = "%d / %d / %d" % (prop.Yeas, prop.Abstains, prop.Nays)
             votes = item(net_votes)
             if (prop.Yeas - prop.Nays) > 0.1 * self.mnCount:
                 votes.setBackground(Qt.green)
-            if (prop.Yeas - prop.Nays) < 0:
+            elif (prop.Yeas - prop.Nays) < 0:
                 votes.setBackground(Qt.red)
-            if prop.RemainingPayCount == 0:
+            elif prop.RemainingPayCount == 0:
                 votes.setBackground(Qt.yellow)
-            self.ui.torrentBox.setItem(row, 5, votes)
+            self.ui.torrentBox.setItem(row, 3, votes)
 
-            #my_votes = "%d / %d / %d" % (len(prop.MyYeas), len(prop.MyAbstains), len(prop.MyNays))
-            #self.ui.torrentBox.setItem(row, 6, item(my_votes))
-            self.ui.torrentBox.setCellWidget(row, 1, itemButton("https://instant.io/#" + prop.URL, 1))
+            self.ui.torrentBox.setItem(row, 5, item(prop.Hash))
+            self.ui.torrentBox.setItem(row, 6, item(prop.URL))
+
 
         # Sort by Votes descending
         self.ui.torrentBox.setSortingEnabled(True)
-        self.ui.torrentBox.sortByColumn(5, Qt.DescendingOrder)
+        self.ui.torrentBox.sortByColumn(3, Qt.DescendingOrder)
 
     def getSelection(self):
         items = self.ui.torrentBox.selectedItems()
-        # Save row indexes to a set to avoid repetition
-        rows = set()
-        for i in range(0, len(items)):
+
+        rows = []
+        for i in range(0, len(items), self.ui.torrentBox.columnCount()):
             row = items[i].row()
-            rows.add(row)
-        rowsList = list(rows)
-        hashesList = [self.ui.torrentBox.item(row, 6).text() for row in rowsList]
-        # print("Selected: " + str([p.name for p in self.torrents if p.name in namesList]))
-        return [p for p in self.torrents if p.Hash in hashesList]
+            rows.append(row)
+
+        hash_map = {row: self.ui.torrentBox.item(row, 5) for row in rows}
+
+        return hash_map
+
+    @pyqtSlot()
+    def get_sl(self):
+        selected_hashes = self.getSelection()
+        pass
+
 
     @pyqtSlot()
     def onRefreshTorrents(self):
@@ -293,6 +293,9 @@ class TabGovernance():
             self.ui.selectedPropLabel.setText("<em><b>1</b> torrent selected")
         else:
             self.ui.selectedPropLabel.setText("<em><b>%d</b> torrents selected" % len(self.selectedTorrents))
+        self.ui.download_torrent_btn.setEnabled(len(self.selectedTorrents) == 1)
+        self.ui.play_torrent_btn.setEnabled(len(self.selectedTorrents) == 1)
+        self.ui.seed_leech_btn.setEnabled(len(self.selectedTorrents) > 0)
 
     @staticmethod
     def prepare_vote_data(hash, masternode_name, vote):
@@ -304,7 +307,7 @@ class TabGovernance():
                 'alias',
                 hash,
                 vote,
-                master_node
+                masternode_name
             ]
         }
         return json.dumps(json_object)
@@ -334,7 +337,7 @@ class TabGovernance():
                                       data=self.prepare_vote_data(prop.hash,
                                                                   mn[1],
                                                                   ["ABSTAIN", "YES", "NO"][vote_code]))
-                printDbg(v_res) # Vote status is not processed yet
+                printDbg(v_res)  # Vote status is not processed yet
             except Exception as e:
                 printException(getCallerName(),
                                getFunctionName(),
@@ -347,80 +350,6 @@ class TabGovernance():
                     -int(self.ui.randomDelayNeg_edt.value()),
                     int(self.ui.randomDelayPos_edt.value())
                 ))
-
-
-    @pyqtSlot(object, str)
-    def _vote_thread_old(self, ctrl, vote_code):
-        # Left for reference
-        # vote_code index for ["yes", "abstain", "no"]
-        if not isinstance(vote_code, int) or vote_code not in range(3):
-            raise Exception("Wrong vote_code %s" % str(vote_code))
-        self.successVotes = 0
-        self.failedVotes = 0
-
-        # save delay check data to cache
-        self.caller.parent.cache["votingDelayCheck"] = self.ui.randomDelayCheck.isChecked()
-        self.caller.parent.cache["votingDelayNeg"] = self.ui.randomDelayNeg_edt.value()
-        self.caller.parent.cache["votingDelayPos"] = self.ui.randomDelayPos_edt.value()
-        writeToFile(self.caller.parent.cache, cache_File)
-
-        for prop in self.selectedTorrents:
-            for mn in self.votingMasternodes:
-                vote_sig = ''
-                serialize_for_sig = ''
-                sig_time = int(time.time())
-
-                try:
-                    # Get mnPrivKey
-                    currNode = next(x for x in self.caller.masternode_list if x['name'] == mn[1])
-                    if currNode is None:
-                        raise Exception("currNode not found for current voting masternode %s" % mn[1])
-                    mnPrivKey = currNode['mnPrivKey']
-                    printDbg("we have a key\n")
-                    # Add random delay offset
-                    if self.ui.randomDelayCheck.isChecked():
-                        minuns_max = int(self.ui.randomDelayNeg_edt.value())
-                        plus_max = int(self.ui.randomDelayPos_edt.value())
-                        delay_secs = random.randint(-minuns_max, plus_max)
-                        sig_time += delay_secs
-
-                    # Print Debug line to console
-                    mess = "Processing '%s' vote on behalf of masternode [%s]" % (self.vote_codes[vote_code], mn[1])
-                    mess += " for the torrent {%s}" % prop.name
-                    if self.ui.randomDelayCheck.isChecked():
-                        mess += " with offset of %d seconds" % delay_secs
-                    printDbg(mess)
-                    # Serialize vote
-                    serialize_for_sig = mn[0][:64] + '-' + str(currNode['collateral'].get('txidn'))
-                    printDbg(serialize_for_sig)
-                    serialize_for_sig += prop.Hash + str(vote_code) + str(sig_time)
-                    printDbg("searlized\n")
-                    printDbg(serialize_for_sig)
-                    printDbg(mnPrivKey)
-                    # Sign vote
-                    vote_sig = ecdsa_sign(serialize_for_sig, mnPrivKey)
-                    printDbg("signed\n")
-                    # Broadcast the vote
-                    v_res = self.caller.rpcClient.mnBudgetRawVote(
-                        mn_tx_hash=currNode['collateral'].get('txid'),
-                        mn_tx_index=int(currNode['collateral'].get('txidn')),
-                        torrent_hash=prop.Hash,
-                        vote=self.vote_codes[vote_code],
-                        time=sig_time,
-                        vote_sig=vote_sig)
-                    printDbg("boradcast?\n")
-                    printOK(v_res)
-
-                    if v_res == 'Voted successfully':
-                        self.successVotes += 1
-                    else:
-                        self.failedVotes += 1
-
-                except Exception as e:
-                    err_msg = "Exception in vote_thread - check MN privKey"
-                    printException(getCallerName(), getFunctionName(), err_msg, e.args)
-                    printDbg(err_msg)
-                    printDbg(e.args)
 
     def vote_thread_end(self):
         message = '<p>Votes sent</p>'
