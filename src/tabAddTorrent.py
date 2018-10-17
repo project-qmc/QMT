@@ -76,6 +76,15 @@ class TabAddTorrent(object):
             QtWidgets.QMessageBox.Ok
         )
 
+    def notify_success(self):
+        QtWidgets.QMessageBox.information(
+            self.caller,
+            'Success',
+            'Torrent has been successfully submitted!',
+            QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.Ok
+        )
+
     def submit_torrent_thread(self, ctrl, name, uri, payee, cat):
         while not self.update:
             time.sleep(self.UPDATE_HALF_PERIOD)
@@ -149,4 +158,5 @@ class TabAddTorrent(object):
         ThreadFuns.runInThread(self.submit_torrent_thread,
                                (name, uri, payee, cat),
                                on_thread_exception=self.display_error,
+                               on_thread_finish=self.notify_success,
                                skip_raise_exception=False)
