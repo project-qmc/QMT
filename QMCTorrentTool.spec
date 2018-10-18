@@ -1,9 +1,10 @@
 # -*- mode: python -*-
+import sys
 import os
 import os.path
 import simplejson as json
 
-os_type = 'linux'
+os_type = sys.platform
 block_cipher = None
 base_dir = os.path.dirname(os.path.realpath('__file__'))
 
@@ -16,7 +17,7 @@ version_str = version_data["number"] + version_data["tag"]
 
 add_files = [('src/version.txt', '.'), ('img', 'img')]
 
-lib_path = '/usr/local/lib/python3.5/dist-packages/'
+lib_path = next(p for p in sys.path if 'site-packages' in p)
 if os_type == 'win32':
     qt5_path = os.path.join(lib_path, 'PyQt5\\Qt\\bin')
     sys.path.append(qt5_path)
@@ -26,7 +27,7 @@ if os_type == 'win32':
         file_name = os.path.join(p, "vcruntime140.dll")
         if os.path.exists(file_name):
             found = True
-            add_files.append((file_name, ''))
+            add_files.append((file_name, '.'))
             print('Adding file ' + file_name)
             break
     if not found:
@@ -54,7 +55,7 @@ pyz = PYZ(a.pure, a.zipped_data,
 exe = EXE(pyz,
           a.scripts,
           exclude_binaries=True,
-          name='QMCTorrentTool',
+          name='SecurePivxMasternodeTool',
           debug=False,
           strip=False,
           upx=False,
@@ -71,7 +72,7 @@ coll = COLLECT(exe,
 
 if os_type == 'darwin':
 	app = BUNDLE(coll,
-             name='QMCTorrentTool.app',
+             name='SecurePivxMasternodeTool.app',
              icon=os.path.join(base_dir, 'img', 'spmt.icns'),
              bundle_identifier=None,
              info_plist={'NSHighResolutionCapable': 'True'})
@@ -93,28 +94,28 @@ if os_type == 'win32':
 	os.system('xcopy app\PyQt5\Qt\plugins\platforms app\platforms\ /i')
 	os.chdir(base_dir)
 	# Rename dist Dir
-	dist_path_win = os.path.join(base_dir, 'SPMT-v' + version_str + '-Win64')
+	dist_path_win = os.path.join(base_dir, 'QMT-v' + version_str + '-Win64')
 	os.rename(dist_path, dist_path_win)
 	# Compress dist Dir
 	print('Compressing Windows App Folder')
-	os.system('"C:\\Program Files\\7-Zip\\7z.exe" a %s %s -mx0' % (dist_path_win + '.zip', dist_path_win))
+	os.system('"C:\\7z.exe" a %s %s -mx0' % (dist_path_win + '.zip', dist_path_win))
 	
 	
 if os_type == 'linux':
 	os.chdir(base_dir)
 	# Rename dist Dir
-	dist_path_linux = os.path.join(base_dir, 'SPMT-v' + version_str + '-gnu_linux')
+	dist_path_linux = os.path.join(base_dir, 'QMT-v' + version_str + '-gnu_linux')
 	os.rename(dist_path, dist_path_linux)
 	# Compress dist Dir
 	print('Compressing Linux App Folder')
-	os.system('tar -zcvf %s -C %s %s' % ('SPMT-v' + version_str + '-x86_64-gnu_linux.tar.gz', 
-                base_dir, 'SPMT-v' + version_str + '-gnu_linux'))
+	os.system('tar -zcvf %s -C %s %s' % ('QMT-v' + version_str + '-x86_64-gnu_linux.tar.gz', 
+                base_dir, 'QMT-v' + version_str + '-gnu_linux'))
 
 
 if os_type == 'darwin':
     os.chdir(base_dir)
     # Rename dist Dir
-    dist_path_mac = os.path.join(base_dir, 'SPMT-v' + version_str + '-MacOSX')
+    dist_path_mac = os.path.join(base_dir, 'QMT-v' + version_str + '-MacOSX')
     os.rename(dist_path, dist_path_mac)
     # Remove 'app' folder
     print("Removin 'app' folder")
@@ -123,7 +124,7 @@ if os_type == 'darwin':
     os.chdir(base_dir)
     # Compress dist Dir
     print('Compressing Mac App Folder')
-    os.system('tar -zcvf %s -C %s %s' % ('SPMT-v' + version_str + '-MacOSX.tar.gz',
-                base_dir, 'SPMT-v' + version_str + '-MacOSX'))
+    os.system('tar -zcvf %s -C %s %s' % ('QMT-v' + version_str + '-MacOSX.tar.gz',
+                base_dir, 'QMT-v' + version_str + '-MacOSX'))
 
     

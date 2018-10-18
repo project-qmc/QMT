@@ -379,7 +379,7 @@ class TabGovernance(QtCore.QObject):
     def prepare_vote_data(hash, masternode_name, vote):
         json_object = {
             'jsonrpc': 1.0,
-            'id': 'curltest',
+            'id': 'qmt',
             'method': 'mnbudgetvote',
             'params': [
                 'alias',
@@ -412,20 +412,19 @@ class TabGovernance(QtCore.QObject):
             try:
                 v_res = requests.post(url=server_url,
                                       auth=auth_pair,
-                                      data=self.prepare_vote_data(prop.hash + '@',
+                                      data=self.prepare_vote_data(prop.Hash,
                                                                   mn[1],
-                                                                  ["ABSTAIN", "YES", "NO"][vote_code]))
+                                                                  ["ABSTAIN", "yes", "no"][vote_code]))
 
                 response = json.loads(v_res.content)
                 if 'error' in response:
                     self.display_error(response['error']['message'])
                     continue
-
             except Exception as e:
                 printException(getCallerName(),
                                getFunctionName(),
                                'Submitting a vote failed',
-                               e.args + (prop.hash, mn[1], ["ABSTAIN", "YES", "NO"][vote_code]))
+                               e.args + (prop.Hash, mn[1], ["ABSTAIN", "yes", "no"][vote_code]))
                 continue
 
             if self.ui.randomDelayCheck.isChecked():

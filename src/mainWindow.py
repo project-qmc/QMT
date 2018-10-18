@@ -99,9 +99,9 @@ class MainWindow(QWidget):
         ###-- Add tabs
         self.tabs.addTab(self.tabGovernance, "Search Torrents")
         self.tabs.addTab(self.tabAddTorrent, "Add Torrents")
-        self.tabs.addTab(self.tabMain, "Masternode Control")
-        self.tabs.addTab(self.tabMNConf, "MN Configuration")
-        self.tabs.addTab(self.tabRewards, "Transfer Rewards")
+#        self.tabs.addTab(self.tabMain, "Masternode Control")
+#        self.tabs.addTab(self.tabMNConf, "MN Configuration")   # We will put these back later, just with RPC instead of messy key handling which we don't need or want anyway !
+#        self.tabs.addTab(self.tabRewards, "Transfer Rewards")
 
         ###-- Connect change action
         self.tabs.currentChanged.connect(lambda: self.onTabChange())

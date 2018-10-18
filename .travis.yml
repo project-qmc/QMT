@@ -1,0 +1,12 @@
+sudo: false
+
+language: python
+
+python:
+- 3.6
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get -y install libusb-1.0-0-dev libudev-dev libudev1
+
+script: pytest

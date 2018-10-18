@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/tabGovernance.py" line="48" />
+    <bookmark url="file://$PROJECT_DIR$/src/tabGovernance.py" line="0" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="Unused method removed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_qmt.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/QMC-SPTM.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/QMCTorrentTool.spec" beforeDir="false" afterPath="$PROJECT_DIR$/QMCTorrentTool.spec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tabAddTorrent.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabAddTorrent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabGovernance.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,14 +65,34 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="359" column="30" lean-forward="true" selection-start-line="359" selection-start-column="30" selection-end-line="359" selection-end-column="30" />
+            <state relative-caret-position="159">
+              <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
               <folding>
-                <element signature="e#14881#15931#0" expanded="true" />
-                <element signature="e#15060#16209#0" expanded="true" />
-                <marker date="1539824515965" expanded="true" signature="4530:4965" ph="..." />
-                <marker date="1539824515965" expanded="true" signature="9009:9014" ph="..." />
-                <marker date="1539824515965" expanded="true" signature="13034:15020" ph="..." />
+                <element signature="e#47#56#0" expanded="true" />
+                <element signature="e#1060#1763#0" expanded="true" />
+                <element signature="e#1843#2990#0" expanded="true" />
+                <element signature="e#3021#3231#0" expanded="true" />
+                <element signature="e#3269#4190#0" expanded="true" />
+                <element signature="e#4241#4260#0" expanded="true" />
+                <element signature="e#4319#4484#0" expanded="true" />
+                <element signature="e#4539#4734#0" expanded="true" />
+                <element signature="e#4782#4965#0" expanded="true" />
+                <element signature="e#5006#8678#0" expanded="true" />
+                <element signature="e#5181#5356#0" expanded="true" />
+                <element signature="e#8716#9008#0" expanded="true" />
+                <element signature="e#9067#9353#0" expanded="true" />
+                <element signature="e#9411#10346#0" expanded="true" />
+                <element signature="e#10408#10853#0" expanded="true" />
+                <element signature="e#10900#11496#0" expanded="true" />
+                <element signature="e#11569#12261#0" expanded="true" />
+                <element signature="e#12308#12597#0" expanded="true" />
+                <element signature="e#12638#16173#0" expanded="true" />
+                <element signature="e#13047#13499#0" expanded="true" />
+                <element signature="e#13554#15010#0" expanded="true" />
+                <element signature="e#13743#14892#0" expanded="true" />
+                <element signature="e#16258#16552#0" expanded="true" />
+                <element signature="e#16633#18622#0" expanded="true" />
+                <element signature="e#18663#19309#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -505,8 +533,6 @@
             <element signature="e#2116#2303#0" expanded="true" />
             <element signature="e#2343#2434#0" expanded="true" />
             <element signature="e#4686#5472#0" expanded="true" />
-            <marker date="1539819048094" expanded="true" signature="2107:2572" ph="..." />
-            <marker date="1539819048094" expanded="true" signature="2334:2572" ph="..." />
           </folding>
         </state>
       </provider>
@@ -607,21 +633,40 @@
             <element signature="e#1022#7626#0" expanded="true" />
             <element signature="e#7679#8056#0" expanded="true" />
             <element signature="e#8110#9234#0" expanded="true" />
-            <marker date="1539824425345" expanded="true" signature="7582:7591" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="359" column="30" lean-forward="true" selection-start-line="359" selection-start-column="30" selection-end-line="359" selection-end-column="30" />
+        <state relative-caret-position="159">
+          <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
           <folding>
-            <element signature="e#14881#15931#0" expanded="true" />
-            <element signature="e#15060#16209#0" expanded="true" />
-            <marker date="1539824515965" expanded="true" signature="4530:4965" ph="..." />
-            <marker date="1539824515965" expanded="true" signature="9009:9014" ph="..." />
-            <marker date="1539824515965" expanded="true" signature="13034:15020" ph="..." />
+            <element signature="e#47#56#0" expanded="true" />
+            <element signature="e#1060#1763#0" expanded="true" />
+            <element signature="e#1843#2990#0" expanded="true" />
+            <element signature="e#3021#3231#0" expanded="true" />
+            <element signature="e#3269#4190#0" expanded="true" />
+            <element signature="e#4241#4260#0" expanded="true" />
+            <element signature="e#4319#4484#0" expanded="true" />
+            <element signature="e#4539#4734#0" expanded="true" />
+            <element signature="e#4782#4965#0" expanded="true" />
+            <element signature="e#5006#8678#0" expanded="true" />
+            <element signature="e#5181#5356#0" expanded="true" />
+            <element signature="e#8716#9008#0" expanded="true" />
+            <element signature="e#9067#9353#0" expanded="true" />
+            <element signature="e#9411#10346#0" expanded="true" />
+            <element signature="e#10408#10853#0" expanded="true" />
+            <element signature="e#10900#11496#0" expanded="true" />
+            <element signature="e#11569#12261#0" expanded="true" />
+            <element signature="e#12308#12597#0" expanded="true" />
+            <element signature="e#12638#16173#0" expanded="true" />
+            <element signature="e#13047#13499#0" expanded="true" />
+            <element signature="e#13554#15010#0" expanded="true" />
+            <element signature="e#13743#14892#0" expanded="true" />
+            <element signature="e#16258#16552#0" expanded="true" />
+            <element signature="e#16633#18622#0" expanded="true" />
+            <element signature="e#18663#19309#0" expanded="true" />
           </folding>
         </state>
       </provider>
