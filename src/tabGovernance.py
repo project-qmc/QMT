@@ -179,7 +179,7 @@ class TabGovernance(QtCore.QObject):
             payments = "%d / %d" % (prop.RemainingPayCount, prop.TotalPayCount)
             self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_payments, item(payments))
 
-            net_votes = "%d / %d / %d" % (prop.Yeas, prop.Abstains, prop.Nays)
+            net_votes = "%d / %d" % (prop.Yeas, prop.Nays)
             votes = item(net_votes)
             if (prop.Yeas - prop.Nays) > 0.1 * self.mnCount:
                 votes.setBackground(Qt.green)
@@ -304,11 +304,11 @@ class TabGovernance(QtCore.QObject):
         def create_url_button(url, kind):
             result = QPushButton()
             url_opener = lambda: QDesktopServices.openUrl(QUrl(str(url)))
-            if kind == 'Play':
-                result.setIcon(self.ui.search_icon)
-                result.setToolTip('Download Torrent')
-            elif kind == 'Download':
+            if kind == 'Download':
                 result.setIcon(self.ui.link_icon)
+                result.setToolTip('Download Torrent')
+            elif kind == 'Play':
+                result.setIcon(self.ui.search_icon)
                 result.setToolTip('Play with instant.io')
             result.clicked.connect(url_opener)
 
@@ -335,8 +335,8 @@ class TabGovernance(QtCore.QObject):
                 magnet_uri = magnet_uri[0]
                 try:
                     _, s, l, __ = torrent_scraper.scrape(magnet_uri,
-                                                         'tracker.coppersurfer.tk',
-                                                         6969)
+                                                         'tracker.openbittorrent.com',
+                                                         80)
                 except ValueError:
                     torrent_scraper.logger.log = saved_log
                     return

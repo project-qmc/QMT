@@ -203,13 +203,13 @@ class TabGovernance_gui(QWidget):
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Votes")
-        item.setToolTip("Network Votes: Good/ABSTAINS/Bad")
+        item.setToolTip("Network Votes: Good/Bad")
         self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_votes, item)
 
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
-        item.setText("Hash")
-        item.setToolTip("Not supported yet")
+        item.setText("SE / LE")
+        item.setToolTip("Click to get")
         self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_sl, item)
         
         
