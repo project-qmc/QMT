@@ -4,14 +4,8 @@
     <bookmark url="file://$PROJECT_DIR$/src/tabGovernance.py" line="48" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="Unused method removed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/misc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/misc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabGovernance.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,12 +41,12 @@
         <counts>
           <entry key="gitignore" value="8" />
           <entry key="py" value="7943" />
-          <entry key="txt" value="124" />
+          <entry key="txt" value="244" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="132" />
+          <entry key="PLAIN_TEXT" value="252" />
           <entry key="Python" value="7943" />
         </counts>
       </usages-collector>
@@ -63,17 +57,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="464">
-              <caret line="388" column="41" selection-start-line="388" selection-start-column="41" selection-end-line="388" selection-end-column="41" />
+            <state relative-caret-position="160">
+              <caret line="359" column="30" lean-forward="true" selection-start-line="359" selection-start-column="30" selection-end-line="359" selection-end-column="30" />
               <folding>
-                <element signature="e#47#56#0" expanded="true" />
-                <element signature="e#9056#10334#0" expanded="true" />
-                <element signature="e#9371#10292#0" expanded="true" />
+                <element signature="e#14881#15931#0" expanded="true" />
                 <element signature="e#15060#16209#0" expanded="true" />
-                <marker date="1539824277611" expanded="true" signature="4530:4965" ph="..." />
-                <marker date="1539824277611" expanded="true" signature="9047:10330" ph="..." />
-                <marker date="1539824277611" expanded="true" signature="9683:9695" ph="..." />
-                <marker date="1539824277611" expanded="true" signature="14350:16337" ph="..." />
+                <marker date="1539824515965" expanded="true" signature="4530:4965" ph="..." />
+                <marker date="1539824515965" expanded="true" signature="9009:9014" ph="..." />
+                <marker date="1539824515965" expanded="true" signature="13034:15020" ph="..." />
               </folding>
             </state>
           </provider>
@@ -296,7 +287,21 @@
       <option name="project" value="LOCAL" />
       <updated>1539819089704</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Play/Download buttons appear on selection&#10;SL stuff">
+      <created>1539824428080</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1539824428080</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Unused method removed">
+      <created>1539824530700</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1539824530700</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -353,7 +358,9 @@
     <MESSAGE value="4K buttons -&gt; 3 buttons&#10;Gitignore changes" />
     <MESSAGE value="Error messages" />
     <MESSAGE value="More message boxes" />
-    <option name="LAST_COMMIT_MESSAGE" value="More message boxes" />
+    <MESSAGE value="Play/Download buttons appear on selection&#10;SL stuff" />
+    <MESSAGE value="Unused method removed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Unused method removed" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -533,7 +540,7 @@
             <element signature="e#9859#10213#0" expanded="true" />
             <element signature="e#10739#10805#0" expanded="true" />
             <element signature="e#10844#10928#0" expanded="true" />
-            <marker date="1539820577695" expanded="true" signature="7431:7754" ph="..." />
+            <marker date="1539824423953" expanded="true" signature="7432:7755" ph="..." />
           </folding>
         </state>
       </provider>
@@ -600,24 +607,21 @@
             <element signature="e#1022#7626#0" expanded="true" />
             <element signature="e#7679#8056#0" expanded="true" />
             <element signature="e#8110#9234#0" expanded="true" />
-            <marker date="1539823156703" expanded="true" signature="7582:7591" ph="..." />
+            <marker date="1539824425345" expanded="true" signature="7582:7591" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="388" column="41" selection-start-line="388" selection-start-column="41" selection-end-line="388" selection-end-column="41" />
+        <state relative-caret-position="160">
+          <caret line="359" column="30" lean-forward="true" selection-start-line="359" selection-start-column="30" selection-end-line="359" selection-end-column="30" />
           <folding>
-            <element signature="e#47#56#0" expanded="true" />
-            <element signature="e#9056#10334#0" expanded="true" />
-            <element signature="e#9371#10292#0" expanded="true" />
+            <element signature="e#14881#15931#0" expanded="true" />
             <element signature="e#15060#16209#0" expanded="true" />
-            <marker date="1539824277611" expanded="true" signature="4530:4965" ph="..." />
-            <marker date="1539824277611" expanded="true" signature="9047:10330" ph="..." />
-            <marker date="1539824277611" expanded="true" signature="9683:9695" ph="..." />
-            <marker date="1539824277611" expanded="true" signature="14350:16337" ph="..." />
+            <marker date="1539824515965" expanded="true" signature="4530:4965" ph="..." />
+            <marker date="1539824515965" expanded="true" signature="9009:9014" ph="..." />
+            <marker date="1539824515965" expanded="true" signature="13034:15020" ph="..." />
           </folding>
         </state>
       </provider>
