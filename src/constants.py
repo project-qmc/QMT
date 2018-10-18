@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os.path
 
 MPATH = "44'/77'/"
@@ -21,7 +20,7 @@ rpc_File = 'rpcServer.json'
 cache_File = 'cache.json'
 DEFAULT_RPC_CONF = {
     "rpc_ip": "127.0.0.1",
-    "rpc_port": 51473,
+    "rpc_port": 55777,
     "rpc_user": "myUsername",
     "rpc_password": "myPassword"
     }

@@ -20,7 +20,7 @@ class TabGovernance_gui(QWidget):
         self.refreshTorrents_btn.setIcon(self.refresh_icon)
         self.budgetProjection_btn.setIcon(self.list_icon)
         self.timeIconLabel.setPixmap(self.time_icon.scaledToHeight(20, Qt.SmoothTransformation))
-        self.questionLabel.setPixmap(self.question_icon.scaledToHeight(15, Qt.SmoothTransformation))
+        self.questionLabel.setPixmap(self.question_pixmap.scaledToHeight(15, Qt.SmoothTransformation))
         self.loadCacheData()
         
         
@@ -70,41 +70,33 @@ class TabGovernance_gui(QWidget):
         self.torrentBox.setSelectionMode(QAbstractItemView.MultiSelection)
         self.torrentBox.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.torrentBox.setShowGrid(True)
-        self.torrentBox.setColumnCount(7)
+        self.torrentBox.setColumnCount(9)
         self.torrentBox.setRowCount(0)
         self.torrentBox.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.torrentBox.setSortingEnabled(True)
+        self.torrentBox.column_name = 0
+        self.torrentBox.column_play = 1
+        self.torrentBox.column_dl = 2
+        self.torrentBox.column_qmc_per_month = 3
+        self.torrentBox.column_payments = 4
+        self.torrentBox.column_votes = 5
+        self.torrentBox.column_sl = 6
+        self.torrentBox.column_hash = 7
+        self.torrentBox.column_url = 8
         #self.torrentBox.verticalHeader().hide
         self.setTorrentBoxHeader()
-        self.torrentBox.setColumnWidth(1, 100)
-        self.torrentBox.setColumnWidth(2, 100)
-        self.torrentBox.setColumnWidth(3, 150)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_name, 100)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_play, 50)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_dl, 50)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_qmc_per_month, 100)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_payments, 150)
        # self.torrentBox.setColumnWidth(6, 120)
-        self.torrentBox.setColumnWidth(4, 50)
-        self.torrentBox.setColumnHidden(5, True)
-        self.torrentBox.setColumnHidden(6, True)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_votes, 50)
+        self.torrentBox.setColumnHidden(self.torrentBox.column_hash, True)
+        self.torrentBox.setColumnHidden(self.torrentBox.column_url, True)
         layout.addWidget(self.torrentBox)
 
         ## -- ROW 3
-        row = QHBoxLayout()
-        self.play_torrent_btn = QPushButton('Play selected torrent')
-        self.play_torrent_btn.setEnabled(False)
-        self.play_torrent_btn.setToolTip('Stream in browser')
-        row.addWidget(self.play_torrent_btn)
-
-        self.download_torrent_btn = QPushButton('Download selected torrent')
-        self.download_torrent_btn.setEnabled(False)
-        self.download_torrent_btn.setToolTip('Launch torrent client')
-        row.addWidget(self.download_torrent_btn)
-
-        self.seed_leech_btn = QPushButton('Get S/L')
-        self.seed_leech_btn.setEnabled(False)
-        self.seed_leech_btn.setToolTip('Obtain S/L for selected torrent')
-        row.addWidget(self.seed_leech_btn)
-
-        layout.addLayout(row)
-
-        ## -- ROW 4
         row = QHBoxLayout()      
         self.timeIconLabel = QLabel()
         self.timeIconLabel.setToolTip("Check to add a randomized time offset (positive or negative) to enhance privacy")
@@ -151,7 +143,7 @@ class TabGovernance_gui(QWidget):
         row.addWidget(self.questionLabel)
         layout.addLayout(row)
 
-        ## -- ROW 5
+        ## -- ROW 4
         row = QHBoxLayout()
         self.voteYes_btn = QPushButton("Vote Good!")
         self.voteYes_btn.setToolTip("Vote this as a quality torrent")
@@ -182,30 +174,41 @@ class TabGovernance_gui(QWidget):
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Name")
         item.setToolTip("Torrent Name")
-        self.torrentBox.setHorizontalHeaderItem(0, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_name, item)
+
+        item = QTableWidgetItem()
+        item.setTextAlignment(Qt.AlignCenter)
+        item.setText("P")
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_play, item)
+
+        item = QTableWidgetItem()
+        item.setTextAlignment(Qt.AlignCenter)
+        item.setText("D")
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_dl, item)
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("QMC/month")
         item.setToolTip("Monthly QMC Payment requested")
-        self.torrentBox.setHorizontalHeaderItem(1, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_qmc_per_month, item)
         
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Payments")
         item.setToolTip("Remaining Payment Count / Total Payment Count")
-        self.torrentBox.setHorizontalHeaderItem(2, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_payments, item)
         
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Votes")
         item.setToolTip("Network Votes: Good/ABSTAINS/Bad")
-        self.torrentBox.setHorizontalHeaderItem(3, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_votes, item)
 
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("S/L")
         item.setToolTip("Not supported yet")
-        self.torrentBox.setHorizontalHeaderItem(4, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_sl, item)
         
         
     def loadIcons(self):
@@ -214,7 +217,8 @@ class TabGovernance_gui(QWidget):
         self.link_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_link.png'))
         self.search_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_search.png'))
         self.list_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_list.png'))
-        self.question_icon = QPixmap(os.path.join(self.caller.imgDir, 'icon_question.png'))
+        self.question_pixmap = QPixmap(os.path.join(self.caller.imgDir, 'icon_question.png'))
+        self.question_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_question.png'))
         
         
         

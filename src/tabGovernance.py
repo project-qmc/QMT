@@ -9,7 +9,7 @@ from PyQt5.Qt import QDesktopServices, QFont, QUrl
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from PyQt5.QtCore import Qt, pyqtSlot
-from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QTableWidgetItem, QMessageBox, QPushButton
 
 from itertools import product
 from qt.gui_tabGovernance import TabGovernance_gui, ScrollMessageBox
@@ -72,10 +72,6 @@ class TabGovernance(QtCore.QObject):
         self.ui.voteYes_btn.pressed.connect(lambda: self.onVote(1))
         self.ui.voteNo_btn.pressed.connect(lambda: self.onVote(2))
         self.ui.search_textbox.returnPressed.connect(lambda: self.onRefreshTorrents())
-
-        self.ui.seed_leech_btn.pressed.connect(lambda: self.get_sl())
-        self.ui.download_torrent_btn.pressed.connect(lambda: self.download_selected())
-        self.ui.play_torrent_btn.pressed.connect(lambda: self.play_selected())
 
     def clear(self):
         # Clear voting masternodes configuration and update cache
@@ -171,17 +167,17 @@ class TabGovernance(QtCore.QObject):
 
         self.ui.torrentBox.setRowCount(len(filtered_torrents))
         for row, prop in enumerate(filtered_torrents):
-            self.ui.torrentBox.setItem(row, 0, item(prop.name))
-            self.ui.torrentBox.item(row, 0).setFont(QFont("Arial", 9, QFont.Bold))
+            self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_name, item(prop.name))
+            self.ui.torrentBox.item(row, self.ui.torrentBox.column_name).setFont(QFont("Arial", 9, QFont.Bold))
             # self.ui.torrentBox.setCellWidget(row, 1, itemButton("https://instant.io/#" + prop.URL, 1))
             # self.ui.torrentBox.setCellWidget(row, 2, itemButton(prop.URL, 0))
 
             monthlyPay = item(prop.MonthlyPayment)
             monthlyPay.setData(Qt.EditRole, int(round(prop.MonthlyPayment)))
-            self.ui.torrentBox.setItem(row, 1, monthlyPay)
+            self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_qmc_per_month, monthlyPay)
 
             payments = "%d / %d" % (prop.RemainingPayCount, prop.TotalPayCount)
-            self.ui.torrentBox.setItem(row, 2, item(payments))
+            self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_payments, item(payments))
 
             net_votes = "%d / %d / %d" % (prop.Yeas, prop.Abstains, prop.Nays)
             votes = item(net_votes)
@@ -191,14 +187,14 @@ class TabGovernance(QtCore.QObject):
                 votes.setBackground(Qt.red)
             elif prop.RemainingPayCount == 0:
                 votes.setBackground(Qt.yellow)
-            self.ui.torrentBox.setItem(row, 3, votes)
+            self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_votes, votes)
 
-            self.ui.torrentBox.setItem(row, 5, item(prop.Hash))
-            self.ui.torrentBox.setItem(row, 6, item(prop.URL))
+            self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_hash, item(prop.Hash))
+            self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_url, item(prop.URL))
 
         # Sort by Votes descending
         self.ui.torrentBox.setSortingEnabled(True)
-        self.ui.torrentBox.sortByColumn(3, Qt.DescendingOrder)
+        self.ui.torrentBox.sortByColumn(self.ui.torrentBox.column_votes, Qt.DescendingOrder)
 
     def getSelection(self):
         items = self.ui.torrentBox.selectedItems()
@@ -208,7 +204,7 @@ class TabGovernance(QtCore.QObject):
             row = items[i].row()
             rows.add(row)
 
-        url_map = {row: self.ui.torrentBox.item(row, 6).text() for row in rows}
+        url_map = {row: self.ui.torrentBox.item(row, self.ui.torrentBox.column_url).text() for row in rows}
 
         return url_map
 
@@ -226,10 +222,10 @@ class TabGovernance(QtCore.QObject):
         def poll(ctrl):
             global print
             # Mute the module temporary
-            saved_error = torrent_scraper.logger.error
+            saved_log = torrent_scraper.logger.log
             null_func = lambda _, __, ___: None
 
-            torrent_scraper.logger.error = null_func
+            torrent_scraper.logger.log = null_func
 
             # Mute print too
             saved_stdout = sys.stdout
@@ -246,7 +242,7 @@ class TabGovernance(QtCore.QObject):
                 string = f'{s} / {l}'
                 self.ui.torrentBox.setItem(row, 4, QTableWidgetItem(string))
 
-            torrent_scraper.logger.error = saved_error
+            torrent_scraper.logger.log = saved_log
             sys.stdout = saved_stdout
             self.ui.torrentBox.clearSelection()
 
@@ -341,9 +337,83 @@ class TabGovernance(QtCore.QObject):
             self.ui.selectedPropLabel.setText("<em><b>1</b> torrent selected")
         else:
             self.ui.selectedPropLabel.setText("<em><b>%d</b> torrents selected" % len(self.selectedTorrents))
-        self.ui.download_torrent_btn.setEnabled(len(self.selectedTorrents) == 1)
-        self.ui.play_torrent_btn.setEnabled(len(self.selectedTorrents) == 1)
-        self.ui.seed_leech_btn.setEnabled(len(self.selectedTorrents) > 0)
+
+        if not len(self.selectedTorrents):
+            return
+
+        def create_url_button(url, kind):
+            result = QPushButton()
+            url_opener = lambda: QDesktopServices.openUrl(QUrl(str(url)))
+            if kind == 'Play':
+                result.setIcon(self.ui.search_icon)
+                result.setToolTip('Download Torrent')
+            elif kind == 'Download':
+                result.setIcon(self.ui.link_icon)
+                result.setToolTip('Play with instant.io')
+            result.clicked.connect(url_opener)
+
+            return result
+
+        def create_sl_button(row, hash):
+            result = QPushButton()
+            result.setIcon(self.ui.question_icon)
+            result.setToolTip('Get seeders and leechers')
+
+            def sl_button_clicked(ctrl):
+                saved_log = torrent_scraper.logger.log
+                null_func = lambda _, __, ___: None
+
+                torrent_scraper.logger.log = null_func
+
+                saved_stdout = sys.stdout
+                sys.stdout = io.StringIO()
+
+                uri_extractor = r'urn\:btih\:([^&]+)'
+                magnet_uri = re.findall(uri_extractor, hash)
+                if not magnet_uri:
+                    return
+                magnet_uri = magnet_uri[0]
+                try:
+                    _, s, l, __ = torrent_scraper.scrape(magnet_uri,
+                                                         'tracker.coppersurfer.tk',
+                                                         6969)
+                except ValueError:
+                    torrent_scraper.logger.log = saved_log
+                    return
+
+                self.ui.torrentBox.removeCellWidget(row, self.ui.torrentBox.column_sl)
+                self.ui.torrentBox.setItem(row, self.ui.torrentBox.column_sl,
+                                           QTableWidgetItem(f'{s} / {l}'))
+                torrent_scraper.logger.log = saved_log
+                sys.stdout = saved_stdout
+
+            result.clicked.connect(lambda: ThreadFuns.runInThread(sl_button_clicked, ()))
+
+            return result
+
+        for row, hash in self.selectedTorrents.items():
+            if not self.ui.torrentBox.cellWidget(row, self.ui.torrentBox.column_play):
+                self.ui.torrentBox.setCellWidget(
+                    row,
+                    self.ui.torrentBox.column_play, create_url_button(
+                        "https://instant.io/#" + self.ui.torrentBox.item(row, self.ui.torrentBox.column_url).text(),
+                        'Play'
+                    ))
+
+            if not self.ui.torrentBox.cellWidget(row, self.ui.torrentBox.column_dl):
+                self.ui.torrentBox.setCellWidget(
+                    row,
+                    self.ui.torrentBox.column_dl, create_url_button(
+                        self.ui.torrentBox.item(row, self.ui.torrentBox.column_url).text(),
+                        'Download'
+                    ))
+
+            if (
+                    not self.ui.torrentBox.cellWidget(row, self.ui.torrentBox.column_sl) and
+                    not self.ui.torrentBox.item(row, self.ui.torrentBox.column_sl)
+            ):
+                self.ui.torrentBox.setCellWidget(row, self.ui.torrentBox.column_sl, create_sl_button(row, hash))
+
 
     @staticmethod
     def prepare_vote_data(hash, masternode_name, vote):
