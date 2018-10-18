@@ -209,46 +209,6 @@ class TabGovernance(QtCore.QObject):
         return url_map
 
     @pyqtSlot()
-    def get_sl(self):
-        selected_hashes = self.getSelection()
-
-        uri_extractor = r'urn\:btih\:([^&]+)'
-        selected_hashes = {
-            row: re.findall(uri_extractor, value)[0]
-            for row, value in selected_hashes.items()
-            if re.findall(uri_extractor, value)
-        }
-
-        def poll(ctrl):
-            global print
-            # Mute the module temporary
-            saved_log = torrent_scraper.logger.log
-            null_func = lambda _, __, ___: None
-
-            torrent_scraper.logger.log = null_func
-
-            # Mute print too
-            saved_stdout = sys.stdout
-            sys.stdout = io.StringIO()
-
-            for row, hash in selected_hashes.items():
-                try:
-                    _, s, l, c = torrent_scraper.scrape(hash,
-                                                        'tracker.coppersurfer.tk',
-                                                        6969)
-                except ValueError:
-                    continue
-
-                string = f'{s} / {l}'
-                self.ui.torrentBox.setItem(row, 4, QTableWidgetItem(string))
-
-            torrent_scraper.logger.log = saved_log
-            sys.stdout = saved_stdout
-            self.ui.torrentBox.clearSelection()
-
-        ThreadFuns.runInThread(poll, ())
-
-    @pyqtSlot()
     def onRefreshTorrents(self):
         self.ui.refreshingLabel.show()
         self.ui.torrentBox.setRowCount(0)
