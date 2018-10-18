@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os.path
+import sys
+
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QAbstractItemView, QHeaderView,\
-    QTableWidget, QTableWidgetItem, QHBoxLayout, QPushButton, QCheckBox, QLabel, QProgressBar,\
-    QFormLayout, QSpinBox, QMessageBox, QScrollArea, QDialog, QLineEdit
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QAbstractItemView, QHeaderView, \
+    QTableWidget, QTableWidgetItem, QHBoxLayout, QPushButton, QCheckBox, QLabel, QProgressBar, \
+    QSpinBox, QScrollArea, QDialog, QLineEdit
 from PyQt5.Qt import QPixmap, QIcon
 
 
@@ -19,7 +20,7 @@ class TabGovernance_gui(QWidget):
         self.refreshTorrents_btn.setIcon(self.refresh_icon)
         self.budgetProjection_btn.setIcon(self.list_icon)
         self.timeIconLabel.setPixmap(self.time_icon.scaledToHeight(20, Qt.SmoothTransformation))
-        self.questionLabel.setPixmap(self.question_icon.scaledToHeight(15, Qt.SmoothTransformation))
+        self.questionLabel.setPixmap(self.question_pixmap.scaledToHeight(15, Qt.SmoothTransformation))
         self.loadCacheData()
         
         
@@ -71,21 +72,32 @@ class TabGovernance_gui(QWidget):
         self.torrentBox.setSelectionMode(QAbstractItemView.MultiSelection)
         self.torrentBox.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.torrentBox.setShowGrid(True)
-        self.torrentBox.setColumnCount(7)
+        self.torrentBox.setColumnCount(9)
         self.torrentBox.setRowCount(0)
         self.torrentBox.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         self.torrentBox.setSortingEnabled(True)
+        self.torrentBox.column_name = 0
+        self.torrentBox.column_play = 1
+        self.torrentBox.column_dl = 2
+        self.torrentBox.column_qmc_per_month = 3
+        self.torrentBox.column_payments = 4
+        self.torrentBox.column_votes = 5
+        self.torrentBox.column_sl = 6
+        self.torrentBox.column_hash = 7
+        self.torrentBox.column_url = 8
         #self.torrentBox.verticalHeader().hide
         self.setTorrentBoxHeader()
-        self.torrentBox.setColumnWidth(1, 50)
-        self.torrentBox.setColumnWidth(2, 50)
-        self.torrentBox.setColumnWidth(3, 100)
-        self.torrentBox.setColumnWidth(4, 100)
-        self.torrentBox.setColumnWidth(5, 150)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_name, 100)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_play, 50)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_dl, 50)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_qmc_per_month, 100)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_payments, 150)
        # self.torrentBox.setColumnWidth(6, 120)
-        self.torrentBox.setColumnWidth(7, 50)
+        self.torrentBox.setColumnWidth(self.torrentBox.column_votes, 50)
+        self.torrentBox.setColumnHidden(self.torrentBox.column_hash, True)
+        self.torrentBox.setColumnHidden(self.torrentBox.column_url, True)
         layout.addWidget(self.torrentBox)
-        
+
         ## -- ROW 3
         row = QHBoxLayout()      
         self.timeIconLabel = QLabel()
@@ -132,7 +144,7 @@ class TabGovernance_gui(QWidget):
         self.questionLabel.setToolTip(message)
         row.addWidget(self.questionLabel)
         layout.addLayout(row)
-        
+
         ## -- ROW 4
         row = QHBoxLayout()
         self.voteYes_btn = QPushButton("Vote Good!")
@@ -164,49 +176,41 @@ class TabGovernance_gui(QWidget):
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Name")
         item.setToolTip("Torrent Name")
-        self.torrentBox.setHorizontalHeaderItem(0, item)
-        
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_name, item)
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
-        item.setText("Play")
-        item.setToolTip("Stream in browser")
-        self.torrentBox.setHorizontalHeaderItem(1, item)
-        
+        item.setText("P")
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_play, item)
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
-        item.setText("D/L")
-        item.setToolTip("Launch torrent client")
-        self.torrentBox.setHorizontalHeaderItem(2, item)
-        
+        item.setText("D")
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_dl, item)
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("QMC/month")
         item.setToolTip("Monthly QMC Payment requested")
-        self.torrentBox.setHorizontalHeaderItem(3, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_qmc_per_month, item)
         
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Payments")
         item.setToolTip("Remaining Payment Count / Total Payment Count")
-        self.torrentBox.setHorizontalHeaderItem(4, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_payments, item)
         
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Votes")
         item.setToolTip("Network Votes: Good/ABSTAINS/Bad")
-        self.torrentBox.setHorizontalHeaderItem(5, item)
-        
-      #  item = QTableWidgetItem()
-      #  item.setTextAlignment(Qt.AlignCenter)
-      #  item.setText("My Votes")
-      #  item.setToolTip("My Votes: YEAS/ABSTAINS/NAYS")
-      #  self.torrentBox.setHorizontalHeaderItem(6, item)
-        
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_votes, item)
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Hash")
         item.setToolTip("Not supported yet")
-        self.torrentBox.setHorizontalHeaderItem(6, item)
+        self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_sl, item)
         
         
     def loadIcons(self):
@@ -215,7 +219,8 @@ class TabGovernance_gui(QWidget):
         self.link_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_link.png'))
         self.search_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_search.png'))
         self.list_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_list.png'))
-        self.question_icon = QPixmap(os.path.join(self.caller.imgDir, 'icon_question.png'))
+        self.question_pixmap = QPixmap(os.path.join(self.caller.imgDir, 'icon_question.png'))
+        self.question_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_question.png'))
         
         
         

@@ -326,7 +326,6 @@ class MainWindow(QWidget):
 
         # reload torrent and voting masternode list
         if self.tabs.currentWidget() == self.tabGovernance:
-            self.t_governance.onRefreshTorrents()
             self.t_governance.updateSelectedMNlabel()
 
     @pyqtSlot()

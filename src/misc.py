@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os.path
+import sys
 from ipaddress import ip_address
 from urllib.parse import urlsplit
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 import time
 from PyQt5.QtCore import QObject, pyqtSignal
 from constants import user_dir, log_File, masternodes_File, rpc_File, cache_File, \
-    DEFAULT_CACHE, DEFAULT_MN_CONF, DEFAULT_RPC_CONF
+    DEFAULT_CACHE, DEFAULT_MN_CONF, DEFAULT_RPC_CONF, home_dir
+
 
 def append_to_logfile(text):
     try:
@@ -283,6 +285,25 @@ def readMNfile():
 
 
 def readRPCfile():
+    def inject_conf(path):
+        with open(os.path.join(appdata_dir, shard), 'r') as conf:
+            lines = conf.readlines()
+            settings = dict(map(lambda s: s.split('='), lines))
+            DEFAULT_RPC_CONF['rpc_user'] = settings['rpcuser'].strip()
+            DEFAULT_RPC_CONF['rpc_password'] = settings['rpcpassword'].strip()
+
+    try:
+        appdata_dir = os.environ['APPDATA']
+        shard = 'QMC2/qmc2.conf'
+
+        inject_conf(os.path.join(appdata_dir, shard))
+    except:
+        try:
+            path = os.path.join(home_dir, '.qmc2/qmc2.conf')
+            inject_conf(path)
+        except:
+            pass
+
     try:
         import simplejson as json
         config_file = os.path.join(user_dir, rpc_File)
