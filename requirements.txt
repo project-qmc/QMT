@@ -2,6 +2,7 @@ python-bitcoinrpc>=1.0
 btchip-python>=v0.1.27
 bitcoin>=1.1.42
 PyQt5>=5.9
+torrent_tracker_scraper
 requests>=2.18.4
 simplejson
 ecdsa
