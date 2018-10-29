@@ -178,7 +178,7 @@ class TabRewards:
             self.ui.collateralHidden = True
             self.ui.btn_toggleCollateral.setText("Show Collateral")
             if result is not None:
-                self.runInThread = ThreadFuns.runInThread(self.load_utxos_thread, (), self.display_utxos)
+                ThreadFuns.runInThread(self.load_utxos_thread, (), self.display_utxos)
 
     @pyqtSlot()
     def onSelectAllRewards(self):

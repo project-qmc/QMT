@@ -12,6 +12,9 @@ from workerThread import WorkerThread
 
 
 class ThreadFuns:
+    GLOBAL_THREAD_POOL = []
+    LAST_STARTED_THREAD = None
+
     @staticmethod
     def runInThread(worker_fun, worker_fun_args, on_thread_finish=None, on_thread_exception=None,
                     skip_raise_exception=False):
@@ -23,7 +26,6 @@ class ThreadFuns:
         :param skip_raise_exception: Exception raised inside the 'worker_fun' will be passed to the calling thread if:
             - on_thread_exception is a valid function (it's exception handler)
             - skip_raise_exception is False
-        :return: reference to a thread object
         """
 
         def on_thread_finished_int(thread_arg, on_thread_finish_arg, skip_raise_exception_arg, on_thread_exception_arg):
@@ -51,6 +53,7 @@ class ThreadFuns:
                                            on_thread_exception)
 
         thread.finished.connect(bound_on_thread_finished)
-        thread.daemon = True
+        thread.finished.connect(lambda: ThreadFuns.GLOBAL_THREAD_POOL.remove(thread))
+        ThreadFuns.GLOBAL_THREAD_POOL.append(thread)
         thread.start()
-        return thread
+        ThreadFuns.LAST_STARTED_THREAD = thread
