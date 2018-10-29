@@ -6,8 +6,10 @@
 """
 from PyQt5.QtCore import QThread
 
+
 class CtrlObject(object):
     pass
+
 
 class WorkerThread(QThread):
     """

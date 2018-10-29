@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import unittest
-from utils import checkQmcAddr, compose_tx_locking_script
-from qmc_hashlib import generate_privkey, pubkey_to_address
+
 from bitcoin import privkey_to_pubkey
 from bitcoin.main import b58check_to_hex
 
+from qmc_hashlib import generate_privkey, pubkey_to_address
+from utils import checkQmcAddr, compose_tx_locking_script
+
+
 class TestUtilsMethods(unittest.TestCase):
-    
+
     def test_checkQmcAddr(self):
         # Generate Valid QMC address
         pK = privkey_to_pubkey(generate_privkey())
@@ -24,9 +27,7 @@ class TestUtilsMethods(unittest.TestCase):
         for _ in range(10):
             qmcAddr3 += self.getRandomChar()
         self.assertFalse(checkQmcAddr(qmcAddr3))
-        
-        
-        
+
     def test_compose_tx_locking_script(self):
         # check with P2PKH addresses
         # Generate Valid QMC address
@@ -46,17 +47,11 @@ class TestUtilsMethods(unittest.TestCase):
         self.assertEqual(result[23], int('88', 16))
         # check OP_CHECKSIG
         self.assertEqual(result[24], int('AC', 16))
-        
-        
-        
-        
-    
+
     def getRandomChar(self):
         import string
         import random
         return random.choice(string.ascii_letters)
-    
-    
-    
+
     if __name__ == '__main__':
         unittest.main(verbosity=2)

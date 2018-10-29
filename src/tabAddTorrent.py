@@ -14,6 +14,7 @@ from threads import ThreadFuns
 class TabAddTorrent(object):
     UPDATE_HALF_PERIOD = 5
     BLOCK_DELAY = 6
+
     def __init__(self, caller):
         self.caller = caller
 

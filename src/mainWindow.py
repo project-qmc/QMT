@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os.path
 import sys
 from queue import Queue
 from time import gmtime, strftime
 
-import os.path
 from PyQt5.Qt import QLabel, QSplitter, QTabWidget
 from PyQt5.QtCore import QThread, Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QPalette, QPixmap, QTextCursor
@@ -99,9 +99,9 @@ class MainWindow(QWidget):
         ###-- Add tabs
         self.tabs.addTab(self.tabGovernance, "Search Torrents")
         self.tabs.addTab(self.tabAddTorrent, "Add Torrents")
-#        self.tabs.addTab(self.tabMain, "Masternode Control")
-#        self.tabs.addTab(self.tabMNConf, "MN Configuration")   # We will put these back later, just with RPC instead of messy key handling which we don't need or want anyway !
-#        self.tabs.addTab(self.tabRewards, "Transfer Rewards")
+        #        self.tabs.addTab(self.tabMain, "Masternode Control")
+        #        self.tabs.addTab(self.tabMNConf, "MN Configuration")   # We will put these back later, just with RPC instead of messy key handling which we don't need or want anyway !
+        #        self.tabs.addTab(self.tabRewards, "Transfer Rewards")
 
         ###-- Connect change action
         self.tabs.currentChanged.connect(lambda: self.onTabChange())
@@ -273,7 +273,7 @@ class MainWindow(QWidget):
                 (remote_version[0] == local_version[0] and remote_version[1] == local_version[1] and remote_version[2] >
                  local_version[2]):
             self.versionMess = '<b style="color:red">New Version Available:</b> %s.%s.%s  ' % (
-            remote_version[0], remote_version[1], remote_version[2])
+                remote_version[0], remote_version[1], remote_version[2])
             self.versionMess += '(<a href="https://github.com/project-qmc/QMT/releases/">download</a>)'
         else:
             self.versionMess = "You have the latest version of QMT"

@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import unittest
-from masternode import Masternode
-from rpcClient import RpcClient
-from PyQt5.QtCore import pyqtSlot
-import simplejson as json
-from time import sleep
-from bitcoin import privkey_to_pubkey
-from qmc_hashlib import pubkey_to_address
-from utils import b64encode
 import time
+import unittest
+from time import sleep
+
+import simplejson as json
+from PyQt5.QtCore import pyqtSlot
+from bitcoin import privkey_to_pubkey
+
+from masternode import Masternode
+from qmc_hashlib import pubkey_to_address
+from rpcClient import RpcClient
+from utils import b64encode
+
 
 class TestMasternodeMethods(unittest.TestCase):
     def setUp(self):
@@ -17,11 +20,11 @@ class TestMasternodeMethods(unittest.TestCase):
         rpcStatus, _ = self.rpcClient.getStatus()
         if not rpcStatus:
             self.skipTest("RPC not connected")
-            
+
         # read masternode data from file    
         with open('test_masternode.data.json') as data_file:
             input_data_list = json.load(data_file)
-        
+
         self.mnode_list = []
         for input_data in input_data_list:
             # Rename input data
@@ -39,26 +42,19 @@ class TestMasternodeMethods(unittest.TestCase):
             mnode.protocol_version = self.rpcClient.getProtocolVersion()
             # Add it to list
             self.mnode_list.append(mnode)
-        
-        
-        
+
     def tearDown(self):
         if hasattr(self.rpcClient, 'conn'):
             self.rpcClient.parent = None
-            
-            
-    
+
     def test_finalizeStartMessage(self):
         for mnode in self.mnode_list:
             # Test message construction
             mnode.finalizeStartMessage(mnode.sig1)
             sleep(3)
-        
-        
-        
-        
+
     # Activated by signal from masternode       
-    @pyqtSlot(str)    
+    @pyqtSlot(str)
     def finalizeStartMessage_end(self, text):
         # decode message
         ret = self.caller.rpcClient.decodemasternodebroadcast(text)
@@ -82,7 +78,6 @@ class TestMasternodeMethods(unittest.TestCase):
                 # check masternode signature
                 node_sig = b64encode(text[320:450])
                 self.assertEqual(ret['vchSig'], node_sig)
-                
-                
+
     if __name__ == '__main__':
-        unittest.main(verbosity=2)    
+        unittest.main(verbosity=2)

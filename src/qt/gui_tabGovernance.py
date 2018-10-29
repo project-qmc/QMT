@@ -22,20 +22,19 @@ class TabGovernance_gui(QWidget):
         self.timeIconLabel.setPixmap(self.time_icon.scaledToHeight(20, Qt.SmoothTransformation))
         self.questionLabel.setPixmap(self.question_pixmap.scaledToHeight(15, Qt.SmoothTransformation))
         self.loadCacheData()
-        
-        
+
     def initLayout(self):
         layout = QVBoxLayout()
-        #layout.setContentsMargins(10, 10, 10, 10)
-        #layout.setSpacing(13)
-        #layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
-        
+        # layout.setContentsMargins(10, 10, 10, 10)
+        # layout.setSpacing(13)
+        # layout.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
+
         ## -- ROW 1
         row = QHBoxLayout()
         self.search_label = QLabel("<b><i>Search:<i></b>")
         self.search_label.setStyleSheet('color: #003366')
         self.search_textbox = QLineEdit()
-        #self.search_textbox.setFixedWidth(300)
+        # self.search_textbox.setFixedWidth(300)
         self.is_regex_label = QLabel("Regex?")
         self.is_regex_checkbox = QCheckBox()
         row.addWidget(self.search_label)
@@ -65,7 +64,6 @@ class TabGovernance_gui(QWidget):
         row.addWidget(self.toggleExpiring_btn)
         layout.addLayout(row)
 
-
         ## -- ROW 2
         self.torrentBox = QTableWidget()
         self.torrentBox.setMinimumHeight(280)
@@ -85,21 +83,21 @@ class TabGovernance_gui(QWidget):
         self.torrentBox.column_sl = 6
         self.torrentBox.column_hash = 7
         self.torrentBox.column_url = 8
-        #self.torrentBox.verticalHeader().hide
+        # self.torrentBox.verticalHeader().hide
         self.setTorrentBoxHeader()
         self.torrentBox.setColumnWidth(self.torrentBox.column_name, 100)
         self.torrentBox.setColumnWidth(self.torrentBox.column_play, 50)
         self.torrentBox.setColumnWidth(self.torrentBox.column_dl, 50)
         self.torrentBox.setColumnWidth(self.torrentBox.column_qmc_per_month, 100)
         self.torrentBox.setColumnWidth(self.torrentBox.column_payments, 150)
-       # self.torrentBox.setColumnWidth(6, 120)
+        # self.torrentBox.setColumnWidth(6, 120)
         self.torrentBox.setColumnWidth(self.torrentBox.column_votes, 50)
         self.torrentBox.setColumnHidden(self.torrentBox.column_hash, True)
         self.torrentBox.setColumnHidden(self.torrentBox.column_url, True)
         layout.addWidget(self.torrentBox)
 
         ## -- ROW 3
-        row = QHBoxLayout()      
+        row = QHBoxLayout()
         self.timeIconLabel = QLabel()
         self.timeIconLabel.setToolTip("Check to add a randomized time offset (positive or negative) to enhance privacy")
         row.addWidget(self.timeIconLabel)
@@ -150,18 +148,16 @@ class TabGovernance_gui(QWidget):
         self.voteYes_btn = QPushButton("Vote Good!")
         self.voteYes_btn.setToolTip("Vote this as a quality torrent")
         row.addWidget(self.voteYes_btn)
-        #self.voteAbstain_btn = QPushButton("Vote ABSTAIN")
-        #self.voteAbstain_btn.setToolTip("Vote ABSTAIN on selected torrents [currently disabled]")
-        #row.addWidget(self.voteAbstain_btn)
+        # self.voteAbstain_btn = QPushButton("Vote ABSTAIN")
+        # self.voteAbstain_btn.setToolTip("Vote ABSTAIN on selected torrents [currently disabled]")
+        # row.addWidget(self.voteAbstain_btn)
         self.voteNo_btn = QPushButton("Vote Bad!")
         self.voteNo_btn.setToolTip("Vote this for spam, low quality or highly offensive files")
         row.addWidget(self.voteNo_btn)
         layout.addLayout(row)
 
         self.setLayout(layout)
-    
-    
-    
+
     def loadCacheData(self):
         if self.caller.parent.cache.get("votingDelayCheck"):
             negative_delay = self.caller.parent.cache.get("votingDelayNeg")
@@ -169,8 +165,7 @@ class TabGovernance_gui(QWidget):
             self.randomDelayCheck.setChecked(True)
             self.randomDelayNeg_edt.setValue(negative_delay)
             self.randomDelayPos_edt.setValue(positive_delay)
-    
-    
+
     def setTorrentBoxHeader(self):
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
@@ -193,13 +188,13 @@ class TabGovernance_gui(QWidget):
         item.setText("QMC/month")
         item.setToolTip("Monthly QMC Payment requested")
         self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_qmc_per_month, item)
-        
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Payments")
         item.setToolTip("Remaining Payment Count / Total Payment Count")
         self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_payments, item)
-        
+
         item = QTableWidgetItem()
         item.setTextAlignment(Qt.AlignCenter)
         item.setText("Votes")
@@ -211,8 +206,7 @@ class TabGovernance_gui(QWidget):
         item.setText("SE / LE")
         item.setToolTip("Click to get")
         self.torrentBox.setHorizontalHeaderItem(self.torrentBox.column_sl, item)
-        
-        
+
     def loadIcons(self):
         self.refresh_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_refresh.png'))
         self.time_icon = QPixmap(os.path.join(self.caller.imgDir, 'icon_clock.png'))
@@ -221,10 +215,8 @@ class TabGovernance_gui(QWidget):
         self.list_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_list.png'))
         self.question_pixmap = QPixmap(os.path.join(self.caller.imgDir, 'icon_question.png'))
         self.question_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_question.png'))
-        
-        
-        
-        
+
+
 class ScrollMessageBox(QDialog):
     def __init__(self, main_wnd, message):
         QDialog.__init__(self, parent=main_wnd)
@@ -247,5 +239,3 @@ class ScrollMessageBox(QDialog):
         row.addWidget(self.no_btn)
         lay.addLayout(row)
         self.setLayout(lay)
-        
-        

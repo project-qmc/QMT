@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os
+import sys
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 import hashlib
 import bitcoin
 from constants import WIF_PREFIX, MAGIC_BYTE, TESTNET_WIF_PREFIX, TESTNET_MAGIC_BYTE
 from qmc_b58 import b58encode, b58decode
+
 
 def double_sha256(data):
     return hashlib.sha256(hashlib.sha256(data).digest()).digest()
@@ -32,7 +34,6 @@ def generate_privkey(isTestnet=False):
     return b58encode(data + checksum)
 
 
-
 def pubkey_to_address(pubkey, isTestnet=False):
     base58_pubkey = TESTNET_MAGIC_BYTE if isTestnet else MAGIC_BYTE
     pubkey_bin = bytes.fromhex(pubkey)
@@ -40,7 +41,6 @@ def pubkey_to_address(pubkey, isTestnet=False):
     data = bytes([base58_pubkey]) + pub_hash
     checksum = bitcoin.bin_dbl_sha256(data)[0:4]
     return b58encode(data + checksum)
-
 
 
 def num_to_varint(a):
@@ -51,12 +51,11 @@ def num_to_varint(a):
     if x < 253:
         return x.to_bytes(1, byteorder='big')
     elif x < 65536:
-        return int(253).to_bytes(1, byteorder='big') +  x.to_bytes(2, byteorder='little')
+        return int(253).to_bytes(1, byteorder='big') + x.to_bytes(2, byteorder='little')
     elif x < 4294967296:
         return int(254).to_bytes(1, byteorder='big') + x.to_bytes(4, byteorder='little')
     else:
         return int(255).to_bytes(1, byteorder='big') + x.to_bytes(8, byteorder='little')
-
 
 
 def wif_to_privkey(string):
@@ -68,7 +67,7 @@ def wif_to_privkey(string):
     check = double_sha256(vs)[0:4]
 
     if (wifversion == WIF_PREFIX.to_bytes(1, byteorder='big').hex() and checksum == check.hex()) \
-    or (wifversion == TESTNET_WIF_PREFIX.to_bytes(1, byteorder='big').hex() and checksum == check.hex()):
+            or (wifversion == TESTNET_WIF_PREFIX.to_bytes(1, byteorder='big').hex() and checksum == check.hex()):
 
         if wif_compressed:
             privkey = pvkeyencoded[2:-10]
@@ -80,4 +79,3 @@ def wif_to_privkey(string):
 
     else:
         return None
-    

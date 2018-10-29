@@ -374,7 +374,6 @@ class TabGovernance(QtCore.QObject):
             ):
                 self.ui.torrentBox.setCellWidget(row, self.ui.torrentBox.column_sl, create_sl_button(row, hash))
 
-
     @staticmethod
     def prepare_vote_data(hash, masternode_name, vote):
         json_object = {

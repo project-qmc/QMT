@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os.path
+import sys
+
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 import signal
-from misc import getQMTVersion, printDbg, readCacheFile, writeToFile, printOK
-from constants import starting_height, starting_width, user_dir, cache_File
+from misc import getQMTVersion, printDbg, readCacheFile, writeToFile
+from constants import user_dir, cache_File
 from PyQt5.Qt import QMainWindow, QIcon, QAction, QFileDialog
 from mainWindow import MainWindow
 from qt.dlg_configureRPCserver import ConfigureRPCserver_dlg
+
 
 class ServiceExit(Exception):
     """
@@ -16,16 +18,15 @@ class ServiceExit(Exception):
     of all running threads and the main program.
     """
     pass
- 
- 
+
+
 def service_shutdown(signum, frame):
     print('Caught signal %d' % signum)
     raise ServiceExit
 
 
-
 class App(QMainWindow):
- 
+
     def __init__(self, masternode_list, imgDir, app):
         super().__init__()
         self.app = app
@@ -42,7 +43,7 @@ class App(QMainWindow):
         self.cache = readCacheFile()
         # Initialize user interface
         self.initUI(masternode_list, imgDir)
- 
+
     def initUI(self, masternode_list, imgDir):
         # Set title and geometry
         self.setWindowTitle(self.title)
@@ -61,38 +62,35 @@ class App(QMainWindow):
         self.loadMNConfAction = QAction(self.script_icon, 'Import "masternode.conf" file', self)
         self.loadMNConfAction.triggered.connect(self.loadMNConf)
         confMenu.addAction(self.loadMNConfAction)
-        
+
         # Sort masternode list (by alias if no previous order set)
         if self.cache.get('mnList_order') != {}:
             masternode_list.sort(key=self.extract_order)
         else:
             masternode_list.sort(key=self.extract_name)
-        
+
         # Create main window
         self.mainWindow = MainWindow(self, masternode_list, imgDir)
         self.setCentralWidget(self.mainWindow)
-        
+
         # Show
         self.show()
         self.activateWindow()
-        
+
     def extract_name(self, json):
         try:
             return json['name'].lower()
         except KeyError:
             return 0
-        
-    
+
     def extract_order(self, json):
         try:
             name = json['name']
             return self.cache.get('mnList_order').get(name)
-        
+
         except KeyError:
             return 0
-        
-        
-        
+
     def closeEvent(self, *args, **kwargs):
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
@@ -103,13 +101,13 @@ class App(QMainWindow):
         if getattr(self.mainWindow.hwdevice, 'dongle', None) is not None:
             self.mainWindow.hwdevice.dongle.close()
             print("Dongle closed")
-            
+
         # Save window/splitter size to cache file
         self.cache["window_width"] = self.width()
         self.cache["window_height"] = self.height()
         self.cache["splitter_sizes"] = self.mainWindow.splitter.sizes()
         self.cache["console_hidden"] = (self.mainWindow.btn_consoleToggle.text() == 'Show')
-        
+
         # Save mnList order to cache file
         mnOrder = {}
         mnList = self.mainWindow.tabMain.myList
@@ -117,22 +115,20 @@ class App(QMainWindow):
             mnName = mnList.itemWidget(mnList.item(i)).alias
             mnOrder[mnName] = i
         self.cache['mnList_order'] = mnOrder
-        
+
         # Write cache file
         writeToFile(self.cache, cache_File)
         print("Bye Bye.")
         return QMainWindow.closeEvent(self, *args, **kwargs)
-    
-    
-    
+
     def loadMNConf(self):
         options = QFileDialog.Options()
-        fileName, _ = QFileDialog.getOpenFileName(self, 'Open masternode.conf', 'masternode.conf', 'Text Files (*.conf)', options=options)
-            
+        fileName, _ = QFileDialog.getOpenFileName(self, 'Open masternode.conf', 'masternode.conf',
+                                                  'Text Files (*.conf)', options=options)
+
         if fileName:
-            self.mainWindow.loadMNConf(fileName)     
-    
-    
+            self.mainWindow.loadMNConf(fileName)
+
     def onEditRPCServer(self):
         # Create Dialog
         ui = ConfigureRPCserver_dlg(self)

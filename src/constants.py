@@ -3,12 +3,12 @@
 import os.path
 
 MPATH = "44'/77'/"
-WIF_PREFIX = 212 # 212 = d4
+WIF_PREFIX = 212  # 212 = d4
 MAGIC_BYTE = 30
 TESTNET_WIF_PREFIX = 239
 TESTNET_MAGIC_BYTE = 139
 DEFAULT_PROTOCOL_VERSION = 70913
-MINIMUM_FEE = 0.0001    # minimum QMC/kB
+MINIMUM_FEE = 0.0001  # minimum QMC/kB
 starting_width = 933
 starting_height = 666
 APPDATA_DIRNAME = ".QMCTorrentTool"
@@ -23,7 +23,7 @@ DEFAULT_RPC_CONF = {
     "rpc_port": 55777,
     "rpc_user": "myUsername",
     "rpc_password": "myPassword"
-    }
+}
 DEFAULT_MN_CONF = {
     "name": "",
     "ip": "",
@@ -33,7 +33,7 @@ DEFAULT_MN_CONF = {
     "isHardware": True,
     "hwAcc": 0,
     "collateral": {}
-    }
+}
 DEFAULT_CACHE = {
     "lastAddress": "",
     "window_width": starting_width,
@@ -45,4 +45,4 @@ DEFAULT_CACHE = {
     "votingDelayCheck": False,
     "votingDelayNeg": 0,
     "votingDelayPos": 300
-    }
+}
