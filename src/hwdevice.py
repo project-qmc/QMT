@@ -14,7 +14,7 @@ from constants import MPATH
 from misc import compose_tx_locking_script, extract_pkh_from_locking_script, getCallerName, getFunctionName, printDbg, \
     printException, printOK, splitString
 from qmc_hashing.qmc_hashlib import pubkey_to_address, single_sha256
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 
 
 class DisconnectedException(Exception):

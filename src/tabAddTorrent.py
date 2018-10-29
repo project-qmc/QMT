@@ -7,8 +7,8 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 
 from misc import getCallerName, getFunctionName, highlight_textbox, printException, readRPCfile
+from qmt_threading.threads import ThreadFuns
 from qt.gui_tabAddTorrent import TabAddTorrent_gui
-from threads import ThreadFuns
 
 
 class TabAddTorrent(object):

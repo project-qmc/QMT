@@ -16,6 +16,8 @@ from constants import LOG_FILE, MASTERNODES_FILE, STARTING_HEIGHT
 from hwdevice import HWdevice
 from misc import WriteStream, WriteStreamReceiver, getCallerName, getFunctionName, getRemoteQMTversion, loadMNConfFile, \
     now, printDbg, printException, printOK, writeToFile
+from qmt_threading.threads import ThreadFuns
+from qmt_threading.watchdogThreads import RpcWatchdog
 from qt.guiHeader import GuiHeader
 from rpcClient import RpcClient
 from tabAddTorrent import TabAddTorrent
@@ -23,8 +25,6 @@ from tabGovernance import TabGovernance
 from tabMNConf import TabMNConf
 from tabMain import TabMain
 from tabRewards import TabRewards
-from threads import ThreadFuns
-from watchdogThreads import RpcWatchdog
 
 
 class MainWindow(QWidget):

@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTab
     QApplication, QProgressBar, QCheckBox
 from PyQt5.Qt import QLabel
 from PyQt5.QtCore import pyqtSlot
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 from constants import MPATH, CACHE_FILE, MINIMUM_FEE
 from hwdevice import DisconnectedException
 from misc import printDbg, writeToFile, getCallerName, getFunctionName, printException, checkQmcAddr

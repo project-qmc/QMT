@@ -16,7 +16,7 @@ from qt.gui_tabGovernance import TabGovernance_gui, ScrollMessageBox
 from qt.dlg_selectMNs import SelectMNs_dlg
 from qt.dlg_budgetProjection import BudgetProjection_dlg
 from misc import printException, getCallerName, getFunctionName, printDbg, writeToFile, highlight_textbox
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 import json
 import time
 import random

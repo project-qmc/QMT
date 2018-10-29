@@ -7,7 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from misc import printDbg, printException, printOK, getCallerName, getFunctionName, writeToFile, now
 from constants import MASTERNODES_FILE
 from masternode import Masternode
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 import simplejson as json
 import time
 

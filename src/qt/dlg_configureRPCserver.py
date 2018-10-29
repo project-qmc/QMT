@@ -8,7 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from PyQt5.QtWidgets import QDialog, QLabel, QSpinBox
 from PyQt5.Qt import QPushButton, QGroupBox, QLineEdit, QHBoxLayout, QFormLayout
 from PyQt5.QtCore import pyqtSlot
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 
 from misc import writeToFile, readRPCfile, printDbg, checkRPCstring
 from constants import RPC_FILE

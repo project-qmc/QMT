@@ -5,7 +5,7 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from misc import printDbg, printException, getCallerName, getFunctionName, writeToFile, checkQmcAddr
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 from constants import MPATH, MINIMUM_FEE, CACHE_FILE
 from hwdevice import DisconnectedException
 

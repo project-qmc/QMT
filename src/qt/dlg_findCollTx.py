@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QDialog, QDialogButtonBox, QLineEdit
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QSpacerItem, QSizePolicy, QTableWidget, QAbstractScrollArea, \
     QAbstractItemView, QTableWidgetItem
 from PyQt5.Qt import QHBoxLayout, QHeaderView
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 from misc import printDbg
 
 

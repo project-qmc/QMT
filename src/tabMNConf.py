@@ -4,7 +4,7 @@ import os.path
 import sys
 from ipaddress import ip_address
 
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from misc import printDbg, printOK, writeToFile, is_hex

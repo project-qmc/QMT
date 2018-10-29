@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTableWidget, \
 from misc import printException, getCallerName, getFunctionName
 
 from misc import sec_to_time
-from threads import ThreadFuns
+from qmt_threading.threads import ThreadFuns
 
 
 class BudgetProjection_dlg(QDialog):
