@@ -1,16 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import threading
-
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
-
+from misc import getCallerName, getFunctionName, printException, printDbg, readRPCfile, now
 from constants import DEFAULT_PROTOCOL_VERSION, MINIMUM_FEE
-from misc import getCallerName, getFunctionName, now, printDbg, printException, readRPCfile
+import threading
 from tabGovernance import Torrent
 
-
 class RpcClient:
-
+        
     def __init__(self):
         # Lock for threads
         self.lock = threading.Lock()
@@ -19,7 +16,7 @@ class RpcClient:
 
         try:
             self.lock.acquire()
-            self.conn = AuthServiceProxy(rpc_url, timeout=120)
+            self.conn = AuthServiceProxy(rpc_url, timeout=120)     
         except JSONRPCException as e:
             err_msg = 'remote or local QMC-cli running?'
             printException(getCallerName(), getFunctionName(), err_msg, e)
@@ -28,33 +25,40 @@ class RpcClient:
             printException(getCallerName(), getFunctionName(), err_msg, e)
         finally:
             self.lock.release()
-
+    
+    
+    
     def decodeRawTransaction(self, rawTx):
         try:
             self.lock.acquire()
-            res = self.conn.decoderawtransaction(rawTx)
+            res = self.conn.decoderawtransaction(rawTx)    
         except Exception as e:
             err_msg = 'error in decodeRawTransaction'
             printException(getCallerName(), getFunctionName(), err_msg, e.args)
             res = None
         finally:
             self.lock.release()
-
+        
         return res
-
+    
+    
+    
     def getAddressUtxos(self, addresses):
         try:
             self.lock.acquire()
-            res = self.conn.getaddressutxos({'addresses': addresses})
+            res = self.conn.getaddressutxos({'addresses': addresses})    
         except Exception as e:
             err_msg = "error in getAddressUtxos"
             printException(getCallerName(), getFunctionName(), err_msg, e.args)
             res = None
         finally:
             self.lock.release()
-
+        
         return res
-
+    
+    
+    
+    
     def getBlockCount(self):
         try:
             self.lock.acquire()
@@ -66,9 +70,12 @@ class RpcClient:
             n = 0
         finally:
             self.lock.release()
-
+            
         return n
-
+    
+    
+    
+    
     def getBlockHash(self, blockNum):
         try:
             self.lock.acquire()
@@ -79,9 +86,10 @@ class RpcClient:
             h = None
         finally:
             self.lock.release()
-
+            
         return h
-
+    
+    
     def getBudgetVotes(self, torrent):
         try:
             self.lock.acquire()
@@ -92,9 +100,10 @@ class RpcClient:
             votes = {}
         finally:
             self.lock.release()
-
+            
         return votes
-
+    
+    
     def getFeePerKb(self):
         try:
             self.lock.acquire()
@@ -107,9 +116,11 @@ class RpcClient:
             res = MINIMUM_FEE
         finally:
             self.lock.release()
-
+            
         return res
-
+    
+    
+    
     def getMNStatus(self, address):
         try:
             self.lock.acquire()
@@ -124,8 +135,10 @@ class RpcClient:
             mnStatus = None
         finally:
             self.lock.release()
-
+            
         return mnStatus
+                
+                
 
     def getMasternodeCount(self):
         try:
@@ -137,11 +150,13 @@ class RpcClient:
             ans = None
         finally:
             self.lock.release()
-
+            
         return ans
-
+                
+                
     def getMasternodes(self):
-        mnList = {'last_update': now()}
+        mnList = {}
+        mnList['last_update'] = now()
         score = []
         try:
             self.lock.acquire()
@@ -152,30 +167,32 @@ class RpcClient:
             masternodes = []
         finally:
             self.lock.release()
-
+        
         for mn in masternodes:
-
+            
             if mn.get('status') == 'ENABLED':
                 if mn.get('lastpaid') == 0:
                     mn['score'] = mn.get('activetime')
                 else:
                     lastpaid_ago = now() - mn.get('lastpaid')
                     mn['score'] = min(lastpaid_ago, mn.get('activetime'))
-
+                
             else:
                 mn['score'] = 0
-
+                
             score.append(mn)
-
+        
         score.sort(key=lambda x: x['score'], reverse=True)
-
+        
         for mn in masternodes:
             mn['queue_pos'] = score.index(mn)
-
+                
         mnList['masternodes'] = masternodes
-
+                
         return mnList
-
+    
+    
+    
     def getNextSuperBlock(self):
         try:
             self.lock.acquire()
@@ -187,9 +204,11 @@ class RpcClient:
             n = 0
         finally:
             self.lock.release()
-
-        return n
-
+            
+        return n    
+    
+    
+    
     def getTorrents(self):
         torrents = []
         try:
@@ -201,17 +220,18 @@ class RpcClient:
             data = []
         finally:
             self.lock.release()
-
+            
         for p in data:
-            new_torrent = Torrent(p.get('Name'), p.get('URL'), p.get('Hash'), p.get('FeeHash'), p.get('BlockStart'),
-                                  p.get('BlockEnd'), p.get('TotalPaymentCount'), p.get('RemainingPaymentCount'),
-                                  p.get('PaymentAddress'),
-                                  p.get('Yeas'), p.get('Nays'), p.get('Abstains'),
-                                  float(p.get('TotalPayment')), float(p.get('MonthlyPayment')))
+            new_torrent = Torrent(p.get('Name'), p.get('URL'), p.get('Hash'), p.get('FeeHash'), p.get('BlockStart'), 
+                                    p.get('BlockEnd'), p.get('TotalPaymentCount'), p.get('RemainingPaymentCount'), p.get('PaymentAddress'), 
+                                    p.get('Yeas'), p.get('Nays'), p.get('Abstains'), 
+                                    float(p.get('TotalPayment')), float(p.get('MonthlyPayment')))
             torrents.append(new_torrent)
-
+            
         return torrents
-
+    
+    
+    
     def getTorrentsProjection(self):
         torrents = []
         try:
@@ -223,33 +243,40 @@ class RpcClient:
             data = []
         finally:
             self.lock.release()
-
+            
         for p in data:
-            new_torrent = Torrent(p.get('Name'), p.get('URL'), p.get('Hash'), p.get('FeeHash'), p.get('BlockStart'),
-                                  p.get('BlockEnd'), p.get('TotalPaymentCount'), p.get('RemainingPaymentCount'),
-                                  p.get('PaymentAddress'),
-                                  p.get('Yeas'), p.get('Nays'), p.get('Abstains'), p.get('TotalPayment'),
-                                  p.get('MonthlyPayment'))
-            new_torrent = {'Name': p.get('Name'), 'Allotted': float(p.get("Alloted")),
-                           'Votes': p.get('Yeas') - p.get('Nays'), 'Total_Allotted': float(p.get('TotalBudgetAlloted'))}
+            new_torrent = Torrent(p.get('Name'), p.get('URL'), p.get('Hash'), p.get('FeeHash'), p.get('BlockStart'), 
+                                    p.get('BlockEnd'), p.get('TotalPaymentCount'), p.get('RemainingPaymentCount'), p.get('PaymentAddress'), 
+                                    p.get('Yeas'), p.get('Nays'), p.get('Abstains'), p.get('TotalPayment'), p.get('MonthlyPayment'))
+            new_torrent = {}
+            new_torrent['Name'] = p.get('Name')
+            new_torrent['Allotted'] = float(p.get("Alloted"))
+            new_torrent['Votes'] = p.get('Yeas') - p.get('Nays')
+            new_torrent['Total_Allotted'] = float(p.get('TotalBudgetAlloted'))
             torrents.append(new_torrent)
-
+            
         return torrents
-
+    
+    
+    
+    
     def getProtocolVersion(self):
         try:
             self.lock.acquire()
             prot_version = self.conn.getinfo().get('protocolversion')
-            res = int(prot_version)
+            res = int(prot_version)      
         except Exception as e:
             err_msg = 'error in getProtocolVersion'
             printException(getCallerName(), getFunctionName(), err_msg, e.args)
             res = DEFAULT_PROTOCOL_VERSION
         finally:
             self.lock.release()
-
-        return res
-
+        
+        return res    
+     
+            
+    
+    
     def getRawTransaction(self, txid):
         try:
             self.lock.acquire()
@@ -260,12 +287,15 @@ class RpcClient:
             res = None
         finally:
             self.lock.release()
-
+            
         return res
-
+    
+    
+    
+    
     def getStatus(self):
         status = False
-        statusMess = "Unable to connect to a QMC RPC server.\n"
+        statusMess = "Unable to connect to a QMC RPC server.\n" 
         statusMess += "Either the local QMC wallet is not open, or the remote RPC server is not responding."
         n = 0
         try:
@@ -274,7 +304,7 @@ class RpcClient:
             if n > 0:
                 status = True
                 statusMess = "Connected to QMC RPC client"
-
+                
         except Exception as e:
             # If loading block index set lastBlock=1
             if str(e.args[0]) == "Loading block index..." or str(e.args[0]) == "Verifying blocks...":
@@ -284,12 +314,15 @@ class RpcClient:
             elif str(e.args[0]) != "Request-sent" and str(e.args[0]) != "10061":
                 err_msg = "Error while contacting RPC server"
                 printException(getCallerName(), getFunctionName(), err_msg, e.args)
-
+                
         finally:
             self.lock.release()
-
+                
         return status, statusMess, n
-
+     
+    
+    
+    
     def isBlockchainSynced(self):
         try:
             self.lock.acquire()
@@ -301,9 +334,11 @@ class RpcClient:
             res = False
         finally:
             self.lock.release()
-
+        
         return res
-
+    
+    
+    
     def mnBudgetRawVote(self, mn_tx_hash, mn_tx_index, torrent_hash, vote, time, vote_sig):
         try:
             self.lock.acquire()
@@ -314,9 +349,10 @@ class RpcClient:
             res = None
         finally:
             self.lock.release()
-
-        return res
-
+        
+        return res   
+            
+            
     def decodemasternodebroadcast(self, work):
         try:
             self.lock.acquire()
@@ -327,21 +363,25 @@ class RpcClient:
             res = ""
         finally:
             self.lock.release()
-
+        
         return res
-
+    
+            
+    
     def relaymasternodebroadcast(self, work):
         try:
             self.lock.acquire()
             res = self.conn.relaymasternodebroadcast(work.strip())
         except Exception as e:
             err_msg = "error in relaymasternodebroadcast"
-            printException(getCallerName(), getFunctionName(), err_msg, e.args)
+            printException(getCallerName(), getFunctionName(), err_msg, e.args)    
             res = ""
         finally:
             self.lock.release()
-
+        
         return res
+    
+
 
     def sendRawTransaction(self, tx_hex, use_swiftx):
         try:
@@ -353,9 +393,12 @@ class RpcClient:
             tx_id = None
         finally:
             self.lock.release()
-
+        
         return tx_id
-
+    
+    
+    
+    
     def verifyMessage(self, qmcaddress, signature, message):
         try:
             self.lock.acquire()
@@ -366,5 +409,6 @@ class RpcClient:
             res = False
         finally:
             self.lock.release()
-
+            
         return res
+            

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os.path
 import sys
-
+import os.path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 from PyQt5.QtCore import Qt
@@ -19,7 +18,7 @@ class TabMain_gui(QWidget):
         ###-- Initialize
         self.loadIcons()
         self.initGlobalButtons()
-        self.initBody()
+        self.initBody()        
         ###-- Compose layout
         mainVertical = QVBoxLayout()
         mainVertical.setSpacing(10)
@@ -27,7 +26,10 @@ class TabMain_gui(QWidget):
         mainVertical.addWidget(self.body)
         ###-- Set Layout
         self.setLayout(mainVertical)
-
+        
+        
+        
+        
     def initGlobalButtons(self):
         ###-- Global Buttons
         globalButtons = QHBoxLayout()
@@ -38,7 +40,10 @@ class TabMain_gui(QWidget):
         self.button_sweepAllRewards = QPushButton("Sweep All Rewards")
         globalButtons.addWidget(self.button_sweepAllRewards)
         self.globalButtons = globalButtons
-
+        
+        
+        
+        
     def initBody(self):
         ###-- CENTRAL PART
         self.body = QGroupBox()
@@ -59,19 +64,22 @@ class TabMain_gui(QWidget):
         self.btn_edit = {}
         self.btn_start = {}
         self.btn_rewards = {}
-
+        
         for masternode in self.caller.masternode_list:
             name = masternode['name']
-            self.insert_mn_list(name, masternode['ip'], masternode['port'], isHardware=masternode['isHardware'])
-
+            self.insert_mn_list(name, masternode['ip'], masternode['port'], isHardware=masternode['isHardware'])  
+        
         vBox = QVBoxLayout()
         vBox.addWidget(self.myList)
         self.button_addMasternode = QPushButton("New Masternode")
         vBox.addWidget(self.button_addMasternode)
         vBox.stretch(1)
-        self.body.setLayout(vBox)
-
-    def insert_mn_list(self, name, ip, port, row=None, isHardware=True):
+        self.body.setLayout(vBox)  
+        
+    
+          
+     
+    def insert_mn_list(self, name, ip, port, row=None, isHardware=True):   
         mnRow = QWidget()
         mnRow.alias = name
         if isHardware:
@@ -97,7 +105,7 @@ class TabMain_gui(QWidget):
         ##--- Status Label
         self.mnStatusLabel[name] = QLabel()
         mnRowLayout.addWidget(self.mnStatusLabel[name])
-        self.mnStatusLabel[name].hide()
+        self.mnStatusLabel[name].hide()        
         ##--- Rank bar
         self.mnStatusProgress[name] = QProgressBar()
         self.mnStatusProgress[name].setMaximumHeight(15)
@@ -110,37 +118,37 @@ class TabMain_gui(QWidget):
         self.btn_details[name].setIcon(self.details_icon)
         self.btn_details[name].setToolTip('Check status details of masternode "%s"' % name)
         mnRowLayout.addWidget(self.btn_details[name])
-        self.btn_details[name].hide()
+        self.btn_details[name].hide()         
         ##--- Rewards button
         self.btn_rewards[name] = QPushButton()
-        self.btn_rewards[name].setToolTip('Transfer rewards from "%s"' % name)
+        self.btn_rewards[name].setToolTip('Transfer rewards from "%s"' % name)           
         self.btn_rewards[name].setIcon(self.rewards_icon)
         self.btn_rewards[name].alias = name
         if not isHardware:
             self.btn_rewards[name].setDisabled(True)
-            self.btn_rewards[name].setToolTip("EXTERNAL MN: unable to move rewards with QMT")
+            self.btn_rewards[name].setToolTip("EXTERNAL MN: unable to move rewards with QMT")         
         mnRowLayout.addWidget(self.btn_rewards[name])
         ##--- Start button
         self.btn_start[name] = QPushButton()
-        self.btn_start[name].setToolTip('Start masternode "%s"' % name)
+        self.btn_start[name].setToolTip('Start masternode "%s"' % name)          
         self.btn_start[name].setIcon(self.startMN_icon)
         self.btn_start[name].alias = name
         if not isHardware:
             self.btn_start[name].setDisabled(True)
-            self.btn_start[name].setToolTip("EXTERNAL MN: unable to start with QMT")
+            self.btn_start[name].setToolTip("EXTERNAL MN: unable to start with QMT")            
         mnRowLayout.addWidget(self.btn_start[name])
         ##--- Edit button
         self.btn_edit[name] = QPushButton()
-        self.btn_edit[name].setToolTip('Edit masternode "%s"' % name)
+        self.btn_edit[name].setToolTip('Edit masternode "%s"' % name)   
         self.btn_edit[name].setIcon(self.editMN_icon)
         self.btn_edit[name].alias = name
         if not isHardware:
             self.btn_edit[name].setDisabled(True)
-            self.btn_edit[name].setToolTip("EXTERNAL MN: to edit, delete entry and load new 'masternode.conf'")
+            self.btn_edit[name].setToolTip("EXTERNAL MN: to edit, delete entry and load new 'masternode.conf'")              
         mnRowLayout.addWidget(self.btn_edit[name])
         ##--- Remove button
         self.btn_remove[name] = QPushButton()
-        self.btn_remove[name].setToolTip('Delete masternode "%s"' % name)
+        self.btn_remove[name].setToolTip('Delete masternode "%s"' % name)        
         self.btn_remove[name].setIcon(self.removeMN_icon)
         self.btn_remove[name].alias = name
         mnRowLayout.addWidget(self.btn_remove[name])
@@ -152,14 +160,17 @@ class TabMain_gui(QWidget):
         mnRow.setLayout(mnRowLayout)
         ##--- Append Row
         self.current_mn[name] = QListWidgetItem()
-        # self.current_mn[name].setFlags(Qt.ItemIsSelectable)
+        #self.current_mn[name].setFlags(Qt.ItemIsSelectable)
         self.current_mn[name].setSizeHint(mnRow.sizeHint())
         if row is not None:
             self.myList.insertItem(row, self.current_mn[name])
         else:
             self.myList.addItem(self.current_mn[name])
         self.myList.setItemWidget(self.current_mn[name], mnRow)
-
+        
+        
+        
+        
     def loadIcons(self):
         self.removeMN_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_delete.png'))
         self.editMN_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_edit.png'))
@@ -168,3 +179,4 @@ class TabMain_gui(QWidget):
         self.details_icon = QIcon(os.path.join(self.caller.imgDir, 'icon_search.png'))
         self.ledgerImg = QPixmap(os.path.join(self.caller.imgDir, 'ledger.png'))
         self.threeDots_icon = QPixmap(os.path.join(self.caller.imgDir, 'icon_3dots.png'))
+    

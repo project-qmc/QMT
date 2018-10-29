@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import unittest
-
+from qmc_hashlib import generate_privkey, pubkey_to_address
 import bitcoin
-
-from qmc_hashing.qmc_b58 import b58decode
-from qmc_hashing.qmc_hashlib import generate_privkey, pubkey_to_address
-
+from qmc_b58 import b58decode
 
 class TestQmc_hashlibMethods(unittest.TestCase):
-
+    
     def test_generate_privkey(self):
         # generate random private key
         randomKey = generate_privkey()
@@ -21,7 +18,9 @@ class TestQmc_hashlibMethods(unittest.TestCase):
         randomKey_bin = bytes.fromhex(b58decode(randomKey).hex())
         randomKey_bin_check = bitcoin.bin_dbl_sha256(randomKey_bin[0:-4])[0:4]
         self.assertEqual(randomKey_bin[-4:], randomKey_bin_check)
-
+    
+        
+        
     def test_pubkey_to_address(self):
         # generate random private key and convert to public
         randomPubKey = bitcoin.privkey_to_pubkey(generate_privkey())
@@ -33,6 +32,8 @@ class TestQmc_hashlibMethods(unittest.TestCase):
         randomQmcAddr_bin = bytes.fromhex(b58decode(randomQmcAddr).hex())
         randomQmcAddr_bin_check = bitcoin.bin_dbl_sha256(randomQmcAddr_bin[0:-4])[0:4]
         self.assertEqual(randomQmcAddr_bin[-4:], randomQmcAddr_bin_check)
-
+        
+        
+        
     if __name__ == '__main__':
         unittest.main(verbosity=2)
