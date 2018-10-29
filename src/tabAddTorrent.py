@@ -111,7 +111,7 @@ class TabAddTorrent(object):
                                'Preparing the torrent failed',
                                e.args + (name, uri, payee, cat))
 
-            response_object = json.loads(response)
+            response_object = json.loads(response.content)
 
             if 'error' in response_object:
                 raise Exception(response_object['error']['message'])
