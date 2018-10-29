@@ -4,10 +4,30 @@
     <bookmark url="file://$PROJECT_DIR$/src/tabGovernance.py" line="0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="Even more refactoring">
+    <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="Attempt to fix crashing threads">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hwdevice.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hwdevice.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/masternode.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/masternode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/misc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/misc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qmc_b58.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qmc_hashing/qmc_b58.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qmc_hashlib.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qmc_hashing/qmc_hashlib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qt/dlg_configureRPCserver.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt/dlg_configureRPCserver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qt/dlg_selectMNs.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt/dlg_selectMNs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qt/dlg_sweepAll.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt/dlg_sweepAll.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/spmtApp.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/spmtApp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tabAddTorrent.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabAddTorrent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabGovernance.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tabMNConf.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabMNConf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tabMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabMain.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tabRewards.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabRewards.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/threads.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/threads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/testHwDeviceMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/testHwDeviceMethods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/testMasternodeMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/testMasternodeMethods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/testPivx_b58Methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/testPivx_b58Methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/testPivx_hashlibMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/testPivx_hashlibMethods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/testUtilsMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/testUtilsMethods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,29 +50,31 @@
         <counts>
           <entry key="gitignore" value="1" />
           <entry key="png" value="5" />
-          <entry key="py" value="63" />
+          <entry key="py" value="69" />
           <entry key="pyi" value="1" />
+          <entry key="txt" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="5" />
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="63" />
+          <entry key="PLAIN_TEXT" value="2" />
+          <entry key="Python" value="69" />
           <entry key="PythonStub" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="dummy" value="49" />
           <entry key="gitignore" value="8" />
-          <entry key="py" value="8139" />
-          <entry key="txt" value="312" />
+          <entry key="py" value="8147" />
+          <entry key="txt" value="349" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="320" />
-          <entry key="Python" value="8139" />
+          <entry key="PLAIN_TEXT" value="406" />
+          <entry key="Python" value="8147" />
         </counts>
       </usages-collector>
     </session>
@@ -60,45 +82,78 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="672">
-              <caret line="60" column="28" lean-forward="true" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="912">
-              <caret line="122" column="20" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="20" />
-              <folding>
-                <element signature="e#47#60#0" expanded="true" />
-                <element signature="e#2408#2746#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qt/gui_tabMain.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="30" column="32" lean-forward="true" selection-start-line="30" selection-start-column="32" selection-end-line="30" selection-end-column="32" />
-              <folding>
-                <element signature="e#968#1461#0" expanded="true" />
-                <element signature="e#2668#6805#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/workerThread.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="471">
+              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+              <folding>
+                <element signature="e#383#702#0" expanded="true" />
+                <element signature="e#732#951#0" expanded="true" />
+                <element signature="e#980#1161#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/hwdevice.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-537">
+              <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+              <folding>
+                <element signature="e#7068#8169#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/spmtApp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="151">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+              <folding>
+                <element signature="e#457#578#1" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/tabAddTorrent.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="327">
+              <caret line="106" column="36" lean-forward="true" selection-start-line="106" selection-start-column="36" selection-end-line="106" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#4950#5805#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/apiClient.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+              <folding>
+                <element signature="e#47#72#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/constants.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -106,72 +161,28 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/watchdogThreads.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/misc.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1847">
-              <caret line="387" column="47" lean-forward="true" selection-start-line="387" selection-start-column="47" selection-end-line="387" selection-end-column="47" />
+            <state relative-caret-position="272">
+              <caret line="22" column="18" lean-forward="true" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
               <folding>
-                <element signature="e#442#581#0" expanded="true" />
-                <element signature="e#2514#2601#0" expanded="true" />
-                <element signature="e#3995#4018#0" expanded="true" />
-                <element signature="e#4049#4249#0" expanded="true" />
-                <element signature="e#4276#4357#0" expanded="true" />
-                <element signature="e#10901#10967#0" expanded="true" />
-                <element signature="e#10996#11080#0" expanded="true" />
+                <element signature="e#275#584#0" expanded="true" />
+                <element signature="e#613#988#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/version.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/threads.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="55" column="45" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="45" />
+            <state relative-caret-position="55">
+              <caret line="33" column="60" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
               <folding>
-                <element signature="e#1164#1547#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/tabRewards.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="180" column="16" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
-              <folding>
-                <element signature="e#5586#6774#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="215" column="21" lean-forward="true" selection-start-line="215" selection-start-column="21" selection-end-line="215" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/qmc_hashlib.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="60" column="27" lean-forward="true" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
-              <folding>
-                <element signature="e#318#379#0" expanded="true" />
-                <element signature="e#411#447#0" expanded="true" />
-                <element signature="e#1866#2482#0" expanded="true" />
+                <element signature="e#149#165#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -206,18 +217,18 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/io.pyi" />
         <option value="$PROJECT_DIR$/src/workerThread.py" />
-        <option value="$PROJECT_DIR$/src/constants.py" />
-        <option value="$PROJECT_DIR$/src/misc.py" />
         <option value="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" />
         <option value="$PROJECT_DIR$/src/mainWindow.py" />
         <option value="$PROJECT_DIR$/src/apiClient.py" />
         <option value="$PROJECT_DIR$/src/masternode.py" />
-        <option value="$PROJECT_DIR$/src/tabAddTorrent.py" />
         <option value="$PROJECT_DIR$/src/qt/dlg_budgetProjection.py" />
         <option value="$PROJECT_DIR$/src/tabGovernance.py" />
-        <option value="$PROJECT_DIR$/src/utils.py" />
         <option value="$PROJECT_DIR$/src/tabRewards.py" />
         <option value="$PROJECT_DIR$/src/threads.py" />
+        <option value="$PROJECT_DIR$/src/utils.py" />
+        <option value="$PROJECT_DIR$/src/misc.py" />
+        <option value="$PROJECT_DIR$/src/constants.py" />
+        <option value="$PROJECT_DIR$/src/tabAddTorrent.py" />
       </list>
     </option>
   </component>
@@ -260,6 +271,11 @@
   <component name="PropertiesComponent">
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PythonContentEntriesConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Source\QMT\src\qmc_hashing" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -421,7 +437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1540777735961</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Attempt to fix crashing threads">
+      <created>1540778809546</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1540778809546</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -432,8 +455,8 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32769555" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32769555" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32769555" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32769555" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39852008" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -482,7 +505,8 @@
     <MESSAGE value="Unused method removed" />
     <MESSAGE value="Reformat everything" />
     <MESSAGE value="Even more refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Even more refactoring" />
+    <MESSAGE value="Attempt to fix crashing threads" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attempt to fix crashing threads" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -570,28 +594,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/apiClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-          <folding>
-            <element signature="e#47#72#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hwdevice.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-288" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/qmt.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-464">
@@ -609,7 +611,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/qmc_b58.py">
+    <entry file="file://$PROJECT_DIR$/src/qmc_hashing/qmc_b58.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
@@ -622,24 +624,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qt/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/spmtApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="10" selection-end-line="27" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tabAddTorrent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="161" column="65" lean-forward="true" selection-start-line="161" selection-start-column="65" selection-end-line="161" selection-end-column="65" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#2643#4895#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qt/dlg_torrentDetails.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -686,21 +670,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="672">
-          <caret line="60" column="28" lean-forward="true" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="215" column="21" lean-forward="true" selection-start-line="215" selection-start-column="21" selection-end-line="215" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/qmc_hashlib.py">
+    <entry file="file://$PROJECT_DIR$/src/qmc_hashing/qmc_hashlib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="60" column="27" lean-forward="true" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
@@ -708,33 +678,6 @@
             <element signature="e#318#379#0" expanded="true" />
             <element signature="e#411#447#0" expanded="true" />
             <element signature="e#1866#2482#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/misc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1847">
-          <caret line="387" column="47" lean-forward="true" selection-start-line="387" selection-start-column="47" selection-end-line="387" selection-end-column="47" />
-          <folding>
-            <element signature="e#442#581#0" expanded="true" />
-            <element signature="e#2514#2601#0" expanded="true" />
-            <element signature="e#3995#4018#0" expanded="true" />
-            <element signature="e#4049#4249#0" expanded="true" />
-            <element signature="e#4276#4357#0" expanded="true" />
-            <element signature="e#10901#10967#0" expanded="true" />
-            <element signature="e#10996#11080#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="122" column="20" selection-start-line="122" selection-start-column="20" selection-end-line="122" selection-end-column="20" />
-          <folding>
-            <element signature="e#47#60#0" expanded="true" />
-            <element signature="e#2408#2746#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -750,36 +693,144 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/workerThread.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/watchdogThreads.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/tabRewards.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
-          <caret line="180" column="16" selection-start-line="180" selection-start-column="16" selection-end-line="180" selection-end-column="16" />
+          <caret line="179" column="16" selection-start-line="179" selection-start-column="16" selection-end-line="179" selection-end-column="16" />
           <folding>
             <element signature="e#5586#6774#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="60" column="28" lean-forward="true" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
+          <folding>
+            <element signature="e#47#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/misc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1472">
+          <caret line="431" column="21" lean-forward="true" selection-start-line="431" selection-start-column="21" selection-end-line="431" selection-end-column="21" />
+          <folding>
+            <element signature="e#47#60#0" expanded="true" />
+            <element signature="e#442#581#0" expanded="true" />
+            <element signature="e#2514#2601#0" expanded="true" />
+            <element signature="e#3995#4018#0" expanded="true" />
+            <element signature="e#4049#4249#0" expanded="true" />
+            <element signature="e#4276#4357#0" expanded="true" />
+            <element signature="e#10901#10967#0" expanded="true" />
+            <element signature="e#10996#11080#0" expanded="true" />
+            <element signature="e#11535#11599#0" expanded="true" />
+            <element signature="e#12068#13254#0" expanded="true" />
+            <element signature="e#13304#13642#0" expanded="true" />
+            <element signature="e#13676#14036#0" expanded="true" />
+            <element signature="e#14075#14283#0" expanded="true" />
+            <element signature="e#14335#14682#0" expanded="true" />
+            <element signature="e#14718#14773#0" expanded="true" />
+            <element signature="e#14801#16061#0" expanded="true" />
+            <element signature="e#16090#16558#0" expanded="true" />
+            <element signature="e#16598#17180#0" expanded="true" />
+            <element signature="e#17249#17768#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/version.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/threads.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="55" column="45" selection-start-line="55" selection-start-column="45" selection-end-line="55" selection-end-column="45" />
+        <state relative-caret-position="55">
+          <caret line="33" column="60" selection-start-line="33" selection-start-column="60" selection-end-line="33" selection-end-column="60" />
           <folding>
-            <element signature="e#1164#1547#0" expanded="true" />
+            <element signature="e#149#165#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/watchdogThreads.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="18" lean-forward="true" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="18" />
+          <folding>
+            <element signature="e#275#584#0" expanded="true" />
+            <element signature="e#613#988#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workerThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="471">
+          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="e#383#702#0" expanded="true" />
+            <element signature="e#732#951#0" expanded="true" />
+            <element signature="e#980#1161#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-537">
+          <caret line="31" column="42" selection-start-line="31" selection-start-column="42" selection-end-line="31" selection-end-column="42" />
+          <folding>
+            <element signature="e#7068#8169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/spmtApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+          <folding>
+            <element signature="e#457#578#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/apiClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="11" column="16" lean-forward="true" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+          <folding>
+            <element signature="e#47#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="13" column="20" lean-forward="true" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hwdevice.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tabAddTorrent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="106" column="36" lean-forward="true" selection-start-line="106" selection-start-column="36" selection-end-line="106" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#4950#5805#0" expanded="true" />
           </folding>
         </state>
       </provider>

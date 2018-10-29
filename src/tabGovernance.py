@@ -23,7 +23,7 @@ import random
 import re
 import requests
 from torrent_tracker_scraper import scraper as torrent_scraper
-from constants import cache_File
+from constants import CACHE_FILE
 
 
 class Torrent:
@@ -78,7 +78,7 @@ class TabGovernance(QtCore.QObject):
         # Clear voting masternodes configuration and update cache
         self.votingMasternodes = []
         self.caller.parent.cache['votingMasternodes'] = []
-        writeToFile(self.caller.parent.cache, cache_File)
+        writeToFile(self.caller.parent.cache, CACHE_FILE)
 
     def countMyVotes(self):
         for prop in self.torrents:
@@ -403,7 +403,7 @@ class TabGovernance(QtCore.QObject):
         self.caller.parent.cache["votingDelayCheck"] = self.ui.randomDelayCheck.isChecked()
         self.caller.parent.cache["votingDelayNeg"] = self.ui.randomDelayNeg_edt.value()
         self.caller.parent.cache["votingDelayPos"] = self.ui.randomDelayPos_edt.value()
-        writeToFile(self.caller.parent.cache, cache_File)
+        writeToFile(self.caller.parent.cache, CACHE_FILE)
 
         server_url = "http://{}:{}".format(self.caller.rpcClient.rpc_ip, self.caller.rpcClient.rpc_port)
         auth_pair = self.caller.rpcClient.rpc_user, self.caller.rpcClient.rpc_passwd

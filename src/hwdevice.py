@@ -11,10 +11,10 @@ from btchip.btchip import BTChipException, btchip, getDongle
 from btchip.btchipUtils import bitcoinInput, bitcoinOutput, bitcoinTransaction, compress_public_key
 
 from constants import MPATH
-from misc import getCallerName, getFunctionName, printDbg, printException, printOK, splitString
-from qmc_hashlib import pubkey_to_address, single_sha256
+from misc import compose_tx_locking_script, extract_pkh_from_locking_script, getCallerName, getFunctionName, printDbg, \
+    printException, printOK, splitString
+from qmc_hashing.qmc_hashlib import pubkey_to_address, single_sha256
 from threads import ThreadFuns
-from utils import compose_tx_locking_script, extract_pkh_from_locking_script
 
 
 class DisconnectedException(Exception):

@@ -5,8 +5,8 @@ import unittest
 from bitcoin import privkey_to_pubkey
 from bitcoin.main import b58check_to_hex
 
-from qmc_hashlib import generate_privkey, pubkey_to_address
-from utils import checkQmcAddr, compose_tx_locking_script
+from misc import checkQmcAddr, compose_tx_locking_script
+from qmc_hashing.qmc_hashlib import generate_privkey, pubkey_to_address
 
 
 class TestUtilsMethods(unittest.TestCase):

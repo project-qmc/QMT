@@ -6,8 +6,8 @@ from bitcoin import bin_hash160
 from btchip.btchipUtils import bitcoinInput, bitcoinOutput, bitcoinTransaction, compress_public_key
 
 from hwdevice import HWdevice
+from misc import compose_tx_locking_script, extract_pkh_from_locking_script
 from rpcClient import RpcClient
-from utils import compose_tx_locking_script, extract_pkh_from_locking_script
 
 
 class TestHwDeviceMethods(unittest.TestCase):
@@ -120,7 +120,7 @@ class TestHwDeviceMethods(unittest.TestCase):
     # -- hwdevice.signMessFinish
     # without gui
     def signMess(self, path, message):
-        from utils import b64encode
+        from misc import b64encode
         # Ledger doesn't accept characters other that ascii printable:
         # https://ledgerhq.github.io/btchip-doc/bitcoin-technical.html#_sign_message
         message = message.encode('ascii', 'ignore')

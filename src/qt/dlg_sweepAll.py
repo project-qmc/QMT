@@ -12,10 +12,9 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QTab
 from PyQt5.Qt import QLabel
 from PyQt5.QtCore import pyqtSlot
 from threads import ThreadFuns
-from constants import MPATH, cache_File, MINIMUM_FEE
+from constants import MPATH, CACHE_FILE, MINIMUM_FEE
 from hwdevice import DisconnectedException
-from utils import checkQmcAddr
-from misc import printDbg, writeToFile, getCallerName, getFunctionName, printException
+from misc import printDbg, writeToFile, getCallerName, getFunctionName, printException, checkQmcAddr
 import simplejson as json
 
 
@@ -148,7 +147,7 @@ class SweepAll_dlg(QDialog):
                 # save last destination address and swiftxCheck to cache
                 self.main_tab.caller.parent.cache["lastAddress"] = self.dest_addr
                 self.main_tab.caller.parent.cache["useSwiftX"] = self.useSwiftX()
-                writeToFile(self.main_tab.caller.parent.cache, cache_File)
+                writeToFile(self.main_tab.caller.parent.cache, CACHE_FILE)
 
                 # re-connect signals
                 try:

@@ -4,10 +4,9 @@ import os.path
 import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-from misc import printDbg, printException, getCallerName, getFunctionName, writeToFile
+from misc import printDbg, printException, getCallerName, getFunctionName, writeToFile, checkQmcAddr
 from threads import ThreadFuns
-from utils import checkQmcAddr
-from constants import MPATH, MINIMUM_FEE, cache_File
+from constants import MPATH, MINIMUM_FEE, CACHE_FILE
 from hwdevice import DisconnectedException
 
 from PyQt5.QtCore import Qt, pyqtSlot
@@ -237,7 +236,7 @@ class TabRewards:
             # save last destination address and swiftxCheck to cache
             self.caller.parent.cache["lastAddress"] = self.dest_addr
             self.caller.parent.cache["useSwiftX"] = self.useSwiftX()
-            writeToFile(self.caller.parent.cache, cache_File)
+            writeToFile(self.caller.parent.cache, CACHE_FILE)
 
             self.currFee = self.ui.feeLine.value() * 1e8
 

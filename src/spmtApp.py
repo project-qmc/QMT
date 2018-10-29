@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 import signal
 from misc import getQMTVersion, printDbg, readCacheFile, writeToFile
-from constants import user_dir, cache_File
+from constants import USER_DIR, CACHE_FILE
 from PyQt5.Qt import QMainWindow, QIcon, QAction, QFileDialog
 from mainWindow import MainWindow
 from qt.dlg_configureRPCserver import ConfigureRPCserver_dlg
@@ -37,8 +37,8 @@ class App(QMainWindow):
         self.version = getQMTVersion()
         self.title = 'QMT - Quality Manget Tool - v.%s-%s' % (self.version['number'], self.version['tag'])
         # Create the userdir if it doesn't exist
-        if not os.path.exists(user_dir):
-            os.makedirs(user_dir)
+        if not os.path.exists(USER_DIR):
+            os.makedirs(USER_DIR)
         # Read cache
         self.cache = readCacheFile()
         # Initialize user interface
@@ -117,7 +117,7 @@ class App(QMainWindow):
         self.cache['mnList_order'] = mnOrder
 
         # Write cache file
-        writeToFile(self.cache, cache_File)
+        writeToFile(self.cache, CACHE_FILE)
         print("Bye Bye.")
         return QMainWindow.closeEvent(self, *args, **kwargs)
 

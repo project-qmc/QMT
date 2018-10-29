@@ -9,9 +9,9 @@ from PyQt5.QtCore import pyqtSlot
 from bitcoin import privkey_to_pubkey
 
 from masternode import Masternode
-from qmc_hashlib import pubkey_to_address
+from misc import b64encode
+from qmc_hashing.qmc_hashlib import pubkey_to_address
 from rpcClient import RpcClient
-from utils import b64encode
 
 
 class TestMasternodeMethods(unittest.TestCase):

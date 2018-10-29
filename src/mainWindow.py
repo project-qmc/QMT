@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QFileDialog, QGroupBox, QHBoxLayout, QMessageBox, QP
     QWidget
 
 from apiClient import ApiClient
-from constants import log_File, masternodes_File, starting_height
+from constants import LOG_FILE, MASTERNODES_FILE, STARTING_HEIGHT
 from hwdevice import HWdevice
 from misc import WriteStream, WriteStreamReceiver, getCallerName, getFunctionName, getRemoteQMTversion, loadMNConfFile, \
     now, printDbg, printException, printOK, writeToFile
@@ -65,7 +65,7 @@ class MainWindow(QWidget):
         sys.stderr = WriteStream(self.queue2)
 
         ###-- Init last logs
-        logFile = open(log_File, 'w+')
+        logFile = open(LOG_FILE, 'w+')
         timestamp = strftime('%Y-%m-%d %H:%M:%S', gmtime(now()))
         log_line = '<b style="color: blue">{}</b><br>'.format('STARTING QMT at ' + timestamp)
         logFile.write(log_line)
@@ -231,7 +231,7 @@ class MainWindow(QWidget):
             if new_nodes > 0:
                 # update files
                 printDbg("saving MN configuration file")
-                writeToFile(self.masternode_list, masternodes_File)
+                writeToFile(self.masternode_list, MASTERNODES_FILE)
                 printDbg("saved")
                 # Clear voting masternodes configuration and update cache
                 self.t_governance.clear()
@@ -337,7 +337,7 @@ class MainWindow(QWidget):
             self.console.setMaximumHeight(70)
         else:
             self.console.setMinimumHeight(70)
-            self.console.setMaximumHeight(starting_height)
+            self.console.setMaximumHeight(STARTING_HEIGHT)
             self.btn_consoleToggle.setText('Hide')
             self.consoleArea.show()
 

@@ -8,8 +8,8 @@ from threads import ThreadFuns
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from misc import printDbg, printOK, writeToFile, is_hex
-from constants import masternodes_File
-from qmc_hashlib import generate_privkey
+from constants import MASTERNODES_FILE
+from qmc_hashing.qmc_hashlib import generate_privkey
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox
@@ -270,7 +270,7 @@ class TabMNConf:
             self.caller.masternode_list.append(new_masternode)
             # Write to file
             printDbg("saving MN configuration for %s" % new_masternode['name'])
-            writeToFile(self.caller.masternode_list, masternodes_File)
+            writeToFile(self.caller.masternode_list, MASTERNODES_FILE)
             printDbg("saved")
 
             # Insert item in list of Main tab and connect buttons

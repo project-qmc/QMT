@@ -11,7 +11,7 @@ from PyQt5.QtCore import pyqtSlot
 from threads import ThreadFuns
 
 from misc import writeToFile, readRPCfile, printDbg, checkRPCstring
-from constants import rpc_File
+from constants import RPC_FILE
 
 
 class ConfigureRPCserver_dlg(QDialog):
@@ -88,7 +88,7 @@ class Ui_ConfigureRPCserverDlg(object):
 
         if checkRPCstring(urlstring, action_msg="Restoring previous configuration"):
             # Update datafile
-            writeToFile(conf, rpc_File)
+            writeToFile(conf, RPC_FILE)
             # Update current RPC Server
             main_dlg.main_wnd.mainWindow.rpcClient = None
             main_dlg.main_wnd.mainWindow.rpcConnected = False

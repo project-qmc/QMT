@@ -3,7 +3,7 @@
 import unittest
 from random import randint
 
-from qmc_b58 import b58chars, b58decode, b58encode
+from qmc_hashing.qmc_b58 import b58chars, b58decode, b58encode
 
 
 class TestQmc_b58Methods(unittest.TestCase):

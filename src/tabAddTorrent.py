@@ -104,7 +104,7 @@ class TabAddTorrent(object):
                                                                 self.next_super),
                                   headers={
                                       'Content-Type': 'text/plain'
-                                  }).content.decode('ascii')
+                                  })
             except Exception as e:
                 printException(getCallerName(),
                                getFunctionName(),

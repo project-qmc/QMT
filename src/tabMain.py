@@ -5,7 +5,7 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from misc import printDbg, printException, printOK, getCallerName, getFunctionName, writeToFile, now
-from constants import masternodes_File
+from constants import MASTERNODES_FILE
 from masternode import Masternode
 from threads import ThreadFuns
 import simplejson as json
@@ -162,7 +162,7 @@ class TabMain:
                     self.caller.masternode_list.remove(masternode)
                     break
             try:
-                writeToFile(self.caller.masternode_list, masternodes_File)
+                writeToFile(self.caller.masternode_list, MASTERNODES_FILE)
                 self.ui.myList.takeItem(self.ui.myList.row(self.ui.current_mn[masternode_alias]))
             except Exception as e:
                 err_msg = "Error writing masternode file"

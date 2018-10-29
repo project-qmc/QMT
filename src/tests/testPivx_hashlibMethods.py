@@ -4,8 +4,8 @@ import unittest
 
 import bitcoin
 
-from qmc_b58 import b58decode
-from qmc_hashlib import generate_privkey, pubkey_to_address
+from qmc_hashing.qmc_b58 import b58decode
+from qmc_hashing.qmc_hashlib import generate_privkey, pubkey_to_address
 
 
 class TestQmc_hashlibMethods(unittest.TestCase):

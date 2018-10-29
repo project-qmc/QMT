@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QAbstractItemVie
     QTableWidgetItem, QLabel, QHBoxLayout, QPushButton
 
 from misc import writeToFile
-from constants import cache_File
+from constants import CACHE_FILE
 
 
 class masternodeItem(QTableWidgetItem):
@@ -57,7 +57,7 @@ class SelectMNs_dlg(QDialog):
         self.main_wnd.updateSelectedMNlabel()
         # save voting masternodes to cache
         self.main_wnd.caller.parent.cache['votingMasternodes'] = self.main_wnd.votingMasternodes
-        writeToFile(self.main_wnd.caller.parent.cache, cache_File)
+        writeToFile(self.main_wnd.caller.parent.cache, CACHE_FILE)
         self.accept()
 
     def selectAll(self):
