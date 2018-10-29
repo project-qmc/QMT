@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os.path
 import sys
+
+import os.path
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
@@ -10,10 +11,10 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTableWidget, \
     QAbstractItemView, QHeaderView, QTableWidgetItem, QPushButton, QLabel, \
     QGroupBox, QHBoxLayout, QFormLayout
 
-from misc import printException, getCallerName, getFunctionName
+from misc import printException
 
 from misc import sec_to_time
-from qmt_threading.threads import ThreadFuns
+from threads import ThreadFuns
 
 
 class BudgetProjection_dlg(QDialog):

@@ -16,17 +16,17 @@ from qt.gui_tabGovernance import TabGovernance_gui, ScrollMessageBox
 from qt.dlg_selectMNs import SelectMNs_dlg
 from qt.dlg_budgetProjection import BudgetProjection_dlg
 from misc import printException, getCallerName, getFunctionName, printDbg, writeToFile, highlight_textbox
-from qmt_threading.threads import ThreadFuns
+from threads import ThreadFuns
 import json
 import time
 import random
 import re
 import requests
 from torrent_tracker_scraper import scraper as torrent_scraper
-from constants import CACHE_FILE
+from constants import cache_File
 
 
-class Torrent:
+class Torrent():
     def __init__(self, name, URL, Hash, FeeHash, BlockStart, BlockEnd, TotalPayCount, RemainingPayCount,
                  PayMentAddress, Yeas, Nays, Abstains, TotalPayment, MonthlyPayment):
         self.name = name
@@ -51,7 +51,6 @@ class Torrent:
 
 class TabGovernance(QtCore.QObject):
     def __init__(self, caller):
-        super().__init__()
         self.caller = caller
         self.torrents = []  # list of Torrent Objects
         self.selectedTorrents = []
@@ -78,7 +77,7 @@ class TabGovernance(QtCore.QObject):
         # Clear voting masternodes configuration and update cache
         self.votingMasternodes = []
         self.caller.parent.cache['votingMasternodes'] = []
-        writeToFile(self.caller.parent.cache, CACHE_FILE)
+        writeToFile(self.caller.parent.cache, cache_File)
 
     def countMyVotes(self):
         for prop in self.torrents:
@@ -252,7 +251,7 @@ class TabGovernance(QtCore.QObject):
         if reply == 1:
             ThreadFuns.runInThread(self.vote_thread, ([vote_code]), self.vote_thread_end)
 
-    def summaryDlg(self, voteR_code):
+    def summaryDlg(self, vote_code):
         message = "Voting <b>%s</b> on the following torrent(s):<br><br>" % str(self.vote_codes[vote_code]).upper()
         for prop in self.selectedTorrents:
             message += "&nbsp; - <b>%s</b><br>&nbsp; &nbsp; (<em>%s</em>)<br><br>" % (prop.name, prop.Hash)
@@ -375,6 +374,7 @@ class TabGovernance(QtCore.QObject):
             ):
                 self.ui.torrentBox.setCellWidget(row, self.ui.torrentBox.column_sl, create_sl_button(row, hash))
 
+
     @staticmethod
     def prepare_vote_data(hash, masternode_name, vote):
         json_object = {
@@ -403,7 +403,7 @@ class TabGovernance(QtCore.QObject):
         self.caller.parent.cache["votingDelayCheck"] = self.ui.randomDelayCheck.isChecked()
         self.caller.parent.cache["votingDelayNeg"] = self.ui.randomDelayNeg_edt.value()
         self.caller.parent.cache["votingDelayPos"] = self.ui.randomDelayPos_edt.value()
-        writeToFile(self.caller.parent.cache, CACHE_FILE)
+        writeToFile(self.caller.parent.cache, cache_File)
 
         server_url = "http://{}:{}".format(self.caller.rpcClient.rpc_ip, self.caller.rpcClient.rpc_port)
         auth_pair = self.caller.rpcClient.rpc_user, self.caller.rpcClient.rpc_passwd

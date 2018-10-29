@@ -7,14 +7,13 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 
 from misc import getCallerName, getFunctionName, highlight_textbox, printException, readRPCfile
-from qmt_threading.threads import ThreadFuns
 from qt.gui_tabAddTorrent import TabAddTorrent_gui
+from threads import ThreadFuns
 
 
 class TabAddTorrent(object):
     UPDATE_HALF_PERIOD = 5
     BLOCK_DELAY = 6
-
     def __init__(self, caller):
         self.caller = caller
 
@@ -104,14 +103,14 @@ class TabAddTorrent(object):
                                                                 self.next_super),
                                   headers={
                                       'Content-Type': 'text/plain'
-                                  })
+                                  }).content.decode('ascii')
             except Exception as e:
                 printException(getCallerName(),
                                getFunctionName(),
                                'Preparing the torrent failed',
                                e.args + (name, uri, payee, cat))
 
-            response_object = json.loads(response.content)
+            response_object = json.loads(response)
 
             if 'error' in response_object:
                 raise Exception(response_object['error']['message'])
