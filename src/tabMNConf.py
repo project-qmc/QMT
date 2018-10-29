@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os.path
-from threads import ThreadFuns
+import sys
 from ipaddress import ip_address
+
+from qmt_threading.threads import ThreadFuns
+
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from misc import printDbg, printOK, writeToFile, is_hex
-from constants import masternodes_File, cache_File
-from qmc_hashlib import generate_privkey
+from constants import MASTERNODES_FILE
+from qmc_hashing.qmc_hashlib import generate_privkey
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMessageBox
@@ -15,7 +17,8 @@ from PyQt5.QtWidgets import QMessageBox
 from qt.gui_tabMNConf import TabMNConf_gui
 from qt.dlg_findCollTx import FindCollTx_dlg
 
-class TabMNConf():
+
+class TabMNConf:
     def __init__(self, caller, masternode_alias=None):
         self.caller = caller
         self.ui = TabMNConf_gui(masternode_alias)
@@ -35,10 +38,7 @@ class TabMNConf():
         self.ui.btn_saveMNConf.clicked.connect(lambda: self.onSaveMNConf())
         self.ui.btn_spathToAddress.clicked.connect(lambda: self.spathToAddress())
         self.ui.testnetCheck.clicked.connect(lambda: self.onChangeTestnet())
-        
-        
-     
-        
+
     def addressToSpath(self):
         printOK("addressToSpath pressed")
         self.spath_found = False
@@ -48,40 +48,37 @@ class TabMNConf():
             self.caller.myPopUp2(QMessageBox.Critical, 'QMT - hw device check', "Connect to HW device first")
             printDbg("Unable to connect to hardware device. The device status is: %d" % self.caller.hwStatus)
             return None
-        self.runInThread(self.findSpath, (0, 10), self.findSpath_done)     
-    
-          
-                
-    @pyqtSlot(object, int, int)            
+        self.runInThread(self.findSpath, (0, 10), self.findSpath_done)
+
+    @pyqtSlot(object, int, int)
     def findSpath(self, ctrl, starting_spath, spath_count):
         currAddr = self.ui.edt_address.text().strip()
         currHwAcc = self.ui.edt_hwAccount.value()
         # first scan. Subsequent called by findSpath_done
-        self.spath_found, self.spath = self.caller.hwdevice.scanForBip32(currHwAcc, currAddr, starting_spath, spath_count, self.isTestnet())
+        self.spath_found, self.spath = self.caller.hwdevice.scanForBip32(currHwAcc, currAddr, starting_spath,
+                                                                         spath_count, self.isTestnet())
         printOK("Bip32 scan complete. result=%s   spath=%s" % (self.spath_found, self.spath))
         self.curr_starting_spath = starting_spath
         self.curr_spath_count = spath_count
-        
-        
-                
-                
-    @pyqtSlot()            
+
+    @pyqtSlot()
     def findSpath_done(self):
         currAddr = self.ui.edt_address.text().strip()
         currHwAcc = self.ui.edt_hwAccount.value()
         spath = self.spath
         starting_spath = self.curr_starting_spath
         spath_count = self.curr_spath_count
-        
+
         if self.spath_found:
             printOK("spath is %d" % spath)
             mess = "Found address %s in HW account %s with spath_id %s" % (currAddr, currHwAcc, spath)
             self.caller.myPopUp2(QMessageBox.Information, 'QMT - spath search', mess)
             self.ui.edt_spath.setValue(spath)
             self.findPubKey()
-            
+
         else:
-            mess = "Scanned addresses <b>%d</b> to <b>%d</b> of HW account <b>%d</b>.<br>" % (starting_spath, starting_spath+spath_count-1, currHwAcc)
+            mess = "Scanned addresses <b>%d</b> to <b>%d</b> of HW account <b>%d</b>.<br>" % (
+                starting_spath, starting_spath + spath_count - 1, currHwAcc)
             mess += "Unable to find the address <i>%s</i>.<br>Maybe it's on a different account.<br><br>" % currAddr
             mess += "Do you want to scan %d more addresses of account n.<b>%d</b> ?" % (spath_count, currHwAcc)
             ans = self.caller.myPopUp(QMessageBox.Critical, 'QMT - spath search', mess)
@@ -89,84 +86,70 @@ class TabMNConf():
                 starting_spath += spath_count
                 self.runInThread(self.findSpath, (starting_spath, spath_count), self.findSpath_done)
 
-    
-    
     @pyqtSlot()
     def findPubKey(self):
         printDbg("Computing public key...")
         currSpath = self.ui.edt_spath.value()
-        currHwAcc = self.ui.edt_hwAccount.value()      
+        currHwAcc = self.ui.edt_hwAccount.value()
         # Check dongle
         printDbg("Checking HW device")
         if self.caller.hwStatus != 2:
             self.caller.myPopUp2(QMessageBox.Critical, 'QMT - hw device check', "Connect to HW device first")
             printDbg("Unable to connect to hardware device. The device status is: %d" % self.caller.hwStatus)
             return None
-        
+
         try:
             result = self.caller.hwdevice.scanForPubKey(currHwAcc, currSpath)
-            
+
         except Exception as e:
             error_msg = "ERROR: %s" % e.args[0]
             printDbg(error_msg)
             result = None
-        
+
         # Connection pop-up
         warningText = "Another application (such as Ledger Wallet app) has probably taken over "
         warningText += "the communication with the Ledger device.<br><br>To continue, close that application and "
         warningText += "click the <b>Retry</b> button.\nTo cancel, click the <b>Abort</b> button"
         mBox = QMessageBox(QMessageBox.Critical, "WARNING", warningText, QMessageBox.Retry)
-        mBox.setStandardButtons(QMessageBox.Retry | QMessageBox.Abort);
-        
-        while result is None:      
+        mBox.setStandardButtons(QMessageBox.Retry | QMessageBox.Abort)
+
+        while result is None:
             ans = mBox.exec_()
             if ans == QMessageBox.Abort:
                 return
             # we need to reconnect the device
             self.caller.hwdevice.dongle.close()
             self.caller.hwdevice.initDevice()
-            
+
             result = self.caller.hwdevice.scanForPubKey(currHwAcc, currSpath)
-    
+
         mess = "Found public key:\n%s" % result
         self.caller.myPopUp2(QMessageBox.Information, "QMT - findPubKey", mess)
         printOK("Public Key: %s" % result)
         self.ui.edt_pubKey.setText(result)
-        
-        
-   
-        
+
     def findRow_mn_list(self, name):
         row = 0
         while self.caller.tabMain.myList.item(row)['name'] < name:
             row += 1
         return row
-    
-    
-    
+
     def isTestnet(self):
         return self.ui.testnetCheck.isChecked()
-        
-        
-        
+
     @pyqtSlot()
     def onCancelMNConfig(self):
         self.caller.tabs.setCurrentIndex(0)
         self.caller.tabs.removeTab(1)
         self.caller.mnode_to_change = None
-        
-        
-        
+
     @pyqtSlot()
     def onChangeTestnet(self):
         if self.isTestnet():
             self.ui.edt_masternodePort.setValue(51474)
         else:
             self.ui.edt_masternodePort.setValue(51472)
-        
-     
-     
-            
+
     @pyqtSlot()
     def onEditTx(self):
         if not self.ui.edt_txid.isEnabled():
@@ -175,26 +158,20 @@ class TabMNConf():
             self.ui.edt_txidn.setEnabled(True)
             self.ui.btn_findTxid.setEnabled(False)
             self.ui.btn_saveMNConf.setEnabled(False)
-            
+
         else:
             self.ui.btn_editTxid.setText("edit")
             self.ui.edt_txid.setEnabled(False)
             self.ui.edt_txidn.setEnabled(False)
             self.ui.btn_findTxid.setEnabled(True)
             self.ui.btn_saveMNConf.setEnabled(True)
-    
-            
-    
-        
+
     @pyqtSlot()
     def onFindSpathAndPrivKey(self):
         self.ui.edt_spath.setValue(0)
         self.ui.edt_pubKey.setText('')
         self.addressToSpath()
-        
-            
-            
-            
+
     @pyqtSlot()
     def onLookupTx(self):
         # address check
@@ -212,32 +189,26 @@ class TabMNConf():
                 txid, txidn = self.dlg.getSelection()
                 self.ui.edt_txid.setText(txid)
                 self.ui.edt_txidn.setValue(txidn)
-       
+
         except Exception as e:
             printDbg(e)
-            
-        
-        
-        
+
     @pyqtSlot()
     def onGenerateMNkey(self):
         printDbg("Generate MNkey pressed")
         reply = QMessageBox.Yes
-        
+
         if self.ui.edt_mnPrivKey.text() != "":
-            reply = self.caller.myPopUp(QMessageBox.Warning, "GENERATE PRIV KEY", 
-                                 "Are you sure?\nThis will overwrite current private key", QMessageBox.No)
-        
+            reply = self.caller.myPopUp(QMessageBox.Warning, "GENERATE PRIV KEY",
+                                        "Are you sure?\nThis will overwrite current private key", QMessageBox.No)
+
         if reply == QMessageBox.No:
             return
-        
+
         newkey = generate_privkey(self.isTestnet())
         self.ui.edt_mnPrivKey.setText(newkey)
-        
-        
-        
-        
-    @pyqtSlot()            
+
+    @pyqtSlot()
     def onSaveMNConf(self):
         try:
             if self.ui.edt_pubKey.text() == "" or self.ui.edt_txid.text() == "" or self.ui.edt_mnPrivKey.text() == "":
@@ -247,14 +218,14 @@ class TabMNConf():
                 mess_text += "<b>mnPrivKey = </b>%s<br>" % self.ui.edt_mnPrivKey.text()
                 self.caller.myPopUp2(QMessageBox.Critical, 'Complete Form', mess_text)
                 return
-            
+
             if not is_hex(self.ui.edt_txid.text()):
                 mess_text = 'Attention! txid format is not valid.<br>'
                 mess_text += "<b>txId = </b>%s<br>" % self.ui.edt_txid.text()
                 mess_text += 'transaction id must be in hex format.<br>'
                 self.caller.myPopUp2(QMessageBox.Critical, 'Complete Form', mess_text)
                 return
-            
+
             # check for duplicate name
             mn_alias = self.ui.edt_name.text().strip()
             # if we are changing a masternode don't check old alias
@@ -266,7 +237,7 @@ class TabMNConf():
                 mess_text += 'Choose a different name (alias) for the masternode'
                 self.caller.myPopUp2(QMessageBox.Critical, 'Complete Form', mess_text)
                 return
-            
+
             # remove previous element
             if not self.caller.mnode_to_change is None:
                 # remove from memory list
@@ -278,10 +249,9 @@ class TabMNConf():
                 self.caller.mnode_to_change = None
 
             # create new item
-            new_masternode = {}
-            new_masternode['name'] = mn_alias
+            new_masternode = {'name': mn_alias}
             masternodeIp = self.ui.edt_masternodeIp.text().strip()
-            if not masternodeIp.endswith('.onion'):    
+            if not masternodeIp.endswith('.onion'):
                 masternodeIp = ip_address(masternodeIp).compressed
             new_masternode['ip'] = masternodeIp
             new_masternode['port'] = self.ui.edt_masternodePort.value()
@@ -290,22 +260,19 @@ class TabMNConf():
             new_masternode['isHardware'] = True
             new_masternode['hwAcc'] = self.ui.edt_hwAccount.value()
 
-            coll = {}
-            coll['address'] = self.ui.edt_address.text().strip()
-            coll['spath'] = self.ui.edt_spath.value()
-            coll['pubKey'] = self.ui.edt_pubKey.text().strip()
-            coll['txid'] = self.ui.edt_txid.text().strip()
-            coll['txidn'] = self.ui.edt_txidn.value()
-            
+            coll = {'address': self.ui.edt_address.text().strip(), 'spath': self.ui.edt_spath.value(),
+                    'pubKey': self.ui.edt_pubKey.text().strip(), 'txid': self.ui.edt_txid.text().strip(),
+                    'txidn': self.ui.edt_txidn.value()}
+
             new_masternode['collateral'] = coll
 
             # add new item
             self.caller.masternode_list.append(new_masternode)
             # Write to file
             printDbg("saving MN configuration for %s" % new_masternode['name'])
-            writeToFile(self.caller.masternode_list, masternodes_File)
+            writeToFile(self.caller.masternode_list, MASTERNODES_FILE)
             printDbg("saved")
-           
+
             # Insert item in list of Main tab and connect buttons
             name = new_masternode['name']
             namelist = [x['name'] for x in self.caller.masternode_list]
@@ -316,25 +283,22 @@ class TabMNConf():
             self.caller.tabMain.btn_remove[name].clicked.connect(lambda: self.caller.t_main.onRemoveMN())
             self.caller.tabMain.btn_edit[name].clicked.connect(lambda: self.caller.t_main.onEditMN())
             self.caller.tabMain.btn_start[name].clicked.connect(lambda: self.caller.t_main.onStartMN())
-            self.caller.tabMain.btn_rewards[name].clicked.connect(lambda: self.caller.t_main.onRewardsMN())   
-            
+            self.caller.tabMain.btn_rewards[name].clicked.connect(lambda: self.caller.t_main.onRewardsMN())
+
             # Clear voting masternodes configuration and update cache
-            self.caller.t_governance.clear()  
-            
+            self.caller.t_governance.clear()
+
             # go back
             self.onCancelMNConfig()
-            
+
         except Exception as e:
             error_msg = "ERROR: %s" % e
             printDbg(error_msg)
             self.caller.myPopUp2(QMessageBox.Critical, 'ERROR', error_msg)
-            
-    
-    
-    
-    @pyqtSlot()     
+
+    @pyqtSlot()
     def spathToAddress(self):
-        printOK("spathToAddress pressed") 
+        printOK("spathToAddress pressed")
         currHwAcc = self.ui.edt_hwAccount.value()
         currSpath = self.ui.edt_spath.value()
         # Check dongle

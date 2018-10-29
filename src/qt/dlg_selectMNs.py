@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys
 import os.path
+import sys
+
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QAbstractItemView, QHeaderView,\
+from PyQt5.QtWidgets import QDialog, QTableWidget, QVBoxLayout, QAbstractItemView, QHeaderView, \
     QTableWidgetItem, QLabel, QHBoxLayout, QPushButton
-    
+
 from misc import writeToFile
-from constants import cache_File
-    
+from constants import CACHE_FILE
+
+
 class masternodeItem(QTableWidgetItem):
     def __init__(self, name, txid):
         super().__init__(name)
         self.txid = txid
+
 
 class SelectMNs_dlg(QDialog):
     def __init__(self, main_wnd):
@@ -27,17 +30,16 @@ class SelectMNs_dlg(QDialog):
         self.ui.selectAll_btn.clicked.connect(lambda: self.selectAll())
         self.ui.deselectAll_btn.clicked.connect(lambda: self.ui.mnList.clearSelection())
         self.ui.ok_btn.clicked.connect(lambda: self.onOK())
-    
-        
+
     def getSelection(self):
         items = self.ui.mnList.selectedItems()
-        #print("Selected MNs " + str([[x.txid, x.text()] for x in items]))
+        # print("Selected MNs " + str([[x.txid, x.text()] for x in items]))
         return [[x.txid, x.text()] for x in items]
-        
+
     def initUI(self):
         self.ui = Ui_SelectMNsDlg()
         self.ui.setupUi(self)
-        
+
     def loadMasternodes(self):
         for row, mn in enumerate(self.main_wnd.caller.masternode_list):
             name = mn.get('name')
@@ -49,22 +51,20 @@ class SelectMNs_dlg(QDialog):
             # check if already selected
             if name in [x[1] for x in self.main_wnd.votingMasternodes]:
                 item.setSelected(True)
-            
-            
+
     def onOK(self):
         self.main_wnd.votingMasternodes = self.getSelection()
         self.main_wnd.updateSelectedMNlabel()
         # save voting masternodes to cache
         self.main_wnd.caller.parent.cache['votingMasternodes'] = self.main_wnd.votingMasternodes
-        writeToFile(self.main_wnd.caller.parent.cache, cache_File)
+        writeToFile(self.main_wnd.caller.parent.cache, CACHE_FILE)
         self.accept()
-        
-        
+
     def selectAll(self):
         self.ui.mnList.selectAll()
         self.ui.mnList.setFocus()
-    
-        
+
+
 class Ui_SelectMNsDlg(object):
     def setupUi(self, SelectMNsDlg):
         SelectMNsDlg.setModal(True)

@@ -1,3 +1,4 @@
+bitcoin-python
 python-bitcoinrpc>=1.0
 btchip-python>=v0.1.27
 bitcoin>=1.1.42

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import os.path
 import sys
 from queue import Queue
 from time import gmtime, strftime
 
-import os.path
 from PyQt5.Qt import QLabel, QSplitter, QTabWidget
 from PyQt5.QtCore import QThread, Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QPalette, QPixmap, QTextCursor
@@ -12,10 +12,12 @@ from PyQt5.QtWidgets import QFileDialog, QGroupBox, QHBoxLayout, QMessageBox, QP
     QWidget
 
 from apiClient import ApiClient
-from constants import log_File, masternodes_File, starting_height
+from constants import LOG_FILE, MASTERNODES_FILE, STARTING_HEIGHT
 from hwdevice import HWdevice
 from misc import WriteStream, WriteStreamReceiver, getCallerName, getFunctionName, getRemoteQMTversion, loadMNConfFile, \
     now, printDbg, printException, printOK, writeToFile
+from qmt_threading.threads import ThreadFuns
+from qmt_threading.watchdogThreads import RpcWatchdog
 from qt.guiHeader import GuiHeader
 from rpcClient import RpcClient
 from tabAddTorrent import TabAddTorrent
@@ -23,8 +25,6 @@ from tabGovernance import TabGovernance
 from tabMNConf import TabMNConf
 from tabMain import TabMain
 from tabRewards import TabRewards
-from threads import ThreadFuns
-from watchdogThreads import RpcWatchdog
 
 
 class MainWindow(QWidget):
@@ -65,7 +65,7 @@ class MainWindow(QWidget):
         sys.stderr = WriteStream(self.queue2)
 
         ###-- Init last logs
-        logFile = open(log_File, 'w+')
+        logFile = open(LOG_FILE, 'w+')
         timestamp = strftime('%Y-%m-%d %H:%M:%S', gmtime(now()))
         log_line = '<b style="color: blue">{}</b><br>'.format('STARTING QMT at ' + timestamp)
         logFile.write(log_line)
@@ -99,9 +99,9 @@ class MainWindow(QWidget):
         ###-- Add tabs
         self.tabs.addTab(self.tabGovernance, "Search Torrents")
         self.tabs.addTab(self.tabAddTorrent, "Add Torrents")
-#        self.tabs.addTab(self.tabMain, "Masternode Control")
-#        self.tabs.addTab(self.tabMNConf, "MN Configuration")   # We will put these back later, just with RPC instead of messy key handling which we don't need or want anyway !
-#        self.tabs.addTab(self.tabRewards, "Transfer Rewards")
+        #        self.tabs.addTab(self.tabMain, "Masternode Control")
+        #        self.tabs.addTab(self.tabMNConf, "MN Configuration")   # We will put these back later, just with RPC instead of messy key handling which we don't need or want anyway !
+        #        self.tabs.addTab(self.tabRewards, "Transfer Rewards")
 
         ###-- Connect change action
         self.tabs.currentChanged.connect(lambda: self.onTabChange())
@@ -172,7 +172,7 @@ class MainWindow(QWidget):
         self.console.setLayout(layout)
 
     def isMasternodeInList(self, mn_alias):
-        return (mn_alias in [x['name'] for x in self.masternode_list])
+        return mn_alias in [x['name'] for x in self.masternode_list]
 
     def loadIcons(self):
         # Load Icons        
@@ -191,7 +191,7 @@ class MainWindow(QWidget):
 
     def loadMNConf(self, fileName):
         hot_masternodes = loadMNConfFile(fileName)
-        if hot_masternodes == None:
+        if hot_masternodes is None:
             messText = "Unable to load data from file '%s'" % fileName
             self.myPopUp2(QMessageBox.Warning, "QMT - warning", messText)
         else:
@@ -231,7 +231,7 @@ class MainWindow(QWidget):
             if new_nodes > 0:
                 # update files
                 printDbg("saving MN configuration file")
-                writeToFile(self.masternode_list, masternodes_File)
+                writeToFile(self.masternode_list, MASTERNODES_FILE)
                 printDbg("saved")
                 # Clear voting masternodes configuration and update cache
                 self.t_governance.clear()
@@ -273,7 +273,7 @@ class MainWindow(QWidget):
                 (remote_version[0] == local_version[0] and remote_version[1] == local_version[1] and remote_version[2] >
                  local_version[2]):
             self.versionMess = '<b style="color:red">New Version Available:</b> %s.%s.%s  ' % (
-            remote_version[0], remote_version[1], remote_version[2])
+                remote_version[0], remote_version[1], remote_version[2])
             self.versionMess += '(<a href="https://github.com/project-qmc/QMT/releases/">download</a>)'
         else:
             self.versionMess = "You have the latest version of QMT"
@@ -337,7 +337,7 @@ class MainWindow(QWidget):
             self.console.setMaximumHeight(70)
         else:
             self.console.setMinimumHeight(70)
-            self.console.setMaximumHeight(starting_height)
+            self.console.setMaximumHeight(STARTING_HEIGHT)
             self.btn_consoleToggle.setText('Hide')
             self.consoleArea.show()
 
