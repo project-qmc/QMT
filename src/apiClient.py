@@ -34,9 +34,7 @@ class ApiClient:
 
     def getAddressUtxos(self, address):
         try:
-            self.parameters = {}
-            self.parameters['q'] = 'unspent'
-            self.parameters['active'] = address
+            self.parameters = {'q': 'unspent', 'active': address}
             return self.checkResponse(self.parameters)
         except Exception as e:
             err_msg = "error in getAddressUtxos"
@@ -49,9 +47,7 @@ class ApiClient:
 
     def getBalance(self, address):
         try:
-            self.parameters = {}
-            self.parameters['q'] = 'getbalance'
-            self.parameters['a'] = address
+            self.parameters = {'q': 'getbalance', 'a': address}
             return self.checkResponse(self.parameters)
         except Exception as e:
             err_msg = "error in getBalance"
@@ -64,8 +60,7 @@ class ApiClient:
 
     def getStatus(self):
         try:
-            self.parameters = {}
-            self.parameters['q'] = 'getblockcount'
+            self.parameters = {'q': 'getblockcount'}
             resp = requests.get(self.url, self.parameters)
             return resp.status_code
 
@@ -91,8 +86,7 @@ class ApiClient:
 
     def getBlockCount(self):
         try:
-            self.parameters = {}
-            self.parameters['q'] = 'getblockcount'
+            self.parameters = {'q': 'getblockcount'}
             return self.checkResponse(self.parameters)
         except Exception as e:
             err_msg = "error in getBlockCount"
@@ -105,9 +99,7 @@ class ApiClient:
 
     def getBlockHash(self, blockNum):
         try:
-            self.parameters = {}
-            self.parameters['q'] = 'getblockhash'
-            self.parameters['height'] = str(blockNum)
+            self.parameters = {'q': 'getblockhash', 'height': str(blockNum)}
             return self.checkResponse(self.parameters)
         except Exception as e:
             err_msg = "error in getBlockHash"

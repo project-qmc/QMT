@@ -80,11 +80,8 @@ class Ui_ConfigureRPCserverDlg(object):
         main_dlg.rpc_port = int(self.edt_rpcPort.value())
         main_dlg.rpc_user = self.edt_rpcUser.text()
         main_dlg.rpc_password = self.edt_rpcPassword.text()
-        conf = {}
-        conf["rpc_ip"] = main_dlg.rpc_ip
-        conf["rpc_port"] = main_dlg.rpc_port
-        conf["rpc_user"] = main_dlg.rpc_user
-        conf["rpc_password"] = main_dlg.rpc_password
+        conf = {"rpc_ip": main_dlg.rpc_ip, "rpc_port": main_dlg.rpc_port, "rpc_user": main_dlg.rpc_user,
+                "rpc_password": main_dlg.rpc_password}
 
         urlstring = "http://%s:%s@%s:%d" % (
             conf["rpc_user"], conf["rpc_password"], conf["rpc_ip"], conf["rpc_port"])

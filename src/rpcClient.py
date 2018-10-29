@@ -141,8 +141,7 @@ class RpcClient:
         return ans
 
     def getMasternodes(self):
-        mnList = {}
-        mnList['last_update'] = now()
+        mnList = {'last_update': now()}
         score = []
         try:
             self.lock.acquire()
@@ -231,11 +230,8 @@ class RpcClient:
                                   p.get('PaymentAddress'),
                                   p.get('Yeas'), p.get('Nays'), p.get('Abstains'), p.get('TotalPayment'),
                                   p.get('MonthlyPayment'))
-            new_torrent = {}
-            new_torrent['Name'] = p.get('Name')
-            new_torrent['Allotted'] = float(p.get("Alloted"))
-            new_torrent['Votes'] = p.get('Yeas') - p.get('Nays')
-            new_torrent['Total_Allotted'] = float(p.get('TotalBudgetAlloted'))
+            new_torrent = {'Name': p.get('Name'), 'Allotted': float(p.get("Alloted")),
+                           'Votes': p.get('Yeas') - p.get('Nays'), 'Total_Allotted': float(p.get('TotalBudgetAlloted'))}
             torrents.append(new_torrent)
 
         return torrents

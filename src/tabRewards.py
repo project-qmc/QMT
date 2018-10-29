@@ -19,7 +19,7 @@ from qt.gui_tabRewards import TabRewards_gui
 import simplejson as json
 
 
-class TabRewards():
+class TabRewards:
     def __init__(self, caller):
         self.caller = caller
         ##--- Initialize Selection
@@ -261,7 +261,7 @@ class TabRewards():
 
     @pyqtSlot()
     def onToggleCollateral(self):
-        if (self.rewards is not None):
+        if self.rewards is not None:
 
             if len(self.rewards) and self.ui.rewardsList.box.collateralRow is not None:
                 if not self.ui.collateralHidden:

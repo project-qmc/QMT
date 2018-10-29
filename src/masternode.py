@@ -60,7 +60,7 @@ class Masternode(QObject):
         try:
             # local
             sig2 = ecdsa_sign(serializedData, self.mnWIF)
-            return (b64decode(sig2).hex())
+            return b64decode(sig2).hex()
         except Exception as e:
             err_msg = "error in signature2"
             printException(getCallerName(), getFunctionName(), err_msg, e.args)

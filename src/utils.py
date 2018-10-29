@@ -173,16 +173,16 @@ def num_to_varint(a):
 
 
 def read_varint(buffer, offset):
-    if (buffer[offset] < 0xfd):
+    if buffer[offset] < 0xfd:
         value_size = 1
         value = buffer[offset]
-    elif (buffer[offset] == 0xfd):
+    elif buffer[offset] == 0xfd:
         value_size = 3
         value = int.from_bytes(buffer[offset + 1: offset + 3], byteorder='little')
-    elif (buffer[offset] == 0xfe):
+    elif buffer[offset] == 0xfe:
         value_size = 5
         value = int.from_bytes(buffer[offset + 1: offset + 5], byteorder='little')
-    elif (buffer[offset] == 0xff):
+    elif buffer[offset] == 0xff:
         value_size = 9
         value = int.from_bytes(buffer[offset + 1: offset + 9], byteorder='little')
     else:
@@ -194,9 +194,7 @@ def serialize_input_str(tx, prevout_n, sequence, script_sig):
     """
     Based on project: https://github.com/chaeplin/dashmnb.
     """
-    s = ['CTxIn(']
-    s.append('COutPoint(%s, %s)' % (tx, prevout_n))
-    s.append(', ')
+    s = ['CTxIn(', 'COutPoint(%s, %s)' % (tx, prevout_n), ', ']
     if tx == '00' * 32 and prevout_n == 0xffffffff:
         s.append('coinbase %s' % script_sig)
 

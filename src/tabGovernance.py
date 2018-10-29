@@ -26,7 +26,7 @@ from torrent_tracker_scraper import scraper as torrent_scraper
 from constants import cache_File
 
 
-class Torrent():
+class Torrent:
     def __init__(self, name, URL, Hash, FeeHash, BlockStart, BlockEnd, TotalPayCount, RemainingPayCount,
                  PayMentAddress, Yeas, Nays, Abstains, TotalPayment, MonthlyPayment):
         self.name = name
@@ -51,6 +51,7 @@ class Torrent():
 
 class TabGovernance(QtCore.QObject):
     def __init__(self, caller):
+        super().__init__()
         self.caller = caller
         self.torrents = []  # list of Torrent Objects
         self.selectedTorrents = []

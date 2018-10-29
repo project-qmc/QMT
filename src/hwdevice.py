@@ -28,10 +28,10 @@ def process_ledger_exceptions(func):
         except BTChipException as e:
             printDbg('Error while communicating with Ledger hardware wallet.')
             e.message = 'Error while communicating with Ledger hardware wallet.'
-            if (e.sw in (0x6f01, 0x6d00, 0x6700, 0x6faa)):
+            if e.sw in (0x6f01, 0x6d00, 0x6700, 0x6faa):
                 e.message = 'Make sure the QMC app is open on your Ledger device.'
                 e.message += '<br>If there is a program (such as Ledger Bitcoin Wallet) interfering with the USB communication, close it first.'
-            elif (e.sw == 0x6982):
+            elif e.sw == 0x6982:
                 e.message = 'Enter the PIN on your Ledger device.'
 
             printException(getCallerName(), getFunctionName(), e.message, e.args)
@@ -358,7 +358,7 @@ class HWdevice(QObject):
             finally:
                 self.lock.release()
 
-        return (found, spath)
+        return found, spath
 
     def scanForPubKey(self, account, spath):
         self.lock.acquire()
@@ -383,7 +383,7 @@ class HWdevice(QObject):
         # Ledger doesn't accept characters other that ascii printable:
         # https://ledgerhq.github.io/btchip-doc/bitcoin-technical.html#_sign_message
         message = message.encode('ascii', 'ignore')
-        message_sha = splitString(single_sha256(message).hex(), 32);
+        message_sha = splitString(single_sha256(message).hex(), 32)
 
         # Connection pop-up
         mBox = QMessageBox(caller.ui)
@@ -392,7 +392,7 @@ class HWdevice(QObject):
         warningText += "click the <b>Retry</b> button.\nTo cancel, click the <b>Abort</b> button"
         mBox.setText(warningText)
         mBox.setWindowTitle("WARNING")
-        mBox.setStandardButtons(QMessageBox.Retry | QMessageBox.Abort);
+        mBox.setStandardButtons(QMessageBox.Retry | QMessageBox.Abort)
 
         # Ask confirmation
         self.lock.acquire()
@@ -439,7 +439,7 @@ class HWdevice(QObject):
 
     def signMessageFinish(self):
         self.mBox.accept()
-        if self.signature != None:
+        if self.signature is not None:
             if len(self.signature) > 4:
                 rLength = self.signature[3]
                 r = self.signature[4: 4 + rLength]

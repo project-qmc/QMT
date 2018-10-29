@@ -126,8 +126,7 @@ def loadMNConfFile(fileName):
                     printDbg("wrong number of parameters in masternode.conf")
                     return None
 
-                new_mn = {}
-                new_mn['name'] = configs[0]
+                new_mn = {'name': configs[0]}
 
                 ipaddr = configs[1].split(':')
                 if len(ipaddr) != 2:
@@ -138,9 +137,7 @@ def loadMNConfFile(fileName):
                 new_mn['port'] = int(ipaddr[1])
                 new_mn['mnPrivKey'] = configs[2]
                 new_mn['isHardware'] = False
-                collateral = {}
-                collateral['txid'] = configs[3]
-                collateral['txidn'] = int(configs[4])
+                collateral = {'txid': configs[3], 'txidn': int(configs[4])}
                 new_mn['collateral'] = collateral
 
                 hot_masternodes.append(new_mn)

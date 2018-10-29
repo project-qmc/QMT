@@ -18,7 +18,7 @@ from qt.gui_tabMNConf import TabMNConf_gui
 from qt.dlg_findCollTx import FindCollTx_dlg
 
 
-class TabMNConf():
+class TabMNConf:
     def __init__(self, caller, masternode_alias=None):
         self.caller = caller
         self.ui = TabMNConf_gui(masternode_alias)
@@ -111,7 +111,7 @@ class TabMNConf():
         warningText += "the communication with the Ledger device.<br><br>To continue, close that application and "
         warningText += "click the <b>Retry</b> button.\nTo cancel, click the <b>Abort</b> button"
         mBox = QMessageBox(QMessageBox.Critical, "WARNING", warningText, QMessageBox.Retry)
-        mBox.setStandardButtons(QMessageBox.Retry | QMessageBox.Abort);
+        mBox.setStandardButtons(QMessageBox.Retry | QMessageBox.Abort)
 
         while result is None:
             ans = mBox.exec_()
@@ -249,8 +249,7 @@ class TabMNConf():
                 self.caller.mnode_to_change = None
 
             # create new item
-            new_masternode = {}
-            new_masternode['name'] = mn_alias
+            new_masternode = {'name': mn_alias}
             masternodeIp = self.ui.edt_masternodeIp.text().strip()
             if not masternodeIp.endswith('.onion'):
                 masternodeIp = ip_address(masternodeIp).compressed
@@ -261,12 +260,9 @@ class TabMNConf():
             new_masternode['isHardware'] = True
             new_masternode['hwAcc'] = self.ui.edt_hwAccount.value()
 
-            coll = {}
-            coll['address'] = self.ui.edt_address.text().strip()
-            coll['spath'] = self.ui.edt_spath.value()
-            coll['pubKey'] = self.ui.edt_pubKey.text().strip()
-            coll['txid'] = self.ui.edt_txid.text().strip()
-            coll['txidn'] = self.ui.edt_txidn.value()
+            coll = {'address': self.ui.edt_address.text().strip(), 'spath': self.ui.edt_spath.value(),
+                    'pubKey': self.ui.edt_pubKey.text().strip(), 'txid': self.ui.edt_txid.text().strip(),
+                    'txidn': self.ui.edt_txidn.value()}
 
             new_masternode['collateral'] = coll
 

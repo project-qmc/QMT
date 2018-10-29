@@ -172,7 +172,7 @@ class MainWindow(QWidget):
         self.console.setLayout(layout)
 
     def isMasternodeInList(self, mn_alias):
-        return (mn_alias in [x['name'] for x in self.masternode_list])
+        return mn_alias in [x['name'] for x in self.masternode_list]
 
     def loadIcons(self):
         # Load Icons        
@@ -191,7 +191,7 @@ class MainWindow(QWidget):
 
     def loadMNConf(self, fileName):
         hot_masternodes = loadMNConfFile(fileName)
-        if hot_masternodes == None:
+        if hot_masternodes is None:
             messText = "Unable to load data from file '%s'" % fileName
             self.myPopUp2(QMessageBox.Warning, "QMT - warning", messText)
         else:

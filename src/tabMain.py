@@ -20,11 +20,10 @@ from qt.dlg_mnStatus import MnStatus_dlg
 from qt.dlg_sweepAll import SweepAll_dlg
 
 
-class TabMain():
+class TabMain:
     def __init__(self, caller):
         self.caller = caller
-        self.all_masternodes = {}
-        self.all_masternodes['last_update'] = 0
+        self.all_masternodes = {'last_update': 0}
         self.mnToStartList = []
         self.ui = TabMain_gui(caller)
         self.caller.tabMain = self.ui

@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTableWidget, \
     QAbstractItemView, QHeaderView, QTableWidgetItem, QPushButton, QLabel, \
     QGroupBox, QHBoxLayout, QFormLayout
 
-from misc import printException
+from misc import printException, getCallerName, getFunctionName
 
 from misc import sec_to_time
 from threads import ThreadFuns

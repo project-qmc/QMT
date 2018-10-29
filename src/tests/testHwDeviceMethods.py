@@ -126,7 +126,7 @@ class TestHwDeviceMethods(unittest.TestCase):
         message = message.encode('ascii', 'ignore')
         self.device.chip.signMessagePrepare(path, message)
         signature = self.device.chip.signMessageSign(None)
-        if signature != None:
+        if signature is not None:
             if len(signature) > 4:
                 rLength = signature[3]
                 r = signature[4: 4 + rLength]
@@ -249,10 +249,10 @@ class TestHwDeviceMethods(unittest.TestCase):
             self.tx_raw = bytearray(self.new_transaction.serialize())
 
         if self.tx_raw is not None:
-            return (self.tx_raw, str(round(self.amount / 1e8, 8)))
+            return self.tx_raw, str(round(self.amount / 1e8, 8))
         else:
             # transaction refused by user
-            return (None, "")
+            return None, ""
 
     if __name__ == '__main__':
         unittest.main(verbosity=2)
