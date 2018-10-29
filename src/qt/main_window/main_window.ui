@@ -1,0 +1,1470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>DeltaEpsilon7787</author>
+ <class>qmt_main</class>
+ <widget class="QMainWindow" name="qmt_main">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">QMT - Quality Magnet Tool</string>
+  </property>
+  <widget class="QWidget" name="_centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QWidget" name="_widget" native="true">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="LEDLabel" name="led_label">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../../../resources.qrc">:/pixmaps/gray_led</pixmap>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="SyncBlockLabel" name="current_block_counter">
+         <property name="text">
+          <string>0 (unsynced)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="_horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="qmt_logo">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="../../../resources.qrc">:/pixmaps/qmc_logo</pixmap>
+         </property>
+         <property name="margin">
+          <number>16</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="_tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <property name="usesScrollButtons">
+       <bool>false</bool>
+      </property>
+      <widget class="SearchTorrentsTab" name="search_torrent_tab">
+       <attribute name="title">
+        <string>Search Torrents</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QWidget" name="_widget_3" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QLabel" name="_label_5">
+             <property name="text">
+              <string>&lt;b&gt;Search:&lt;/b&gt;</string>
+             </property>
+             <property name="buddy">
+              <cstring>search_bar</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="TorrentSearchBar" name="search_bar"/>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="regex_checkbox">
+             <property name="text">
+              <string>Regex?</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="search_button">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../resources.qrc">
+               <normaloff>:/pixmaps/refresh</normaloff>:/pixmaps/refresh</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="budget_projection_btn">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../resources.qrc">
+               <normaloff>:/pixmaps/list</normaloff>:/pixmaps/list</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="select_masternodes_btn">
+             <property name="text">
+              <string>Select Masternodes...</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="masternodes_selected">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;0 &lt;/span&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;masternodes selected for voting&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="mn_count_label">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Total MN Count: &lt;span style=&quot; font-style:italic;&quot;&gt;107&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="hide_expiring_checkbtn">
+             <property name="text">
+              <string>Hide expiring</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="TorrentsTable" name="torrents_table">
+          <property name="editTriggers">
+           <set>QAbstractItemView::AnyKeyPressed|QAbstractItemView::EditKeyPressed</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="sortingEnabled">
+           <bool>true</bool>
+          </property>
+          <property name="rowCount">
+           <number>0</number>
+          </property>
+          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Stream</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Download</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>QMC/Month</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Payments</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Votes</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>SE/LE</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_widget_5" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_5">
+           <item>
+            <widget class="QCheckBox" name="random_delay_checkbox">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../../resources.qrc">
+               <normaloff>:/pixmaps/clock</normaloff>:/pixmaps/clock</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="min_time_numbox">
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="suffix">
+              <string> secs</string>
+             </property>
+             <property name="prefix">
+              <string>- </string>
+             </property>
+             <property name="maximum">
+              <number>18000</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="max_time_numbox">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="suffix">
+              <string> secs</string>
+             </property>
+             <property name="prefix">
+              <string>+ </string>
+             </property>
+             <property name="maximum">
+              <number>18000</number>
+             </property>
+             <property name="value">
+              <number>300</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="_horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="TorrentsSelectedLabelCounter" name="torrents_selected_counter">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;0 torrents selected&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="_label_6">
+             <property name="maximumSize">
+              <size>
+               <width>25</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="../../../resources.qrc">:/pixmaps/question</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="_widget_4" native="true">
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="vote_good_btn">
+             <property name="text">
+              <string>Vote Good!</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="vote_bad_btn">
+             <property name="text">
+              <string>Vote Bad!</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="AddTorrentsTab" name="add_torrents_tab">
+       <attribute name="title">
+        <string>Add Torrents</string>
+       </attribute>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="_label">
+          <property name="text">
+           <string>File Name:</string>
+          </property>
+          <property name="buddy">
+           <cstring>file_name_edit</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="file_name_edit"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="_label_2">
+          <property name="text">
+           <string>Magnet URI:</string>
+          </property>
+          <property name="buddy">
+           <cstring>magnet_uri_edit</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="magnet_uri_edit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="_label_3">
+          <property name="text">
+           <string>QMC Payment Address:</string>
+          </property>
+          <property name="buddy">
+           <cstring>qmc_payment_address_edit</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="qmc_payment_address_edit"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="_label_4">
+          <property name="text">
+           <string>Category: </string>
+          </property>
+          <property name="buddy">
+           <cstring>category_box</cstring>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QComboBox" name="category_box">
+          <item>
+           <property name="text">
+            <string>Video</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Audio</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>App</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Game</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>eBook</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Document</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Leak</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Other</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="submit_button">
+          <property name="text">
+           <string>Submit Torrent</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0" colspan="2">
+         <widget class="QLabel" name="_label_7">
+          <property name="text">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Submission requires &lt;span style=&quot; font-weight:600;&quot;&gt;3&lt;/span&gt; confirmations to process.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Do not&lt;/span&gt; close this tool until 3 blocks pass since your last submission!&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Also be aware that this function is beta stage.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::RichText</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="_groupBox">
+      <property name="title">
+       <string>Console Log</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QWidget" name="_widget_2" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="console_hide_checkbtn">
+            <property name="text">
+             <string>Hide</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="console_save_btn">
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="console_clean_btn">
+            <property name="text">
+             <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="_horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="UpdateLabel" name="update_status_label">
+            <property name="text">
+             <string>You have the latest version of QMT</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="CheckUpdatesButton" name="check_updates_btn">
+            <property name="text">
+             <string>Check QMT version</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="ConsoleLogOutput" name="console_log_output">
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Button">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Light">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>84</red>
+               <green>84</green>
+               <blue>84</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Midlight">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>70</red>
+               <green>70</green>
+               <blue>70</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Dark">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Mid">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>37</red>
+               <green>37</green>
+               <blue>37</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Text">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>255</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="BrightText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ButtonText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Shadow">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="AlternateBase">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ToolTipBase">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>220</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ToolTipText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Button">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Light">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>84</red>
+               <green>84</green>
+               <blue>84</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Midlight">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>70</red>
+               <green>70</green>
+               <blue>70</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Dark">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Mid">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>37</red>
+               <green>37</green>
+               <blue>37</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Text">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>255</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="BrightText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ButtonText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Shadow">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="AlternateBase">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ToolTipBase">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>220</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ToolTipText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Button">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Light">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>84</red>
+               <green>84</green>
+               <blue>84</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Midlight">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>70</red>
+               <green>70</green>
+               <blue>70</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Dark">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Mid">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>37</red>
+               <green>37</green>
+               <blue>37</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Text">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="BrightText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ButtonText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>28</red>
+               <green>28</green>
+               <blue>28</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Window">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Shadow">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="AlternateBase">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>56</red>
+               <green>56</green>
+               <blue>56</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ToolTipBase">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>220</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="ToolTipText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>0</red>
+               <green>0</green>
+               <blue>0</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QAbstractScrollArea::AdjustToContents</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Logging&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="_menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="_menuSetup">
+    <property name="title">
+     <string>Setup</string>
+    </property>
+    <addaction name="rpc_settings_action"/>
+    <addaction name="import_masterconf_action"/>
+   </widget>
+   <addaction name="_menuSetup"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="rpc_settings_action">
+   <property name="icon">
+    <iconset resource="../../../resources.qrc">
+     <normaloff>:/pixmaps/qmc_shield</normaloff>:/pixmaps/qmc_shield</iconset>
+   </property>
+   <property name="text">
+    <string>RPC Settings</string>
+   </property>
+  </action>
+  <action name="import_masterconf_action">
+   <property name="icon">
+    <iconset resource="../../../resources.qrc">
+     <normaloff>:/pixmaps/script</normaloff>:/pixmaps/script</iconset>
+   </property>
+   <property name="text">
+    <string>Import &quot;masternode.conf&quot; file</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="9"/>
+ <customwidgets>
+  <customwidget>
+   <class>SearchTorrentsTab</class>
+   <extends>QWidget</extends>
+   <header>search_torrents_logic</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AddTorrentsTab</class>
+   <extends>QWidget</extends>
+   <header>add_torrents_logic</header>
+   <container>1</container>
+   <slots>
+    <slot>submic_torrent()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>SyncBlockLabel</class>
+   <extends>QLabel</extends>
+   <header>custom_labels</header>
+   <slots>
+    <signal>sync_started()</signal>
+    <signal>sync_lost()</signal>
+    <signal>sync_finished()</signal>
+    <slot>set_blocks(int)</slot>
+    <slot>set_unsynced_status()</slot>
+    <slot>set_synchronizing_status()</slot>
+    <slot>set_synced_status()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>UpdateLabel</class>
+   <extends>QLabel</extends>
+   <header>custom_labels</header>
+   <slots>
+    <signal>update_checked()</signal>
+    <slot>check_updates()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>ConsoleLogOutput</class>
+   <extends>QTextEdit</extends>
+   <header>console_widget</header>
+   <slots>
+    <slot>save_log()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>CheckUpdatesButton</class>
+   <extends>QPushButton</extends>
+   <header>console_widget</header>
+   <slots>
+    <slot>set_double_dash()</slot>
+    <slot>reset_text()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>LEDLabel</class>
+   <extends>QLabel</extends>
+   <header>custom_labels</header>
+   <slots>
+    <slot>set_green_led()</slot>
+    <slot>set_gray_led()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>TorrentsTable</class>
+   <extends>QTableWidget</extends>
+   <header>torrent_table</header>
+   <slots>
+    <signal>torrents_updated()</signal>
+    <slot>vote_selected_good()</slot>
+    <slot>vote_selected_bad()</slot>
+    <slot>update_torrents()</slot>
+    <slot>show_expiring(bool)</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>TorrentSearchBar</class>
+   <extends>QLineEdit</extends>
+   <header>torrent_table</header>
+   <slots>
+    <signal>search_signal()</signal>
+    <slot>do_search()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>TorrentsSelectedLabelCounter</class>
+   <extends>QLabel</extends>
+   <header>torrent_table</header>
+   <slots>
+    <slot>update_counter()</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../../../resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>console_clean_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>console_log_output</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>222</x>
+     <y>577</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>292</x>
+     <y>643</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>check_updates_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>update_status_label</receiver>
+   <slot>check_updates()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>957</x>
+     <y>580</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>861</x>
+     <y>577</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>update_status_label</sender>
+   <signal>update_checked()</signal>
+   <receiver>check_updates_btn</receiver>
+   <slot>reset_text()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>817</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>945</x>
+     <y>577</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>check_updates_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>check_updates_btn</receiver>
+   <slot>set_double_dash()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>956</x>
+     <y>572</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>960</x>
+     <y>575</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>current_block_counter</sender>
+   <signal>sync_started()</signal>
+   <receiver>led_label</receiver>
+   <slot>set_green_led()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>83</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>71</x>
+     <y>77</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>current_block_counter</sender>
+   <signal>sync_finished()</signal>
+   <receiver>led_label</receiver>
+   <slot>set_green_led()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>150</x>
+     <y>103</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>79</x>
+     <y>98</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>current_block_counter</sender>
+   <signal>sync_lost()</signal>
+   <receiver>led_label</receiver>
+   <slot>set_gray_led()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>142</x>
+     <y>115</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>58</x>
+     <y>122</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>current_block_counter</sender>
+   <signal>sync_started()</signal>
+   <receiver>current_block_counter</receiver>
+   <slot>set_synchronizing_status()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>171</x>
+     <y>57</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>173</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>current_block_counter</sender>
+   <signal>sync_lost()</signal>
+   <receiver>current_block_counter</receiver>
+   <slot>set_unsynced_status()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>179</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>current_block_counter</sender>
+   <signal>sync_finished()</signal>
+   <receiver>current_block_counter</receiver>
+   <slot>set_synced_status()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>181</x>
+     <y>109</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search_button</sender>
+   <signal>clicked()</signal>
+   <receiver>search_bar</receiver>
+   <slot>do_search()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search_bar</sender>
+   <signal>search_signal()</signal>
+   <receiver>torrents_table</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>157</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>173</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search_bar</sender>
+   <signal>search_signal()</signal>
+   <receiver>torrents_table</receiver>
+   <slot>update_torrents()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>198</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>320</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>console_hide_checkbtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>console_log_output</receiver>
+   <slot>setHidden(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>579</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>115</x>
+     <y>658</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>torrents_table</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>torrents_selected_counter</receiver>
+   <slot>update_counter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>763</x>
+     <y>344</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>880</x>
+     <y>449</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hide_expiring_checkbtn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>torrents_table</receiver>
+   <slot>show_expiring(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>934</x>
+     <y>202</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>925</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vote_good_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>torrents_table</receiver>
+   <slot>vote_selected_good()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>306</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>333</x>
+     <y>352</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vote_bad_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>torrents_table</receiver>
+   <slot>vote_selected_bad()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>601</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>566</x>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>budget_projection_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>qmt_main</receiver>
+   <slot>show_budget_projection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>481</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>select_masternodes_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>qmt_main</receiver>
+   <slot>show_masternode_selection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>567</x>
+     <y>200</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>2</x>
+     <y>285</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>console_save_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>console_log_output</receiver>
+   <slot>save_log()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>585</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>145</x>
+     <y>631</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>search_bar</sender>
+   <signal>returnPressed()</signal>
+   <receiver>search_bar</receiver>
+   <slot>do_search()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>198</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>10</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>10</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
+ <slots>
+  <slot>show_budget_projection()</slot>
+  <slot>show_masternode_selection()</slot>
+ </slots>
+</ui>

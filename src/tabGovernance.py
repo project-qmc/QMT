@@ -252,7 +252,7 @@ class TabGovernance(QtCore.QObject):
         if reply == 1:
             ThreadFuns.runInThread(self.vote_thread, ([vote_code]), self.vote_thread_end)
 
-    def summaryDlg(self, vote_code):
+    def summaryDlg(self, voteR_code):
         message = "Voting <b>%s</b> on the following torrent(s):<br><br>" % str(self.vote_codes[vote_code]).upper()
         for prop in self.selectedTorrents:
             message += "&nbsp; - <b>%s</b><br>&nbsp; &nbsp; (<em>%s</em>)<br><br>" % (prop.name, prop.Hash)
