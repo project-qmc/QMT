@@ -4,15 +4,8 @@
     <bookmark url="file://$PROJECT_DIR$/src/tabGovernance.py" line="0" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="Unused method removed">
-      <change afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_qmt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/QMC-SPTM.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QMCTorrentTool.spec" beforeDir="false" afterPath="$PROJECT_DIR$/QMCTorrentTool.spec" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mainWindow.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tabAddTorrent.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabAddTorrent.py" afterDir="false" />
+    <list default="true" id="b280414f-3197-4167-900a-69432fced545" name="Default" comment="Last minute fixes">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/tabGovernance.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/tabGovernance.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,7 +26,7 @@
         <counts>
           <entry key="gitignore" value="1" />
           <entry key="png" value="5" />
-          <entry key="py" value="32" />
+          <entry key="py" value="42" />
           <entry key="pyi" value="1" />
         </counts>
       </usages-collector>
@@ -41,58 +34,131 @@
         <counts>
           <entry key="Image" value="5" />
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="32" />
+          <entry key="Python" value="42" />
           <entry key="PythonStub" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="8" />
-          <entry key="py" value="7943" />
-          <entry key="txt" value="244" />
+          <entry key="py" value="9005" />
+          <entry key="txt" value="266" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="252" />
-          <entry key="Python" value="7943" />
+          <entry key="PLAIN_TEXT" value="274" />
+          <entry key="Python" value="9005" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/threads.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="912">
+              <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
+              <folding>
+                <element signature="e#369#440#0" expanded="true" />
+                <element signature="e#1226#1641#0" expanded="true" />
+                <marker date="1540983620591" expanded="true" signature="362:448" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/tabAddTorrent.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="608">
+              <caret line="114" column="69" lean-forward="true" selection-start-line="114" selection-start-column="69" selection-end-line="114" selection-end-column="69" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#2116#2303#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/constants.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="144">
+              <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1232">
+              <caret line="212" column="21" lean-forward="true" selection-start-line="212" selection-start-column="21" selection-end-line="212" selection-end-column="21" />
+              <folding>
+                <element signature="e#377#1113#0" expanded="true" />
+                <element signature="e#2909#3273#0" expanded="true" />
+                <element signature="e#11349#11750#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-448" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/misc.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="351">
+              <caret line="295" column="64" lean-forward="true" selection-start-line="295" selection-start-column="64" selection-end-line="295" selection-end-column="64" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+            <state relative-caret-position="117">
+              <caret line="263" lean-forward="true" selection-start-line="263" selection-end-line="263" />
               <folding>
                 <element signature="e#47#56#0" expanded="true" />
-                <element signature="e#1060#1763#0" expanded="true" />
-                <element signature="e#1843#2990#0" expanded="true" />
-                <element signature="e#3021#3231#0" expanded="true" />
-                <element signature="e#3269#4190#0" expanded="true" />
-                <element signature="e#4241#4260#0" expanded="true" />
-                <element signature="e#4319#4484#0" expanded="true" />
-                <element signature="e#4539#4734#0" expanded="true" />
-                <element signature="e#4782#4965#0" expanded="true" />
-                <element signature="e#5006#8678#0" expanded="true" />
-                <element signature="e#5181#5356#0" expanded="true" />
-                <element signature="e#8716#9008#0" expanded="true" />
-                <element signature="e#9067#9353#0" expanded="true" />
-                <element signature="e#9411#10346#0" expanded="true" />
-                <element signature="e#10408#10853#0" expanded="true" />
-                <element signature="e#10900#11496#0" expanded="true" />
-                <element signature="e#11569#12261#0" expanded="true" />
-                <element signature="e#12308#12597#0" expanded="true" />
-                <element signature="e#12638#16173#0" expanded="true" />
-                <element signature="e#13047#13499#0" expanded="true" />
-                <element signature="e#13554#15010#0" expanded="true" />
-                <element signature="e#13743#14892#0" expanded="true" />
-                <element signature="e#16258#16552#0" expanded="true" />
-                <element signature="e#16633#18622#0" expanded="true" />
-                <element signature="e#18663#19309#0" expanded="true" />
+                <element signature="e#1843#2976#0" expanded="true" />
+                <element signature="e#5006#8658#0" expanded="true" />
+                <element signature="e#9047#9333#0" expanded="true" />
+                <element signature="e#9391#10326#0" expanded="true" />
+                <element signature="e#10388#10833#0" expanded="true" />
+                <element signature="e#11549#12274#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/workerThread.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="e#381#700#0" expanded="true" />
+                <element signature="e#730#949#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/qt/gui_tabGovernance.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="421">
+              <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+              <folding>
+                <element signature="e#522#971#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,10 +181,18 @@
       <find>voteYes_btn</find>
       <find>json.</find>
       <find>Console log</find>
+      <find>returnPressed</find>
+      <find>refreshTorrents_btn</find>
+      <find>search_textbox</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -127,13 +201,13 @@
         <option value="$PROJECT_DIR$/src/qt/dlg_budgetProjection.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/io.pyi" />
-        <option value="$PROJECT_DIR$/src/threads.py" />
         <option value="$PROJECT_DIR$/src/workerThread.py" />
-        <option value="$PROJECT_DIR$/src/tabAddTorrent.py" />
-        <option value="$PROJECT_DIR$/src/constants.py" />
-        <option value="$PROJECT_DIR$/src/misc.py" />
         <option value="$PROJECT_DIR$/src/qt/gui_tabGovernance.py" />
         <option value="$PROJECT_DIR$/src/mainWindow.py" />
+        <option value="$PROJECT_DIR$/src/threads.py" />
+        <option value="$PROJECT_DIR$/src/constants.py" />
+        <option value="$PROJECT_DIR$/src/misc.py" />
+        <option value="$PROJECT_DIR$/src/tabAddTorrent.py" />
         <option value="$PROJECT_DIR$/src/tabGovernance.py" />
       </list>
     </option>
@@ -149,6 +223,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -159,24 +234,17 @@
             <path>
               <item name="QMT" type="b2602c69:ProjectViewProjectNode" />
               <item name="QMT" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
+              <item name="doc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="QMT" type="b2602c69:ProjectViewProjectNode" />
               <item name="QMT" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="QMT" type="b2602c69:ProjectViewProjectNode" />
-              <item name="QMT" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="qt" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -329,16 +397,24 @@
       <option name="project" value="LOCAL" />
       <updated>1539824530700</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Last minute fixes">
+      <created>1540983625844</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1540983625844</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1928" height="1088" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25855714" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2606635" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32769555" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32769555" />
@@ -388,7 +464,8 @@
     <MESSAGE value="More message boxes" />
     <MESSAGE value="Play/Download buttons appear on selection&#10;SL stuff" />
     <MESSAGE value="Unused method removed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Unused method removed" />
+    <MESSAGE value="Last minute fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Last minute fixes" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
@@ -417,8 +494,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qt/dlg_budgetProjection.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="27" column="22" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="30" />
+        <state relative-caret-position="320">
+          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -437,9 +514,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="64">
           <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
-          <folding>
-            <element signature="e#752#1325#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -479,18 +553,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1280">
-          <caret line="215" column="28" selection-start-line="215" selection-start-column="24" selection-end-line="215" selection-end-column="28" />
-          <folding>
-            <element signature="e#377#1113#0" expanded="true" />
-            <element signature="e#2909#3273#0" expanded="true" />
-            <element signature="e#11349#11750#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/3/io.pyi">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="496">
@@ -502,113 +564,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-288">
           <caret line="33" column="28" lean-forward="true" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-          <folding>
-            <element signature="e#35#50#0" expanded="true" />
-            <element signature="e#772#1528#0" expanded="true" />
-            <element signature="e#1589#3488#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-320" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/threads.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="43" column="28" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
-          <folding>
-            <element signature="e#1226#1641#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tabAddTorrent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="91" column="37" lean-forward="true" selection-start-line="91" selection-start-column="37" selection-end-line="91" selection-end-column="37" />
-          <folding>
-            <element signature="e#2116#2303#0" expanded="true" />
-            <element signature="e#2343#2434#0" expanded="true" />
-            <element signature="e#4686#5472#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="29" />
-          <folding>
-            <element signature="e#47#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tabMain.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/misc.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="414" column="8" selection-start-line="414" selection-start-column="8" selection-end-line="414" selection-end-column="8" />
-          <folding>
-            <element signature="e#1787#2118#0" expanded="true" />
-            <element signature="e#7403#9035#0" expanded="true" />
-            <element signature="e#7440#7748#0" expanded="true" />
-            <element signature="e#8596#8683#0" expanded="true" />
-            <element signature="e#9859#10213#0" expanded="true" />
-            <element signature="e#10739#10805#0" expanded="true" />
-            <element signature="e#10844#10928#0" expanded="true" />
-            <marker date="1539824423953" expanded="true" signature="7432:7755" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mainWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="29" column="6" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
-          <folding>
-            <element signature="e#47#57#0" expanded="true" />
-            <element signature="e#1136#5118#0" expanded="true" />
-            <element signature="e#18011#18435#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qt/gui_tabMain.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="150" column="48" lean-forward="true" selection-start-line="150" selection-start-column="48" selection-end-line="150" selection-end-column="48" />
-          <folding>
-            <element signature="e#509#932#0" expanded="true" />
-            <element signature="e#1010#1503#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="2688">
+          <caret line="168" column="59" selection-start-line="168" selection-start-column="59" selection-end-line="168" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qt/gui_tabAddTorrent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-368">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/workerThread.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
-          <folding>
-            <element signature="e#381#700#0" expanded="true" />
-            <element signature="e#730#949#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="128">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
         </state>
       </provider>
     </entry>
@@ -616,57 +585,123 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mainWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-224">
+          <caret line="147" column="21" selection-start-line="147" selection-start-column="21" selection-end-line="147" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tabMain.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/qt/dlg_findCollTx.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/2012842/PyQt5/QtWidgets/QBoxLayout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <element signature="e#627#1026#0" expanded="true" />
+            <element signature="e#1248#1303#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/threads.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="912">
+          <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
+          <folding>
+            <element signature="e#369#440#0" expanded="true" />
+            <element signature="e#1226#1641#0" expanded="true" />
+            <marker date="1540983620591" expanded="true" signature="362:448" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tabAddTorrent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="114" column="69" lean-forward="true" selection-start-line="114" selection-start-column="69" selection-end-line="114" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#2116#2303#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constants.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/rpcClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1232">
+          <caret line="212" column="21" lean-forward="true" selection-start-line="212" selection-start-column="21" selection-end-line="212" selection-end-column="21" />
+          <folding>
+            <element signature="e#377#1113#0" expanded="true" />
+            <element signature="e#2909#3273#0" expanded="true" />
+            <element signature="e#11349#11750#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-448" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/misc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="295" column="64" lean-forward="true" selection-start-line="295" selection-start-column="64" selection-end-line="295" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/workerThread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#381#700#0" expanded="true" />
+            <element signature="e#730#949#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/qt/gui_tabGovernance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="222" column="34" selection-start-line="222" selection-start-column="34" selection-end-line="222" selection-end-column="34" />
+        <state relative-caret-position="421">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
           <folding>
-            <element signature="e#47#61#0" expanded="true" />
-            <element signature="e#522#969#0" expanded="true" />
-            <element signature="e#1022#7626#0" expanded="true" />
-            <element signature="e#7679#8056#0" expanded="true" />
-            <element signature="e#8110#9234#0" expanded="true" />
+            <element signature="e#522#971#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/tabGovernance.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        <state relative-caret-position="117">
+          <caret line="263" lean-forward="true" selection-start-line="263" selection-end-line="263" />
           <folding>
             <element signature="e#47#56#0" expanded="true" />
-            <element signature="e#1060#1763#0" expanded="true" />
-            <element signature="e#1843#2990#0" expanded="true" />
-            <element signature="e#3021#3231#0" expanded="true" />
-            <element signature="e#3269#4190#0" expanded="true" />
-            <element signature="e#4241#4260#0" expanded="true" />
-            <element signature="e#4319#4484#0" expanded="true" />
-            <element signature="e#4539#4734#0" expanded="true" />
-            <element signature="e#4782#4965#0" expanded="true" />
-            <element signature="e#5006#8678#0" expanded="true" />
-            <element signature="e#5181#5356#0" expanded="true" />
-            <element signature="e#8716#9008#0" expanded="true" />
-            <element signature="e#9067#9353#0" expanded="true" />
-            <element signature="e#9411#10346#0" expanded="true" />
-            <element signature="e#10408#10853#0" expanded="true" />
-            <element signature="e#10900#11496#0" expanded="true" />
-            <element signature="e#11569#12261#0" expanded="true" />
-            <element signature="e#12308#12597#0" expanded="true" />
-            <element signature="e#12638#16173#0" expanded="true" />
-            <element signature="e#13047#13499#0" expanded="true" />
-            <element signature="e#13554#15010#0" expanded="true" />
-            <element signature="e#13743#14892#0" expanded="true" />
-            <element signature="e#16258#16552#0" expanded="true" />
-            <element signature="e#16633#18622#0" expanded="true" />
-            <element signature="e#18663#19309#0" expanded="true" />
+            <element signature="e#1843#2976#0" expanded="true" />
+            <element signature="e#5006#8658#0" expanded="true" />
+            <element signature="e#9047#9333#0" expanded="true" />
+            <element signature="e#9391#10326#0" expanded="true" />
+            <element signature="e#10388#10833#0" expanded="true" />
+            <element signature="e#11549#12274#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -7,12 +7,23 @@
 import threading
 import traceback
 from functools import partial
+
 from workerThread import WorkerThread
 
+
 class ThreadFuns:
-    @staticmethod
-    def runInThread(worker_fun, worker_fun_args, on_thread_finish=None, on_thread_exception=None,
-                        skip_raise_exception=False):
+    _global_thread_pool = []
+
+    @classmethod
+    @property
+    def get_last_thread(cls):
+        return cls._global_thread_pool[-1] if cls._global_thread_pool else None
+
+    @classmethod
+    def runInThread(cls,
+                    worker_fun, worker_fun_args,
+                    on_thread_finish=None, on_thread_exception=None,
+                    skip_raise_exception=False):
             """
             Run a function inside a thread.
             :param worker_fun: reference to function to be executed inside a thread
@@ -49,7 +60,8 @@ class ThreadFuns:
                                                on_thread_exception)
     
             thread.finished.connect(bound_on_thread_finished)
-            thread.daemon = True
+            thread.started.connect(lambda: cls._global_thread_pool.append(thread))
+            thread.finished.connect(lambda: cls._global_thread_pool.remove(thread))
             thread.start()
             return thread
         

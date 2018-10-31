@@ -9,7 +9,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 import time
 from PyQt5.QtCore import QObject, pyqtSignal
 from constants import user_dir, log_File, masternodes_File, rpc_File, cache_File, \
-    DEFAULT_CACHE, DEFAULT_MN_CONF, DEFAULT_RPC_CONF, home_dir
+    DEFAULT_CACHE, DEFAULT_MN_CONF, DEFAULT_RPC_CONF
 
 
 def append_to_logfile(text):
@@ -285,49 +285,48 @@ def readMNfile():
 
 
 def readRPCfile():
+    rpc_config = DEFAULT_RPC_CONF.copy()
+
     def inject_conf(path):
-        with open(os.path.join(appdata_dir, shard), 'r') as conf:
-            lines = conf.readlines()
+        rpc_config = {}
+        with open(path, 'r') as conf:
+            lines = [line.strip() for line in conf.readlines()]
             settings = dict(map(lambda s: s.split('='), lines))
-            DEFAULT_RPC_CONF['rpc_user'] = settings['rpcuser'].strip()
-            DEFAULT_RPC_CONF['rpc_password'] = settings['rpcpassword'].strip()
+            rpc_config['rpc_user'] = settings['rpcuser']
+            rpc_config['rpc_password'] = settings['rpcpassword']
+        return rpc_config
 
     try:
-        appdata_dir = os.environ['APPDATA']
-        shard = 'QMC2/qmc2.conf'
-
-        inject_conf(os.path.join(appdata_dir, shard))
-    except:
+        rpc_config.update(inject_conf(os.path.expandvars('$APPDATA/QMC2/qmc2.conf')))
+    except IOError:
         try:
-            path = os.path.join(home_dir, '.qmc2/qmc2.conf')
-            inject_conf(path)
-        except:
-            pass
+            rpc_config.update(inject_conf(os.path.expandvars('~/.qmc2/qmc2.conf')))
+        except IOError:
+            try:
+                import simplejson as json
+                config_file = os.path.join(user_dir, rpc_File)
+                if os.path.exists(config_file):
+                    with open(config_file) as data_file:
+                        rpc_config.update(json.load(data_file))
 
-    try:
-        import simplejson as json
-        config_file = os.path.join(user_dir, rpc_File)
-        if os.path.exists(config_file):
-            with open(config_file) as data_file:
-                rpc_config = json.load(data_file)
-                
-            # Check for malformed data
-            urlstring = "http://%s:%s@%s:%d" % (
-                rpc_config.get('rpc_user'), rpc_config.get('rpc_password'), 
-                rpc_config.get('rpc_ip'), int(rpc_config.get('rpc_port')))         
-            if not checkRPCstring(urlstring):
-                # save default config and return it
-                resetRPCfile()          
-                rpc_config = DEFAULT_RPC_CONF
+                    # Check for malformed data
+                    urlstring = "http://%s:%s@%s:%d" % (
+                        rpc_config.get('rpc_user'), rpc_config.get('rpc_password'),
+                        rpc_config.get('rpc_ip'), int(rpc_config.get('rpc_port'))
+                    )
+                    if not checkRPCstring(urlstring):
+                        # save default config and return it
+                        resetRPCfile()
+                        rpc_config = DEFAULT_RPC_CONF
 
-        else:
-            printDbg("No rpcServer.json found.")
-            # save default config and return it
-            resetRPCfile()
-            rpc_config = DEFAULT_RPC_CONF
-        
-    except Exception as e:
-        printDbg(e.args[0])
+                else:
+                    printDbg("No rpcServer.json found.")
+                    # save default config and return it
+                    resetRPCfile()
+                    rpc_config = DEFAULT_RPC_CONF
+
+            except Exception as e:
+                printDbg(e.args[0])
     
     rpc_ip = rpc_config.get('rpc_ip')
     rpc_port = int(rpc_config.get('rpc_port'))
