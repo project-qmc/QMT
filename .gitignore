@@ -1,9 +1,1 @@
-/.project
-/.pydevproject
-/.settings/
-/.idea/
-/build/
-/dist/
-/__pycache__/
-/lastLogs.html
-/masternode.conf
+.idea

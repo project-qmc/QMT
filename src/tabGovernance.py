@@ -270,7 +270,13 @@ class TabGovernance(QtCore.QObject):
         if not self.caller.rpcConnected:
             printException(getCallerName(), getFunctionName(), "RPC server not connected", "")
             return
+
+        """
+        Preserved here for generations to come.
+        
+        Apparently returnPressed signal breaks if you set read-only while the connected function executes. 
         self.ui.search_textbox.setReadOnly(True)
+        """
         self.torrents = self.caller.rpcClient.getTorrents()
         num_of_masternodes = self.caller.rpcClient.getMasternodeCount()
 
