@@ -23,7 +23,7 @@ DEFAULT_RPC_CONF = {
     "rpc_port": 55777,
     "rpc_user": "myUsername",
     "rpc_password": "myPassword"
-    }
+}
 DEFAULT_MN_CONF = {
     "name": "",
     "ip": "",
