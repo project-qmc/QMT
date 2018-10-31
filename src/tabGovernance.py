@@ -150,8 +150,6 @@ class TabGovernance(QtCore.QObject):
         for prop in self.torrents:
             not_expired = True
             matches_criteria = True
-            if self.ui.toggleExpiring_btn.text() == "Hide Expiring":
-                not_expired = not prop.RemainingPayCount == 0
             if search_criteria:
                 search_criteria = re.sub(r"\s+", '.*', search_criteria)
                 fulfills_regex = re.search(search_criteria.upper(), prop.name.upper()) if not search_regex else False
@@ -159,7 +157,7 @@ class TabGovernance(QtCore.QObject):
                 if not (fulfills_simple or fulfills_regex):
                     matches_criteria = False
 
-            if not_expired and matches_criteria:
+            if matches_criteria:
                 filtered_torrents.append(prop)
 
         if search_criteria or search_regex:
@@ -223,7 +221,7 @@ class TabGovernance(QtCore.QObject):
             # Hide expiring torrents
             for row in range(0, self.ui.torrentBox.rowCount()):
                 if self.ui.torrentBox.item(row, 5).background() == Qt.yellow:
-                    self.ui.torrentBox.hideRow(row)
+                    self.ui.torrentBox.showRow(row)
             # Update button
             self.ui.toggleExpiring_btn.setToolTip("Show expiring torrents (yellow background) in list")
             self.ui.toggleExpiring_btn.setText("Show Expiring")
@@ -341,8 +339,8 @@ class TabGovernance(QtCore.QObject):
                 magnet_uri = magnet_uri[0]
                 try:
                     _, s, l, __ = torrent_scraper.scrape(magnet_uri,
-                                                         'tracker.openbittorrent.com',
-                                                         80)
+                                                         'tracker.coppersurfer.tk',
+                                                         6969)
                 except ValueError:
                     torrent_scraper.logger.log = saved_log
                     return
