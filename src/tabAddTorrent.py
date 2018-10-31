@@ -111,7 +111,7 @@ class TabAddTorrent(object):
 
             response_object = json.loads(response.content)
 
-            if 'error' in response_object:
+            if response_object.get('error'):
                 raise ValueError(response_object['error']['message'])
 
             while self.current_block < initial_block + self.BLOCK_DELAY:
