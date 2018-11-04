@@ -5,16 +5,14 @@ import requests
 import requests.exceptions
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-
 from misc import getCallerName, getFunctionName, highlight_textbox, printException, readRPCfile
-from qmt_threading.threads import ThreadFuns
 from qt.gui_tabAddTorrent import TabAddTorrent_gui
+from threads import ThreadFuns
 
 
 class TabAddTorrent(object):
     UPDATE_HALF_PERIOD = 5
     BLOCK_DELAY = 6
-
     def __init__(self, caller):
         self.caller = caller
 
@@ -113,8 +111,8 @@ class TabAddTorrent(object):
 
             response_object = json.loads(response.content)
 
-            if 'error' in response_object:
-                raise Exception(response_object['error']['message'])
+            if response_object.get('error'):
+                raise ValueError(response_object['error']['message'])
 
             while self.current_block < initial_block + self.BLOCK_DELAY:
                 time.sleep(self.UPDATE_HALF_PERIOD)

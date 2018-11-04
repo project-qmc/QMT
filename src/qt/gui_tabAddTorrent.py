@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QComboBox, QHBoxLayout, QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QTextEdit, QLineEdit, QLabel, QComboBox, QPushButton
 
 
 class TabAddTorrent_gui(QWidget):
@@ -54,8 +54,7 @@ class TabAddTorrent_gui(QWidget):
         vertical_group.addLayout(horizontal_group_4)
 
         horizontal_group_5 = QHBoxLayout()
-        self.torrentWarningLabel = QLabel(
-            """Submission requires 3 confirmations to process.\nDo not close the tool until 3 blocks pass since your last submission !\n\nAlso be aware that this function is in beta stage,\none known issue is submitting multiple links too fast.\nTry to only submit multipled by the same number of cores your device has and waiting for 3 blocks.""")
+        self.torrentWarningLabel = QLabel("""Submission requires 3 confirmations to process.\nDo not close the tool until 3 blocks pass since your last submission !\n\nAlso be aware that this function is in beta stage,\none known issue is submitting multiple links too fast.\nTry to only submit multipled by the same number of cores your device has and waiting for 3 blocks.""")
         horizontal_group_5.addWidget(self.torrentWarningLabel)
         vertical_group.addLayout(horizontal_group_5)
 

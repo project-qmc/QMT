@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import os.path
 import sys
-
+import os.path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from PyQt5.QtCore import Qt
-from PyQt5.Qt import QLabel, QFormLayout, QDoubleSpinBox, QTableWidget, QTableWidgetItem, QAbstractItemView, \
-    QHeaderView, \
+from PyQt5.Qt import QLabel, QFormLayout, QDoubleSpinBox, QTableWidget, QTableWidgetItem, QAbstractItemView, QHeaderView,\
     QCheckBox
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QGroupBox, QVBoxLayout, \
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QGroupBox, QVBoxLayout,\
     QProgressBar
 from PyQt5.QtWidgets import QLineEdit, QComboBox
 
-
 class TabRewards_gui(QWidget):
     def __init__(self, *args, **kwargs):
-        QWidget.__init__(self)
-        self.initRewardsForm()
-        mainVertical = QVBoxLayout()
+        QWidget.__init__(self)      
+        self.initRewardsForm()    
+        mainVertical = QVBoxLayout()        
         mainVertical.addWidget(self.rewardsForm)
         buttonbox = QHBoxLayout()
         buttonbox.addStretch(1)
         buttonbox.addWidget(self.btn_Cancel)
         mainVertical.addLayout(buttonbox)
-        self.setLayout(mainVertical)
-
+        self.setLayout(mainVertical)     
+        
+        
+        
+        
     def initRewardsForm(self):
         self.collateralHidden = True
         self.rewardsForm = QGroupBox()
@@ -36,7 +36,7 @@ class TabRewards_gui(QWidget):
         ##--- ROW 1
         hBox = QHBoxLayout()
         self.mnSelect = QComboBox()
-        self.mnSelect.setToolTip("Select Masternode")
+        self.mnSelect.setToolTip("Select Masternode") 
         hBox.addWidget(self.mnSelect)
         label = QLabel("Total Address Balance")
         label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
@@ -47,10 +47,10 @@ class TabRewards_gui(QWidget):
         hBox.addWidget(self.addrAvailLine)
         self.btn_toggleCollateral = QPushButton("Show Collateral")
         hBox.addWidget(self.btn_toggleCollateral)
-        hBox.setStretch(0, 1)
-        hBox.setStretch(1, 0)
-        hBox.setStretch(2, 0)
-        layout.addRow(QLabel("Masternode"), hBox)
+        hBox.setStretch(0,1)
+        hBox.setStretch(1,0)
+        hBox.setStretch(2,0)
+        layout.addRow(QLabel("Masternode"), hBox)             
         ## --- ROW 2: REWARDS
         self.rewardsList = QVBoxLayout()
         self.rewardsList.statusLabel = QLabel('<b style="color:purple">Checking explorer...</b>')
@@ -58,7 +58,7 @@ class TabRewards_gui(QWidget):
         self.rewardsList.addWidget(self.rewardsList.statusLabel)
         self.rewardsList.box = QTableWidget()
         self.rewardsList.box.setMinimumHeight(140)
-        # self.rewardsList.box.setMaximumHeight(140)
+        #self.rewardsList.box.setMaximumHeight(140)
         self.rewardsList.box.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.rewardsList.box.setSelectionMode(QAbstractItemView.MultiSelection)
         self.rewardsList.box.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -83,7 +83,7 @@ class TabRewards_gui(QWidget):
         item.setText("TX Output N")
         item.setTextAlignment(Qt.AlignCenter)
         self.rewardsList.box.setHorizontalHeaderItem(3, item)
-        item = QTableWidgetItem()
+        item = QTableWidgetItem()        
         self.rewardsList.addWidget(self.rewardsList.box)
         layout.addRow(self.rewardsList)
         ##--- ROW 3
@@ -99,7 +99,7 @@ class TabRewards_gui(QWidget):
         self.selectedRewardsLine.setMinimumWidth(200)
         self.selectedRewardsLine.setStyleSheet("color: purple")
         self.selectedRewardsLine.setToolTip("QMC to move away")
-        hBox2.addWidget(self.selectedRewardsLine)
+        hBox2.addWidget(self.selectedRewardsLine)    
         hBox2.addStretch(1)
         self.swiftxCheck = QCheckBox()
         self.swiftxCheck.setToolTip("check for SwiftX instant transaction (flat fee rate of 0.01 QMC)")
@@ -135,7 +135,7 @@ class TabRewards_gui(QWidget):
         self.loadingLine.hide()
         self.loadingLinePercent.hide()
         layout.addRow(hBox4)
-        # --- Set Layout
+        #--- Set Layout    
         self.rewardsForm.setLayout(layout)
-        # --- ROW 5
+        #--- ROW 5
         self.btn_Cancel = QPushButton("Clear/Reload")
